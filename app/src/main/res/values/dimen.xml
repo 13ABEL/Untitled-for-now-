@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_top_margin">30px</dimen>
+    <dimen name="activity_bottom_margin">25px</dimen>
+
+
+    <dimen name="activity_horizontal_margin">12dp</dimen>
+    <dimen name="toolbar_height">60dp</dimen>
+
+
+    <!-- for the left nav -->
+    <dimen name="left_nav_padding_top">10dp</dimen>
+    <dimen name="left_nav_padding_left">20dp</dimen>
+
+</resources>
