@@ -18,9 +18,8 @@ public class MainActivity extends AppCompatActivity{
 
     // checks if app is not being restored from another state (savedInstanceState is null)
     if (savedInstanceState == null ) {
-      // create the Display Decks fragement to be insterted into the activity
+      // create the Display Decks fragment to be inserted into the activity
       DisplayDecksFragment displayDecksFrag = new DisplayDecksFragment();
-
     }
 
   }

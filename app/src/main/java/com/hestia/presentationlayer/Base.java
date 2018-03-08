@@ -7,9 +7,11 @@ package com.hestia.presentationlayer;
 public interface Base {
 
   interface BasePresenter {
+    //void start();
   }
 
-  interface BaseView {
+  interface BaseView <T> {
+    //void setPresenter(T Presenter);
   }
 
 }

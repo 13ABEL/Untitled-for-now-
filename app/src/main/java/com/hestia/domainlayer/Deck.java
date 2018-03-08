@@ -5,4 +5,5 @@ package com.hestia.domainlayer;
  */
 
 public interface Deck {
+
 }
