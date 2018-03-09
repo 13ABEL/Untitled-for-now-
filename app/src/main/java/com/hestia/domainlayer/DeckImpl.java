@@ -5,7 +5,17 @@ package com.hestia.domainlayer;
  */
 
 public class DeckImpl implements Deck {
+  public DeckImpl () {
 
+  }
+
+  public DeckImpl (int wow) {
+
+  }
+
+  public String toString () {
+    return "haha yeet";
+  }
 
 
 }

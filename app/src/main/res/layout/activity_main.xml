@@ -26,10 +26,6 @@
         </android.support.v7.widget.Toolbar>
 
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="hello"/>
     </FrameLayout>
     <!-- end of the main content view -->
 

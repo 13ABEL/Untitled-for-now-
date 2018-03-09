@@ -6,6 +6,8 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Adapter;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 
 import com.hestia.R;
@@ -23,7 +25,7 @@ import java.util.List;
  *
  *
  */
-public class DisplayDecksView extends ListFragment implements DisplayDecksContract.View {
+public class DisplayDecksView extends ListFragment implements DisplayDecksContract.View, AdapterView.OnItemClickListener{
 
   private DisplayDecksContract.Presenter displayDeckPresenter;
   private ArrayAdapter<Deck> adapter;
@@ -45,6 +47,17 @@ public class DisplayDecksView extends ListFragment implements DisplayDecksContra
   }
 
   public void displayMultiUsers(List <Deck> decks) {
+    // initializes and sets the list adapter
+    adapter = new ArrayAdapter<> (getActivity(), android.R.layout.simple_list_item_1, decks);
+    setListAdapter(adapter);
+
+    // sets the listeners for the list items
+    getListView().setOnItemClickListener(this);
+
+  }
+
+  @Override
+  public void onItemClick (AdapterView adapterView, View view, int position, long id) {
 
   }
 

@@ -1,6 +1,7 @@
 package com.hestia.presentationlayer.displaydecks;
 
 import com.hestia.domainlayer.Deck;
+import com.hestia.domainlayer.DeckImpl;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -33,6 +34,15 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   public void getAllUsers () {
     // gets all the objects from the room database
     List decks = new ArrayList <Deck> ();
+
+
+    // temporarily testing please dont hurt me
+    Deck deck1 = new DeckImpl(1);
+
+    decks.add(deck1);
+    decks.add(deck1);
+    decks.add(deck1);
+    decks.add(deck1);
 
 
     // tells the view to display all the users
