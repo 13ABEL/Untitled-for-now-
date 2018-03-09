@@ -2,6 +2,8 @@ package com.hestia.presentationlayer.displaydecks;
 
 import com.hestia.domainlayer.Deck;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +28,19 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
    */
   public DisplayDecksPresenter (DisplayDecksContract.View view) {
     this.displayDeckView = view;
+  }
+
+  public void getAllUsers () {
+    // gets all the objects from the room database
+    List decks = new ArrayList <Deck> ();
+
+
+    // tells the view to display all the users
+    displayDeckView.displayMultiUsers(decks);
+  }
+
+  private void getUser() {
+
   }
 
 

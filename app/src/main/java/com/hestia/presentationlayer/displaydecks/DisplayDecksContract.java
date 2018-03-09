@@ -1,6 +1,10 @@
 package com.hestia.presentationlayer.displaydecks;
 
+import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.Base;
+
+import java.util.List;
+
 
 /**
  * Created by Richard on 3/6/2018.
@@ -12,8 +16,10 @@ import com.hestia.presentationlayer.Base;
 public interface DisplayDecksContract {
 
   interface Presenter extends Base.BasePresenter {
+    void getAllUsers();
   }
 
   interface View extends Base.BaseView {
+    void displayMultiUsers(List <Deck> decks);
   }
 }

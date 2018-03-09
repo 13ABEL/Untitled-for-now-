@@ -2,11 +2,16 @@ package com.hestia.presentationlayer.displaydecks;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 
 import com.hestia.R;
+import com.hestia.domainlayer.Deck;
+
+import java.util.List;
 
 /**
  * Created by Richard on 3/6/2018.
@@ -18,18 +23,29 @@ import com.hestia.R;
  *
  *
  */
-public class DisplayDecksView extends Fragment implements DisplayDecksContract.View{
+public class DisplayDecksView extends ListFragment implements DisplayDecksContract.View {
+
   private DisplayDecksContract.Presenter displayDeckPresenter;
+  private ArrayAdapter<Deck> adapter;
 
   @Override
-  public View onCreateView (LayoutInflater inflater, ViewGroup container,
-                            Bundle savedInstanceState){
+  public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+    // inflate the layout for the view
+    return inflater.inflate(R.layout.display_decks, container, false);
+  }
+
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
 
     // create an instance of the presenter
     displayDeckPresenter = new DisplayDecksPresenter(this);
+    // tells presenter to display all items
+    displayDeckPresenter.getAllUsers();
 
-    // inflate the layout for the view
-    return inflater.inflate(R.layout.display_decks, container, false);
+  }
+
+  public void displayMultiUsers(List <Deck> decks) {
+
   }
 
 
