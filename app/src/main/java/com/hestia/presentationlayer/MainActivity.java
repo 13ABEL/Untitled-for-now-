@@ -11,6 +11,8 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
  */
 
 public class MainActivity extends AppCompatActivity{
+
+
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
@@ -23,7 +25,6 @@ public class MainActivity extends AppCompatActivity{
       // Add the fragment to the container (content frame) in this activity
       getSupportFragmentManager().beginTransaction().add(R.id.content_frame, displayDecksFrag).commit();
     }
-
   }
 
 

@@ -5,5 +5,6 @@ package com.hestia.domainlayer;
  */
 
 public interface Deck {
-
+  String getDeckName();
+  String getAuthor();
 }

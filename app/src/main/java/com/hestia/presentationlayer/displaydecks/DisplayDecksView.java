@@ -1,5 +1,6 @@
 package com.hestia.presentationlayer.displaydecks;
 
+import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
@@ -9,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.customadapter.DisplayDeckAdapter;
 
 import java.util.List;
 
@@ -43,22 +46,21 @@ public class DisplayDecksView extends ListFragment implements DisplayDecksContra
     displayDeckPresenter = new DisplayDecksPresenter(this);
     // tells presenter to display all items
     displayDeckPresenter.getAllUsers();
-
   }
 
   public void displayMultiUsers(List <Deck> decks) {
     // initializes and sets the list adapter
-    adapter = new ArrayAdapter<> (getActivity(), android.R.layout.simple_list_item_1, decks);
+    // adapter = new ArrayAdapter<> (getActivity(), android.R.layout.simple_list_item_1, decks);
+    adapter = new DisplayDeckAdapter(decks, getActivity());
     setListAdapter(adapter);
 
-    // sets the listeners for the list items
+    // sets the listeners for the newly created list items
     getListView().setOnItemClickListener(this);
-
   }
 
   @Override
   public void onItemClick (AdapterView adapterView, View view, int position, long id) {
-
+    Toast.makeText(getContext(), position +"", Toast.LENGTH_SHORT).show();
   }
 
 

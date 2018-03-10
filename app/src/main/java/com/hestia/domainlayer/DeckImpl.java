@@ -5,6 +5,13 @@ package com.hestia.domainlayer;
  */
 
 public class DeckImpl implements Deck {
+  int deck_id;
+  int author_id;
+
+  String temp1 ="Discolock";
+  String temp2 = "Richard Wei";
+  String temp3 = "March 9th";
+
   public DeckImpl () {
 
   }
@@ -17,5 +24,12 @@ public class DeckImpl implements Deck {
     return "haha yeet";
   }
 
+  public String getDeckName() {
+    return temp1;
+  }
+
+  public String getAuthor() {
+    return temp2;
+  }
 
 }
