@@ -9,7 +9,6 @@
     android:layout_height="match_parent"
     tools:context="com.hestia.presentationlayer.MainActivity">
 
-
     <!-- The main content view: container for fragments-->
     <FrameLayout
     android:id="@+id/content_frame"
@@ -22,9 +21,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/toolbar_height"
             android:layout_marginBottom="10dp"
-            android:elevation="6dp">
+            android:elevation="16dp">
         </android.support.v7.widget.Toolbar>
-
 
     </FrameLayout>
     <!-- end of the main content view -->
@@ -38,7 +36,6 @@
         android:layout_gravity="start"
         android:paddingTop="@dimen/left_nav_padding_top"
         android:paddingStart="@dimen/left_nav_padding_left">
-
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

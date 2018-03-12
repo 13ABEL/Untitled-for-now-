@@ -1,7 +1,10 @@
 package com.hestia.presentationlayer;
 
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 
 import com.hestia.R;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
@@ -18,6 +21,17 @@ public class MainActivity extends AppCompatActivity{
 
     setContentView(R.layout.activity_main);
 
+//    // initializes the floating action button and its onlick
+//    FloatingActionButton fab = findViewById(R.id.fab);
+//    fab.setOnClickListener(new View.OnClickListener() {
+//      @Override
+//      public void onClick(View view) {
+//        Snackbar.make(view, "haha yeet", Snackbar.LENGTH_LONG)
+//            .setAction("Action", null).show();
+//      }
+//    });
+
+
     // checks if app is not being restored from another state (savedInstanceState is null)
     if (savedInstanceState == null ) {
       // create the Display Decks fragment to be inserted into the activity
@@ -26,6 +40,8 @@ public class MainActivity extends AppCompatActivity{
       getSupportFragmentManager().beginTransaction().add(R.id.content_frame, displayDecksFrag).commit();
     }
   }
+
+
 
 
 }

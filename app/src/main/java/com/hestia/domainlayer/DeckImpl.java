@@ -16,8 +16,8 @@ public class DeckImpl implements Deck {
 
   }
 
-  public DeckImpl (int wow) {
-
+  public DeckImpl (String wow) {
+    temp1 = "this is the real 1 " + wow;
   }
 
   public String toString () {

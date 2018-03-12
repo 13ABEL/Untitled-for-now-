@@ -1,5 +1,7 @@
 package com.hestia.presentationlayer.displaydecks;
 
+import com.hestia.datalayer.DeckRepository;
+import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.domainlayer.Deck;
 import com.hestia.domainlayer.DeckImpl;
 
@@ -19,6 +21,7 @@ import java.util.List;
 
 public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   private DisplayDecksContract.View displayDeckView;
+  private DeckRepository deckRepository;
 
   private List<Deck> deckList;
 
@@ -29,15 +32,17 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
    */
   public DisplayDecksPresenter (DisplayDecksContract.View view) {
     this.displayDeckView = view;
+
+    // initialize the repository object to get data
+    deckRepository = new DeckRepositoryImpl(this);
   }
 
   public void getAllUsers () {
     // gets all the objects from the room database
     List decks = new ArrayList <Deck> ();
 
-
     // temporarily testing please dont hurt me
-    Deck deck1 = new DeckImpl(1);
+    Deck deck1 = new DeckImpl("1");
 
 
     decks.add(deck1);
@@ -61,7 +66,8 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
     decks.add(deck1);
     decks.add(deck1);
 
-
+    Deck deckssss = deckRepository.getDeck( 0);
+    decks.add(deckssss);
     // tells the view to display all the users
     displayDeckView.displayMultiUsers(decks);
   }
@@ -71,6 +77,10 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   }
 
 
+  public void addDecksListener(ArrayList<Deck> decks) {
+    displayDeckView.displayMultiUsers(decks);
+
+  }
 
 
 

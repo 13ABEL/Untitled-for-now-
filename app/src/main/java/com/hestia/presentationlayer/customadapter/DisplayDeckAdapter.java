@@ -85,7 +85,6 @@ public class DisplayDeckAdapter extends ArrayAdapter <Deck> implements View.OnCl
       viewHolder.itemNumber.setText("meme big boy");
       viewHolder.itemNumber.setOnClickListener(this);
 
-
       return convertView;
     }
 
