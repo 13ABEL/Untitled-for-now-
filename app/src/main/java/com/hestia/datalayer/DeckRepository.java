@@ -7,7 +7,7 @@ import com.hestia.domainlayer.Deck;
  */
 
 public interface DeckRepository {
-  Deck getDeck (int deckID);
+  void getDeck (int deckID);
 
   void saveDeck (Deck deck);
   // getCreatedBetween();

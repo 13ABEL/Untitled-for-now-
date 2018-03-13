@@ -32,7 +32,7 @@ import java.util.List;
  *
  *
  */
-public class DisplayDecksView extends ListFragment implements DisplayDecksContract.View, AdapterView.OnItemClickListener{
+public class DisplayDecksView extends Fragment implements DisplayDecksContract.View, AdapterView.OnItemClickListener{
 
   private DisplayDecksContract.Presenter displayDeckPresenter;
   private DisplayDeckAdapter mAdapter;
@@ -42,17 +42,8 @@ public class DisplayDecksView extends ListFragment implements DisplayDecksContra
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-
     // create an instance of the presenter
     displayDeckPresenter = new DisplayDecksPresenter(this);
-
-    // initialize the instance of the recucler view
-    mRecyclerView = (RecyclerView) getActivity().findViewById(R.id.recycler_list);
-    mRecyclerView.setHasFixedSize(true);
-
-    // specify a layout manager and adapter
-    mLayoutManager = new LinearLayoutManager(getActivity());
-    mRecyclerView.setLayoutManager(mLayoutManager);
 
     // initializes the layout and adapter
     ArrayList <Deck> newList = new ArrayList<>();
@@ -60,19 +51,29 @@ public class DisplayDecksView extends ListFragment implements DisplayDecksContra
     mRecyclerView.setAdapter(mAdapter);
 
     // sets the listeners for the newly created list items
-    getListView().setOnItemClickListener(this);
+    //mRecyclerView.setListener(this);
   }
 
   @Override
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
     // inflate the layout for this view
-    return inflater.inflate(R.layout.display_decks, container, false);
+    View rootView = inflater.inflate(R.layout.display_decks, container, false);
+
+    // initialize the instance of the recycler view
+    mRecyclerView = rootView.findViewById(R.id.recycler_list);
+    mRecyclerView.setHasFixedSize(true);
+
+    // specify a layout manager and adapter
+    mLayoutManager = new LinearLayoutManager(getActivity());
+    mRecyclerView.setLayoutManager(mLayoutManager);
+
+    return rootView;
   }
 
 
-  public void displayMultiUsers(List <Deck> decks) {
+  public void addDecks (List <Deck> decks) {
     // add the list of decks to the adapter
-    //mAdapter.addAll(decks);
+    mAdapter.addDecks(decks);
   }
 
   @Override

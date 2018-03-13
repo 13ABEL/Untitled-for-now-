@@ -35,55 +35,33 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
 
     // initialize the repository object to get data
     deckRepository = new DeckRepositoryImpl(this);
+
+    // gets all the objects from the room database
+    deckList = new ArrayList <Deck> ();
     getAllUsers();
   }
 
   public void getAllUsers () {
-    // gets all the objects from the room database
-    List decks = new ArrayList <Deck> ();
-
-    // temporarily testing please dont hurt me
-    Deck deck1 = new DeckImpl("1");
-
-
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-
-    Deck deckssss = deckRepository.getDeck( 0);
-    decks.add(deckssss);
-    // tells the view to display all the users
-    displayDeckView.displayMultiUsers(decks);
+    deckRepository.getDeck( 0);
   }
 
   private void getUser() {
 
   }
 
-
   public void addDecksListener(ArrayList<Deck> decks) {
-    displayDeckView.displayMultiUsers(decks);
+    // adds to the list of decks
 
+    Deck deck1 = new DeckImpl();
+
+    decks.add(deck1);
+    decks.add(deck1);
+    decks.add(deck1);
+    decks.add(deck1);
+    decks.add(deck1);
+    decks.add(deck1);
+    displayDeckView.addDecks(decks);
   }
-
-
 
 
 
