@@ -21,6 +21,5 @@ public interface DisplayDecksContract {
 
   interface View extends Base.BaseView {
     void displayMultiUsers(List <Deck> decks);
-
   }
 }

@@ -35,6 +35,7 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
 
     // initialize the repository object to get data
     deckRepository = new DeckRepositoryImpl(this);
+    getAllUsers();
   }
 
   public void getAllUsers () {
