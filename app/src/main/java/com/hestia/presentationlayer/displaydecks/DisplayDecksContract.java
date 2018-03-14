@@ -16,7 +16,7 @@ import java.util.List;
 public interface DisplayDecksContract {
 
   interface Presenter extends Base.BasePresenter {
-    void getAllUsers();
+    void getNextDecks(int numDecks);
   }
 
   interface View extends Base.BaseView {

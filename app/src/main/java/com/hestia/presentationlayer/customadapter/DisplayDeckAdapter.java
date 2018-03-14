@@ -7,20 +7,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.ViewHolder> {
+public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.ViewHolder>
+implements View.OnClickListener{
   private Context myContext;
   private ArrayList <Deck> deckSet;
 
-  public DisplayDeckAdapter(Context context, ArrayList <Deck> decks) {
+  public DisplayDeckAdapter(Context context) {
     this.myContext = context;
-    this.deckSet = decks;
+    this.deckSet = new ArrayList<>();
   }
 
   // inflates new views from xml layout
@@ -33,9 +36,16 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
     View view = LayoutInflater.from(parentContext).inflate(R.layout.item_deck, parent, false);
     ViewHolder decksVHolder = new ViewHolder(view);
 
+    view.setOnClickListener(this);
+
     return decksVHolder;
   }
 
+  /**
+   *  Invoked by layout manager to replace the contents of each item view
+   * @param holder
+   * @param position
+   */
   @Override
   public void onBindViewHolder(@NonNull DisplayDeckAdapter.ViewHolder holder, int position) {
     // get the object to be bound from our array and bind it
@@ -43,16 +53,24 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
     holder.bindRestraint(deck);
   }
 
+  /**
+   * Also invoked by layout manager to get the size of the dataset
+   * @return
+   */
   public int getItemCount() {
     return deckSet.size();
   }
-
-
 
   public void addDecks (List<Deck> addedDecks){
     deckSet.addAll(addedDecks);
     // notifies the adapter
     this.notifyDataSetChanged();
+  }
+
+  public void onClick (View view) {
+    // get the tag from the view
+    view.getTag();
+    Toast.makeText(myContext, "HAHA YEET", Toast.LENGTH_LONG).show();
   }
 
   // class for caching item data

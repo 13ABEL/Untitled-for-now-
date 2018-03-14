@@ -49,7 +49,7 @@ public class DeckRepositoryImpl implements DeckRepository {
   }
 
 
-  public void getDeck(int deckID) {
+  public void getDeckBatch(int numDecks) {
     Task <QuerySnapshot> task = db.collection( "decks").get();
     task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot> (){
       @Override

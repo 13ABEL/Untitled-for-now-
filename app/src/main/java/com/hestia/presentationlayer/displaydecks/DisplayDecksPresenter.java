@@ -36,13 +36,11 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
     // initialize the repository object to get data
     deckRepository = new DeckRepositoryImpl(this);
 
-    // gets all the objects from the room database
-    deckList = new ArrayList <Deck> ();
-    getAllUsers();
+    this.getNextDecks(100);
   }
 
-  public void getAllUsers () {
-    deckRepository.getDeck( 0);
+  public void getNextDecks (int numDecks) {
+    deckRepository.getDeckBatch(numDecks);
   }
 
   private void getUser() {
@@ -51,15 +49,6 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
 
   public void addDecksListener(ArrayList<Deck> decks) {
     // adds to the list of decks
-
-    Deck deck1 = new DeckImpl();
-
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
-    decks.add(deck1);
     displayDeckView.addDecks(decks);
   }
 

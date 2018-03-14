@@ -45,13 +45,8 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     // create an instance of the presenter
     displayDeckPresenter = new DisplayDecksPresenter(this);
 
-    // initializes the layout and adapter
-    ArrayList <Deck> newList = new ArrayList<>();
-    mAdapter = new DisplayDeckAdapter(getActivity(), newList);
-    mRecyclerView.setAdapter(mAdapter);
-
     // sets the listeners for the newly created list items
-    //mRecyclerView.setListener(this);
+    //mRecyclerView.setRecyclerListener(this);
   }
 
   @Override
@@ -63,13 +58,14 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     mRecyclerView = rootView.findViewById(R.id.recycler_list);
     mRecyclerView.setHasFixedSize(true);
 
-    // specify a layout manager and adapter
+    // initializes and sets the layout manager plus adapter
     mLayoutManager = new LinearLayoutManager(getActivity());
     mRecyclerView.setLayoutManager(mLayoutManager);
+    mAdapter = new DisplayDeckAdapter(getActivity());
+    mRecyclerView.setAdapter(mAdapter);
 
     return rootView;
   }
-
 
   public void addDecks (List <Deck> decks) {
     // add the list of decks to the adapter
