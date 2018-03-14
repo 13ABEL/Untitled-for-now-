@@ -3,8 +3,12 @@ package com.hestia.presentationlayer;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+
+import android.support.v7.widget.Toolbar;
 
 import com.hestia.R;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
@@ -14,7 +18,7 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
  */
 
 public class MainActivity extends AppCompatActivity{
-
+  private ActionBarDrawerToggle mDrawerToggle;
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -31,6 +35,19 @@ public class MainActivity extends AppCompatActivity{
 //      }
 //    });
 
+    // sets the toolbar as the actionbar for this activity
+    Toolbar mToolBar = findViewById(R.id.my_toolbar);
+    setSupportActionBar(mToolBar);
+
+    // gets the layout for the navigation drawer and creates its toggle
+    DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);
+    mDrawerToggle = new ActionBarDrawerToggle(
+        this,
+        mDrawerLayout,
+        mToolBar,
+        R.string.drawer_open,
+        R.string.drawer_close);
+    mDrawerLayout.addDrawerListener(mDrawerToggle);
 
     // checks if app is not being restored from another state (savedInstanceState is null)
     if (savedInstanceState == null ) {
@@ -41,6 +58,16 @@ public class MainActivity extends AppCompatActivity{
     }
   }
 
+  protected void onPostCreate(Bundle savedInstanceState) {
+    super.onPostCreate(savedInstanceState);
+
+    // displays the "opening" icon in the drawer
+    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    getSupportActionBar().setHomeButtonEnabled(true);
+
+    // syncs the current state of the toggle icon
+    mDrawerToggle.syncState();
+  }
 
 
 
