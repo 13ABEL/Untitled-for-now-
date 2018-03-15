@@ -8,7 +8,7 @@ public class DeckImpl implements Deck {
   int deck_id;
   int author_id;
 
-  String temp1 ="Discolock";
+  String deckName ="Discolock";
   String temp2 = "Richard Wei";
   String temp3 = "March 9th";
 
@@ -16,8 +16,8 @@ public class DeckImpl implements Deck {
 
   }
 
-  public DeckImpl (String wow) {
-    temp1 = "this is the real 1 " + wow;
+  public DeckImpl (String author) {
+    this.deckName = author;
   }
 
   public String toString () {
@@ -25,7 +25,7 @@ public class DeckImpl implements Deck {
   }
 
   public String getDeckName() {
-    return temp1;
+    return deckName;
   }
 
   public String getAuthor() {

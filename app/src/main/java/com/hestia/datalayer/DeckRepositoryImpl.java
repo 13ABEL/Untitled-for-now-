@@ -54,6 +54,7 @@ public class DeckRepositoryImpl implements DeckRepository {
     task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot> (){
       @Override
       public void onComplete(@NonNull Task<QuerySnapshot> task) {
+
         if (task.isSuccessful()) {
           //creates a new array for the decks
           ArrayList <Deck> newDecks = new ArrayList<>();
@@ -61,10 +62,10 @@ public class DeckRepositoryImpl implements DeckRepository {
           for (DocumentSnapshot document: task.getResult()) {
             //test += document.getId() + " = " + document.getData();
             Log.d("-----------------pixel", document.getId() + " = " + document.getData());
-            returnString = document.getId() + " = " + document.getData();
+            returnString = document.getId();// + " = " + document.getData();
 
-            // formats the data into and object
-            Deck newDeck = new DeckImpl(returnString);
+            // formats the data into a deck object
+            Deck newDeck = parseFirebaseReturn(returnString);
             newDecks.add(newDeck);
           }
 
@@ -79,11 +80,20 @@ public class DeckRepositoryImpl implements DeckRepository {
   }
 
 
+  private Deck parseFirebaseReturn (String returnString) {
+    String parsedString = returnString;
+
+    Deck newDeck = new DeckImpl(parsedString);
+    return newDeck;
+  }
+
+
 
   @Override
   public void saveDeck(Deck deck) {
 
   }
+
 
 
 }

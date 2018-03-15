@@ -3,9 +3,11 @@ package com.hestia.presentationlayer.displaydecks;
 import android.icu.text.UnicodeSetSpanner;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +20,7 @@ import android.widget.Toast;
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.customadapter.DisplayDeckAdapter;
+import com.hestia.presentationlayer.singledeck.SingleDeckView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,7 +35,7 @@ import java.util.List;
  *
  *
  */
-public class DisplayDecksView extends Fragment implements DisplayDecksContract.View, AdapterView.OnItemClickListener{
+public class DisplayDecksView extends Fragment implements DisplayDecksContract.View {
 
   private DisplayDecksContract.Presenter displayDeckPresenter;
   private DisplayDeckAdapter mAdapter;
@@ -44,9 +47,6 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     super.onActivityCreated(savedInstanceState);
     // create an instance of the presenter
     displayDeckPresenter = new DisplayDecksPresenter(this);
-
-    // sets the listeners for the newly created list items
-    //mRecyclerView.setRecyclerListener(this);
   }
 
   @Override
@@ -62,6 +62,11 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     mLayoutManager = new LinearLayoutManager(getActivity());
     mRecyclerView.setLayoutManager(mLayoutManager);
     mAdapter = new DisplayDeckAdapter(getActivity());
+
+    // creates a new onclick and passes it to the adapter
+    AdapterListener listener = new AdapterListener();
+    mAdapter.addOnClickListener(listener);
+
     mRecyclerView.setAdapter(mAdapter);
 
     return rootView;
@@ -72,9 +77,26 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     mAdapter.addDecks(decks);
   }
 
-  @Override
-  public void onItemClick (AdapterView adapterView, View view, int position, long id) {
-    Toast.makeText(getContext(), position +"", Toast.LENGTH_SHORT).show();
+//  @Override
+//  public void onItemClick (AdapterView adapterView, View view, int position, long id) {
+//    Toast.makeText(getContext(), position +"", Toast.LENGTH_SHORT).show();
+//
+//    // create a new fragment and specify which deck it should show
+//    SingleDeckView singleDeckFragment = new SingleDeckView("hi");
+//  }
+
+  class AdapterListener implements View.OnClickListener {
+    @Override
+    public void onClick(View view) {
+      // get the tag from the view
+      String position = view.getTag().toString();
+      Toast.makeText(getContext(), position, Toast.LENGTH_SHORT).show();
+
+      SingleDeckView singleDeckFragment = new SingleDeckView();
+      Bundle args = new Bundle();
+      args.putString("POSITION", position);
+      singleDeckFragment.setArguments(args);
+    }
   }
 
 }

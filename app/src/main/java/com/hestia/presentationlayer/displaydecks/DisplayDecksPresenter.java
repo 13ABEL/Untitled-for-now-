@@ -44,7 +44,6 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   }
 
   private void getUser() {
-
   }
 
   public void addDecksListener(ArrayList<Deck> decks) {
