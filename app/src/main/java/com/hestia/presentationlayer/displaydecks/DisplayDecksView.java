@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.app.ListFragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -59,7 +60,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     mRecyclerView.setHasFixedSize(true);
 
     // initializes and sets the layout manager plus adapter
-    mLayoutManager = new LinearLayoutManager(getActivity());
+    mLayoutManager = new GridLayoutManager(getActivity(), 2);
     mRecyclerView.setLayoutManager(mLayoutManager);
     mAdapter = new DisplayDeckAdapter(getActivity());
 
@@ -77,14 +78,11 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     mAdapter.addDecks(decks);
   }
 
-//  @Override
-//  public void onItemClick (AdapterView adapterView, View view, int position, long id) {
-//    Toast.makeText(getContext(), position +"", Toast.LENGTH_SHORT).show();
-//
-//    // create a new fragment and specify which deck it should show
-//    SingleDeckView singleDeckFragment = new SingleDeckView("hi");
-//  }
 
+  /**
+   * Custom adapter class to circumvent RecyclerView's lack of an OnItemClickListener
+   * Allows us to keep view code in our this view class
+   */
   class AdapterListener implements View.OnClickListener {
     @Override
     public void onClick(View view) {

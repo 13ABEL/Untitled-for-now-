@@ -11,7 +11,7 @@ public interface SingleDeckContract {
   }
 
   interface Presenter {
-
+    
   }
 
 }
