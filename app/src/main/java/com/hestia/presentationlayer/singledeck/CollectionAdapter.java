@@ -13,7 +13,8 @@ import android.support.v4.app.FragmentPagerAdapter;
  * It's better for a small and fixed number of screens
  */
 public class CollectionAdapter extends FragmentPagerAdapter{
-  final int NUM_ITEMS = 3;
+  private String [] tabNames = {"INFO", "LIST"};
+  final int NUM_ITEMS = 2;
 
   public CollectionAdapter(FragmentManager fragManager) {
     super(fragManager);
@@ -24,10 +25,10 @@ public class CollectionAdapter extends FragmentPagerAdapter{
     Fragment newTabFragment;
     // return the right fragment depending on the position
     if (position == 0) {
-      newTabFragment = InfoFragment.newInstance(0, "title");
+      newTabFragment = InfoFragment.newInstance(0, "INFO");
     }
     else {
-      newTabFragment = InfoFragment.newInstance(0, "title");
+      newTabFragment = DeckListFragment.newInstance(0, "LIST");
     }
 
     return newTabFragment;
@@ -36,6 +37,15 @@ public class CollectionAdapter extends FragmentPagerAdapter{
   @Override
   public int getCount() {
     return NUM_ITEMS;
+  }
+
+  /**
+   * Used to set the tab itles
+   * @param position
+   * @return
+   */
+  public CharSequence getPageTitle(int position) {
+    return tabNames[position];
   }
 
 

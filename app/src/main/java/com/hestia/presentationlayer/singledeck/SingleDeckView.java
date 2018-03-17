@@ -62,11 +62,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     return rootView;
   }
 
-  public void initializeTabs () {
-    TabLayout tabLayout = getActivity().findViewById(R.id.single_deck_pager);
-  }
-
-
   public void onBackPressed() {
   }
 
