@@ -4,6 +4,9 @@ package com.hestia.presentationlayer.singledeck;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -21,12 +24,13 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksPresenter;
 
 public class SingleDeckView extends Fragment implements SingleDeckContract.View {
   private SingleDeckContract.Presenter singleDeckPresenter;
-
   private String [] tabNames = {"INFO", "LIST", "COMMENTS"};
+  private CollectionAdapter mCollectionAdapter;
+  private ViewPager mPager;
+
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-
 
     // gets the current Deck ID and uses it to get the deck from the repository
     String currentDeckID = this.getArguments().getString("deck_id");
@@ -47,16 +51,19 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     // inflate the layout for this view
     View rootView = inflater.inflate(R.layout.single_deck, container, false);
 
-    initializeTabs();
+    // gets supportFragmentManager bc ViewPage uses support library fragments
+    FragmentManager fragManager = getActivity().getSupportFragmentManager();
+    mCollectionAdapter = new CollectionAdapter(fragManager);
+
+    // sets the adapter for the pager to the collection adapter
+    mPager = rootView.findViewById(R.id.single_deck_pager);
+    mPager.setAdapter(mCollectionAdapter);
 
     return rootView;
   }
 
   public void initializeTabs () {
-    TabLayout tabLayout = new TabLayout(getContext());
-    tabLayout.addTab(tabLayout.newTab().setText(tabNames[0]));
-    tabLayout.addTab(tabLayout.newTab().setText(tabNames[1]));
-    tabLayout.addTab(tabLayout.newTab().setText(tabNames[2]));
+    TabLayout tabLayout = getActivity().findViewById(R.id.single_deck_pager);
   }
 
 
