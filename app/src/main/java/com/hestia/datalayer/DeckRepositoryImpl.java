@@ -48,7 +48,6 @@ public class DeckRepositoryImpl implements DeckRepository {
     this.presenter = displayDeckPresenter;
   }
 
-
   public void getDeckBatch(int numDecks) {
     Task <QuerySnapshot> task = db.collection( "decks").get();
     task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot> (){
@@ -85,6 +84,12 @@ public class DeckRepositoryImpl implements DeckRepository {
 
     Deck newDeck = new DeckImpl(parsedString);
     return newDeck;
+  }
+
+
+  private Deck getSingleDeck(int deckID) {
+    Deck fetchedDeck  = new DeckImpl();
+    return fetchedDeck;
   }
 
 

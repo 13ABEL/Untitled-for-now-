@@ -1,5 +1,7 @@
 package com.hestia.presentationlayer.displaydecks;
 
+import android.view.Display;
+
 import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.domainlayer.Deck;
@@ -33,9 +35,9 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   public DisplayDecksPresenter (DisplayDecksContract.View view) {
     this.displayDeckView = view;
 
-    // initialize the repository object to get data
     deckRepository = new DeckRepositoryImpl(this);
 
+    // get the Deck object
     this.getNextDecks(100);
   }
 
