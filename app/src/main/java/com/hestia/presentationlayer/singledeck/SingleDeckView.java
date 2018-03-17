@@ -55,9 +55,12 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     FragmentManager fragManager = getActivity().getSupportFragmentManager();
     mCollectionAdapter = new CollectionAdapter(fragManager);
 
-    // sets the adapter for the pager to the collection adapter
+    // sets the collection adapter as the pager adapter
     mPager = rootView.findViewById(R.id.single_deck_pager);
     mPager.setAdapter(mCollectionAdapter);
+    // sets up the tabs
+    TabLayout tabLayout = rootView.findViewById(R.id.sliding_tabs);
+    tabLayout.setupWithViewPager(mPager);
 
     return rootView;
   }

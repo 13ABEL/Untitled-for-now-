@@ -13,8 +13,8 @@ import android.support.v4.app.FragmentPagerAdapter;
  * It's better for a small and fixed number of screens
  */
 public class CollectionAdapter extends FragmentPagerAdapter{
-  private String [] tabNames = {"INFO", "LIST"};
-  final int NUM_ITEMS = 2;
+  private String [] tabNames = {"INFO", "LIST", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST"};
+  final int NUM_ITEMS = 4;
 
   public CollectionAdapter(FragmentManager fragManager) {
     super(fragManager);
