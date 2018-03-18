@@ -1,31 +1,23 @@
 package com.hestia.datalayer;
 
-import android.hardware.fingerprint.FingerprintManager;
-import android.nfc.Tag;
 import android.support.annotation.NonNull;
 import android.util.Log;
-import android.view.Display;
-import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hestia.domainlayer.Deck;
 import com.hestia.domainlayer.DeckImpl;
+import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksPresenter;
-import com.squareup.okhttp.HttpUrl;
+import com.hestia.presentationlayer.singledeck.SingleDeckContract;
 
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
+import org.w3c.dom.Document;
+
 import java.util.ArrayList;
-
-import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by Richard on 3/10/2018.
@@ -38,22 +30,31 @@ import javax.net.ssl.HttpsURLConnection;
  *
  */
 public class DeckRepositoryImpl implements DeckRepository {
-  private DisplayDecksPresenter presenter;
+  private DisplayDecksContract.Presenter displayDecksPresenter;
+  private SingleDeckContract.Presenter singleDeckPresenter;
+
   private FirebaseFirestore db;
   private String returnString = "";
+
+
+  public DeckRepositoryImpl () {
+    // initializes the instance of the Cloud Firestore db
+    this.db = FirebaseFirestore.getInstance();
+  }
 
   public DeckRepositoryImpl (DisplayDecksPresenter displayDeckPresenter) {
     // initializes the instance of the Cloud Firestore db
     this.db = FirebaseFirestore.getInstance();
-    this.presenter = displayDeckPresenter;
+    //this.displayDeckPresenter = displayDeckPresenter;
   }
 
-  public void getDeckBatch(int numDecks) {
+  public void getDeckBatch(DisplayDecksContract.Presenter presenter, int numDecks) {
+    this.displayDecksPresenter = presenter;
+
     Task <QuerySnapshot> task = db.collection( "decks").get();
     task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot> (){
       @Override
       public void onComplete(@NonNull Task<QuerySnapshot> task) {
-
         if (task.isSuccessful()) {
           //creates a new array for the decks
           ArrayList <Deck> newDecks = new ArrayList<>();
@@ -63,12 +64,11 @@ public class DeckRepositoryImpl implements DeckRepository {
             Log.d("-----------------pixel", document.getId() + " = " + document.getData());
             returnString = document.getId();// + " = " + document.getData();
 
-            // formats the data into a deck object
+            // formats the data into a deck object and adds it into the array of decks
             Deck newDeck = parseFirebaseReturn(returnString);
             newDecks.add(newDeck);
           }
-
-          presenter.addDecksListener(newDecks);
+          displayDecksPresenter.receiveDeckBatch(newDecks);
         }
         else {
           // displays error message if there is a problem retrieving the deck
@@ -76,6 +76,33 @@ public class DeckRepositoryImpl implements DeckRepository {
         }
       }
     });
+  }
+
+
+  public void getFullDeck(SingleDeckContract.Presenter presenter, String deckID) {
+    this.singleDeckPresenter = presenter;
+    Deck fetchedDeck  = new DeckImpl();
+
+    // get the document reference for the deck with id deckID
+    DocumentReference docRef = db.collection("decks").document(deckID);
+    docRef.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+      @Override
+      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+        // always check if the task is successful
+        if (task.isSuccessful()) {
+          DocumentSnapshot document = task.getResult();
+          if (document != null && document.exists()) {
+            // create a new deck by parsing the firebase data
+            Log.d("TESTERTESTER", "DocumentSnapshot data: " + document.getData());
+            //Deck newDeck = parseFirebaseReturn(document.getData());
+            // sends the new deck back to the presenter to handle
+            //singleDeckPresenter.receiveFullDeck(newDeck);
+          }
+        }
+      }
+    });
+
+    singleDeckPresenter.receiveFullDeck(fetchedDeck);
   }
 
 
@@ -87,10 +114,9 @@ public class DeckRepositoryImpl implements DeckRepository {
   }
 
 
-  private Deck getSingleDeck(int deckID) {
-    Deck fetchedDeck  = new DeckImpl();
-    return fetchedDeck;
-  }
+  // TODO: 3/17/2018 create an object for getting a preview of the deck
+
+
 
 
 

@@ -35,20 +35,26 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   public DisplayDecksPresenter (DisplayDecksContract.View view) {
     this.displayDeckView = view;
 
-    deckRepository = new DeckRepositoryImpl(this);
+    deckRepository = new DeckRepositoryImpl();
 
     // get the Deck object
-    this.getNextDecks(100);
+    deckRepository.getDeckBatch(this, 100);
   }
 
   public void getNextDecks (int numDecks) {
-    deckRepository.getDeckBatch(numDecks);
+    deckRepository.getDeckBatch(this, numDecks);
   }
+
+
 
   private void getUser() {
   }
 
-  public void addDecksListener(ArrayList<Deck> decks) {
+  /**
+   * Receives method call after async task resolves to update the UI
+   * @param decks
+   */
+  public void receiveDeckBatch(List<Deck> decks) {
     // adds to the list of decks
     displayDeckView.addDecks(decks);
   }

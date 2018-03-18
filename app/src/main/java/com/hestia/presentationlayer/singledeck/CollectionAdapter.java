@@ -13,8 +13,8 @@ import android.support.v4.app.FragmentPagerAdapter;
  * It's better for a small and fixed number of screens
  */
 public class CollectionAdapter extends FragmentPagerAdapter{
-  private String [] tabNames = {"INFO", "LIST", "TEST", "TEST", "TEST", "TEST", "TEST", "TEST"};
-  final int NUM_ITEMS = 4;
+  private String [] tabNames = {"INFO", "LIST"};
+  final int NUM_ITEMS = tabNames.length;
 
   public CollectionAdapter(FragmentManager fragManager) {
     super(fragManager);
@@ -34,10 +34,12 @@ public class CollectionAdapter extends FragmentPagerAdapter{
     return newTabFragment;
   }
 
+
   @Override
   public int getCount() {
     return NUM_ITEMS;
   }
+
 
   /**
    * Used to set the tab itles

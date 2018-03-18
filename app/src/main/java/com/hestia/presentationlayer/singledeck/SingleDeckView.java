@@ -13,6 +13,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
@@ -34,7 +35,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     // gets the current Deck ID and uses it to get the deck from the repository
     String currentDeckID = this.getArguments().getString("deck_id");
-
+    Toast.makeText(getContext(), "Single Deck Screen " + currentDeckID, Toast.LENGTH_SHORT).show();
     // create instance of the presenter
     singleDeckPresenter = new SingleDeckPresenter(this, currentDeckID);
   }

@@ -9,12 +9,15 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hestia.R;
+import com.hestia.domainlayer.Deck;
 
 /**
  * Created by Richard on 3/17/2018.
  */
 
 public class InfoFragment extends Fragment {
+  // stores the instance of the deck
+  Deck displayDeck;
 
   // new instance constructor
   public static InfoFragment newInstance(int page, String title){
@@ -22,13 +25,15 @@ public class InfoFragment extends Fragment {
     return infoFragment;
   }
 
-  //
+
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
+    // get the deck object from repository
+    displayDeck = null;
   }
 
-  public View onCreateView (LayoutInflater inflater,
-                            ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.single_deck_infotab, container, false);
 
     TextView deckSummary = view.findViewById(R.id.infotab_deck_summary);

@@ -26,8 +26,7 @@ public class DeckListFragment extends Fragment{
     super.onCreate(savedInstanceState);
   }
 
-  public View onCreateView (LayoutInflater inflater,
-                            ViewGroup container, Bundle savedInstanceState) {
+  public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.single_deck_infotab, container, false);
 
     TextView deckSummary = view.findViewById(R.id.infotab_deck_summary);

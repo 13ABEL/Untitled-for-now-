@@ -88,7 +88,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     public void onClick(View view) {
       // get the tag from the view
       String position = view.getTag().toString();
-      Toast.makeText(getContext(), position, Toast.LENGTH_SHORT).show();
+      //Toast.makeText(getContext(), position, Toast.LENGTH_SHORT).show();
 
       // create a bundle to pass the new fragment the id of the deck
       SingleDeckView singleDeckFragment = new SingleDeckView();

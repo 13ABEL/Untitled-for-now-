@@ -17,6 +17,8 @@ public interface DisplayDecksContract {
 
   interface Presenter extends Base.BasePresenter {
     void getNextDecks(int numDecks);
+
+    void receiveDeckBatch(List<Deck> deck);
   }
 
   interface View extends Base.BaseView {

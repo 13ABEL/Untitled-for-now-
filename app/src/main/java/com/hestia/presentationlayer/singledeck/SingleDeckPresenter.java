@@ -1,5 +1,6 @@
 package com.hestia.presentationlayer.singledeck;
 
+import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.domainlayer.Deck;
 
@@ -9,6 +10,7 @@ import com.hestia.domainlayer.Deck;
 
 public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   private SingleDeckContract.View singleDeckView;
+  private DeckRepository deckRepository;
   Deck currentDeck;
 
 
@@ -16,13 +18,16 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
     singleDeckView = view;
 
     // initialize the repository object to get data
-    //deckRepository = new DeckRepositoryImpl(this);
-    //deckRepository.ge
-
-
-
+    deckRepository = new DeckRepositoryImpl();
+    deckRepository.getFullDeck(this, deckID);
   }
 
+
+  @Override
+  public void receiveFullDeck(Deck deck) {
+    this.currentDeck = deck;
+    // update ui to reflect deck changes
+  }
 
 
 }
