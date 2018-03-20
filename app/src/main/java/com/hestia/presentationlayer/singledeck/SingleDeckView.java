@@ -54,7 +54,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     // gets supportFragmentManager bc ViewPage uses support library fragments
     FragmentManager fragManager = getActivity().getSupportFragmentManager();
-    mCollectionAdapter = new CollectionAdapter(fragManager);
+    mCollectionAdapter = new CollectionAdapter(fragManager, singleDeckPresenter);
 
     // sets the collection adapter as the pager adapter
     mPager = rootView.findViewById(R.id.single_deck_pager);
@@ -67,6 +67,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
   }
 
   public void onBackPressed() {
+
   }
 
 }

@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 
 /**
  * Created by Richard on 3/17/2018.
@@ -20,11 +21,15 @@ public class InfoFragment extends Fragment {
   Deck displayDeck;
 
   // new instance constructor
-  public static InfoFragment newInstance(int page, String title){
+  public static InfoFragment newInstance(int page, String title, Deck cDeck){
     InfoFragment infoFragment = new InfoFragment();
+    infoFragment.addDeck(cDeck);
     return infoFragment;
   }
 
+  public  void addDeck(Deck deck) {
+    this.displayDeck = deck;
+  }
 
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

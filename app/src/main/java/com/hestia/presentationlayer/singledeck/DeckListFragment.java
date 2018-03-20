@@ -8,19 +8,28 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hestia.R;
+import com.hestia.domainlayer.Deck;
 
 /**
  * Created by Richard on 3/17/2018.
  */
 
 public class DeckListFragment extends Fragment{
+  // stores the instance of the deck
+  Deck displayDeck;
+
 
   // new instance constructor
-  public static InfoFragment newInstance(int page, String title){
+  public static InfoFragment newInstance(int page, String title, Deck deck){
     InfoFragment infoFragment = new InfoFragment();
+    infoFragment.addDeck(deck);
+
     return infoFragment;
   }
 
+  public  void addDeck(Deck deck) {
+    this.displayDeck = deck;
+  }
   //
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);

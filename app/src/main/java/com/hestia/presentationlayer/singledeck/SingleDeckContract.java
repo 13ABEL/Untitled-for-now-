@@ -15,5 +15,6 @@ public interface SingleDeckContract {
 
   interface Presenter {
     void receiveFullDeck(Deck deck);
+    Deck getCurrDeck();
   }
 }

@@ -13,14 +13,16 @@ Technologies used:
   1. Firebase Firestore is used as the backend database solution.
 
 
-## Currently implemented: 
+## Currently implemented:
 - displaydecks: Displays current decks from the Firebase Firestore database
 
 ## What still needs to be done:
-- displaydecks: 
+- displaydecks:
   - Need to implement sorting and filtering (lots to do on the Firebase Firestore side)
   - Need to design the layout for individual items and implement it
 
-- singledeck: 
+- singledeck:
   - Need to design the layout displaying the deck and implement it
 
+
+  Please not that values are currently hardcoded for xml layouts. I'm haven't finished planning them out, but future versions will make use of resource files :)

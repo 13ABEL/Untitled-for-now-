@@ -51,9 +51,9 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   }
 
   @Override
-  public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-    // inflate the layout for this view
-    View rootView = inflater.inflate(R.layout.display_decks, container, false);
+    public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+      // inflate the layout for this view
+      View rootView = inflater.inflate(R.layout.display_decks, container, false);
 
     // initialize the instance of the recycler view
     mRecyclerView = rootView.findViewById(R.id.recycler_list);

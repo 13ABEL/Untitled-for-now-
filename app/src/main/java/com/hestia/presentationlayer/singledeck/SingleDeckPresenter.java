@@ -29,5 +29,9 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
     // update ui to reflect deck changes
   }
 
+  @Override
+  public Deck getCurrDeck() {
+    return this.currentDeck;
+  }
 
 }
