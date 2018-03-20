@@ -1,5 +1,7 @@
 package com.hestia.presentationlayer.singledeck;
 
+import android.support.v4.app.Fragment;
+
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 
@@ -15,6 +17,6 @@ public interface SingleDeckContract {
 
   interface Presenter {
     void receiveFullDeck(Deck deck);
-    Deck getCurrDeck();
+    void addTabFragment(TabFragment tabFragment);
   }
 }

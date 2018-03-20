@@ -2,6 +2,7 @@ package com.hestia.presentationlayer.singledeck;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,22 +15,15 @@ import com.hestia.domainlayer.Deck;
  * Created by Richard on 3/17/2018.
  */
 
-public class DeckListFragment extends Fragment{
-  // stores the instance of the deck
-  Deck displayDeck;
-
+public class DeckListFragment extends TabFragment {
+  public int test = 0;
 
   // new instance constructor
-  public static InfoFragment newInstance(int page, String title, Deck deck){
-    InfoFragment infoFragment = new InfoFragment();
-    infoFragment.addDeck(deck);
-
-    return infoFragment;
+  public static DeckListFragment newInstance(int page, String title){
+    DeckListFragment newFragment = new DeckListFragment();
+    return newFragment;
   }
 
-  public  void addDeck(Deck deck) {
-    this.displayDeck = deck;
-  }
   //
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -42,6 +36,10 @@ public class DeckListFragment extends Fragment{
     deckSummary.setText("HELLO");
 
     return view;
+  }
+
+  public void updateUI(Deck deck) {
+
   }
 
 }
