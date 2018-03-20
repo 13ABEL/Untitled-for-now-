@@ -10,6 +10,7 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,16 +31,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
   private ViewPager mPager;
 
 
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-
-    // gets the current Deck ID and uses it to get the deck from the repository
-    String currentDeckID = this.getArguments().getString("deck_id");
-    Toast.makeText(getContext(), "Single Deck Screen " + currentDeckID, Toast.LENGTH_SHORT).show();
-    // create instance of the presenter
-    singleDeckPresenter = new SingleDeckPresenter(this, currentDeckID);
-  }
-
   /**
    * Inflates the xml file into a view
    *
@@ -52,19 +43,33 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     // inflate the layout for this view
     View rootView = inflater.inflate(R.layout.single_deck, container, false);
 
+    // gets the current Deck ID and uses it to get the deck from the repository
+    String currentDeckID = this.getArguments().getString("deck_id");
+    Toast.makeText(getContext(), "Single Deck Screen " + currentDeckID, Toast.LENGTH_SHORT).show();
+    // create instance of the presenter
+    singleDeckPresenter = new SingleDeckPresenter(this, currentDeckID);
+
     // gets supportFragmentManager bc ViewPage uses support library fragments
     FragmentManager fragManager = getActivity().getSupportFragmentManager();
     mCollectionAdapter = new CollectionAdapter(fragManager, singleDeckPresenter);
 
-    // sets the collection adapter as the pager adapter
+    // sets the collection adapter with tabs as the pager adapter
     mPager = rootView.findViewById(R.id.single_deck_pager);
     mPager.setAdapter(mCollectionAdapter);
-    // sets up the tabs
     TabLayout tabLayout = rootView.findViewById(R.id.sliding_tabs);
     tabLayout.setupWithViewPager(mPager);
 
     return rootView;
   }
+
+
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+
+
+
+  }
+
 
   public void onBackPressed() {
 

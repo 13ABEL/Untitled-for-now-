@@ -10,6 +10,8 @@ import com.hestia.domainlayer.Deck;
  */
 
 public class TabFragment extends Fragment {
+  private SingleDeckContract.Presenter cPresenter;
+
   public int test = 20;
 
 //  public void onCreate (Bundle savedInstanceState) {
@@ -19,4 +21,6 @@ public class TabFragment extends Fragment {
   public void updateUI (Deck deck) {
 
   }
+
+
 }

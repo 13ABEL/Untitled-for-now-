@@ -21,6 +21,8 @@ public class DeckListFragment extends TabFragment {
   // new instance constructor
   public static DeckListFragment newInstance(int page, String title){
     DeckListFragment newFragment = new DeckListFragment();
+    Log.e("TEST TAG", newFragment.test + "");
+
     return newFragment;
   }
 

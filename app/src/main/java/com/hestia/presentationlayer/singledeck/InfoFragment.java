@@ -23,6 +23,7 @@ public class InfoFragment extends TabFragment {
   // new instance constructor
   public static InfoFragment newInstance(int page, String title){
     InfoFragment newFragment = new InfoFragment();
+    Log.e("TEST TAG", newFragment.test + "");
     return newFragment;
   }
 
