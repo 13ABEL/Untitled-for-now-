@@ -44,12 +44,6 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   private RecyclerView mRecyclerView;
   private RecyclerView.LayoutManager mLayoutManager;
 
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    // create an instance of the presenter
-    displayDeckPresenter = new DisplayDecksPresenter(this);
-  }
-
   @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
       // inflate the layout for this view
@@ -72,6 +66,14 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
     return rootView;
   }
+
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    // create an instance of the presenter
+    displayDeckPresenter = new DisplayDecksPresenter(this);
+  }
+
+
 
   public void addDecks (List <Deck> decks) {
     // add the list of decks to the adapter

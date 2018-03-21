@@ -31,13 +31,11 @@ public class CollectionAdapter extends FragmentPagerAdapter{
     TabFragment newTabFragment;
     // return the right fragment depending on the position
     if (position == 0) {
-      newTabFragment = InfoFragment.newInstance(0, "INFO");
+      newTabFragment = InfoFragment.newInstance(0, "INFO", cPresenter);
     }
     else {
-      newTabFragment = DeckListFragment.newInstance(1, "LIST");
+      newTabFragment = DeckListFragment.newInstance(1, "LIST", cPresenter);
     }
-    // adds the fragment to the presenter to be managed
-    cPresenter.addTabFragment(newTabFragment);
 
     return newTabFragment;
   }

@@ -44,6 +44,7 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   public void addTabFragment(TabFragment tabFragment) {
     // adds the fragment into the current array of tab fragments
     this.tabFragments.add(tabFragment);
+    tabFragment.updateUI(currentDeck);
   }
 
 

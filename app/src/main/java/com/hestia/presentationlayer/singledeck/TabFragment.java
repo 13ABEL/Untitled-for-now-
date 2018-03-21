@@ -10,17 +10,18 @@ import com.hestia.domainlayer.Deck;
  */
 
 public class TabFragment extends Fragment {
-  private SingleDeckContract.Presenter cPresenter;
+  SingleDeckContract.Presenter parentPresenter;
 
   public int test = 20;
 
-//  public void onCreate (Bundle savedInstanceState) {
-//    super.onCreate(savedInstanceState);
-//  }
 
   public void updateUI (Deck deck) {
 
   }
 
+  public void setPresenter(SingleDeckContract.Presenter presenter) {
+    // uses the parent presenter to update information
+    parentPresenter = presenter;
+  }
 
 }

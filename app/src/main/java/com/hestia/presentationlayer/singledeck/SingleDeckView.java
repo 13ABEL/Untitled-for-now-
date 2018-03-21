@@ -30,7 +30,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
   private CollectionAdapter mCollectionAdapter;
   private ViewPager mPager;
 
-
   /**
    * Inflates the xml file into a view
    *

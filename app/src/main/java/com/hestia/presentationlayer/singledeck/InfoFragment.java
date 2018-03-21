@@ -21,9 +21,12 @@ public class InfoFragment extends TabFragment {
   public int test = 10;
 
   // new instance constructor
-  public static InfoFragment newInstance(int page, String title){
+  public static InfoFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter){
+    // creates a new instance of the fragment and sets passes it the parent presenter
     InfoFragment newFragment = new InfoFragment();
+    newFragment.setPresenter(presenter);
     Log.e("TEST TAG", newFragment.test + "");
+
     return newFragment;
   }
 
@@ -34,11 +37,14 @@ public class InfoFragment extends TabFragment {
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     View view = inflater.inflate(R.layout.single_deck_infotab, container, false);
 
-    TextView deckSummary = view.findViewById(R.id.infotab_deck_summary);
-    deckSummary.setText("HELLO");
+    // adds the new fragment to the parent presenter to be managed
+    if (parentPresenter != null) {
+      parentPresenter.addTabFragment(this);
+    }
 
     return view;
   }
+
 
   public void updateUI(Deck deck) {
 
