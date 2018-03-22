@@ -30,7 +30,7 @@ public class DeckListFragment extends TabFragment {
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // inflates the layout into a view
-    View view = inflater.inflate(R.layout.single_deck_infotab, container, false);
+    View view = inflater.inflate(R.layout.single_deck_listtab, container, false);
     return view;
   }
 

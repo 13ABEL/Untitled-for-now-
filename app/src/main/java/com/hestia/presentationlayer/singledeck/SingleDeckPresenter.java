@@ -33,9 +33,9 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   public void receiveFullDeck(Deck deck) {
     this.currentDeck = deck;
     // iterate through each tab fragment to update its information
-    for (TabFragment tabInstance: tabFragments) {
-      tabInstance.updateUI(currentDeck);
-    }
+//    for (TabFragment tabInstance: tabFragments) {
+//      tabInstance.updateUI(currentDeck);
+//    }
     // update ui to reflect deck changes
   }
 
