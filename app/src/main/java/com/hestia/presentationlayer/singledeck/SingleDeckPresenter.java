@@ -39,7 +39,6 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
     // update ui to reflect deck changes
   }
 
-
   @Override
   public void addTabFragment(TabFragment tabFragment) {
     // adds the fragment into the current array of tab fragments

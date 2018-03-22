@@ -1,5 +1,6 @@
 package com.hestia.presentationlayer.singledeck;
 
+import android.icu.text.IDNA;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -32,24 +33,19 @@ public class CollectionAdapter extends FragmentPagerAdapter{
     // return the right fragment depending on the position
     if (position == 0) {
       newTabFragment = InfoFragment.newInstance(0, "INFO", cPresenter);
-    }
-    else {
+    } else {
       newTabFragment = DeckListFragment.newInstance(1, "LIST", cPresenter);
     }
     return newTabFragment;
   }
 
-  public CharSequence getPageTitle(int position) {
-    return tabNames[position];
-  }
 
   @Override
   public int getCount() {
     return numTabs;
   }
 
-
-
-
-
+  public CharSequence getPageTitle(int position) {
+    return tabNames[position];
+  }
 }

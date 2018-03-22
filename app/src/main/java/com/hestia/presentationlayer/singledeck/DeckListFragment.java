@@ -35,7 +35,7 @@ public class DeckListFragment extends TabFragment {
   }
 
   public void updateUI(Deck deck) {
-    TextView textThing = getActivity().findViewById(R.id.infotab_deck_summary);
+    TextView textThing = getActivity().findViewById(R.id.listtab_test);
     textThing.setText(R.string.test_paragraph_long);
   }
 }

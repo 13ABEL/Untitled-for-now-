@@ -60,6 +60,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     return rootView;
   }
-  
+
 
 }

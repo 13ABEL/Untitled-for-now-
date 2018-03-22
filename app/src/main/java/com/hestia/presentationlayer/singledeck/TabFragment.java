@@ -10,15 +10,10 @@ import com.hestia.domainlayer.Deck;
  * Created by Richard on 3/19/2018.
  */
 
-public class TabFragment extends Fragment {
+public abstract class TabFragment extends Fragment {
   SingleDeckContract.Presenter parentPresenter;
 
-  public int test = 20;
-
-
-  public void updateUI (Deck deck) {
-
-  }
+  public abstract void updateUI(Deck deck);
 
   public void setPresenter(SingleDeckContract.Presenter presenter) {
     // uses the parent presenter to update information

@@ -31,16 +31,11 @@ public class InfoFragment extends TabFragment {
     return newFragment;
   }
 
-  public void onCreate(Bundle savedInstanceState) {
-    super.onCreate(savedInstanceState);
-  }
-
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // inflates the layout into a view
     View view = inflater.inflate(R.layout.single_deck_infotab, container, false);
     return view;
   }
-
 
   public void updateUI(Deck deck) {
     TextView textThing = getActivity().findViewById(R.id.infotab_deck_summary);
