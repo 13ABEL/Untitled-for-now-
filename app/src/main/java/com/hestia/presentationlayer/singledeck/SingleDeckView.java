@@ -60,18 +60,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     return rootView;
   }
-
-
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-
-
-
-  }
-
-
-  public void onBackPressed() {
-
-  }
+  
 
 }

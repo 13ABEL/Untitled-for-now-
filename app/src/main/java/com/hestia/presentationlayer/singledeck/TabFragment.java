@@ -1,5 +1,6 @@
 package com.hestia.presentationlayer.singledeck;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
@@ -24,4 +25,9 @@ public class TabFragment extends Fragment {
     parentPresenter = presenter;
   }
 
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    // adds the current fragment to the parent presenter once everything is loaded
+    parentPresenter.addTabFragment(this);
+  }
 }

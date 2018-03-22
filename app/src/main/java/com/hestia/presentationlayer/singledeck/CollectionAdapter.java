@@ -19,7 +19,7 @@ import com.hestia.domainlayer.Deck;
 public class CollectionAdapter extends FragmentPagerAdapter{
   private SingleDeckContract.Presenter cPresenter;
   private String [] tabNames = {"INFO", "LIST"};
-  final int NUM_ITEMS = tabNames.length;
+  private int numTabs = tabNames.length;
 
   public CollectionAdapter(FragmentManager fragManager, SingleDeckContract.Presenter presenter) {
     super(fragManager);
@@ -36,23 +36,16 @@ public class CollectionAdapter extends FragmentPagerAdapter{
     else {
       newTabFragment = DeckListFragment.newInstance(1, "LIST", cPresenter);
     }
-
     return newTabFragment;
   }
 
-  /**
-   * Used to set the tab titles
-   * @param position
-   * @return
-   */
   public CharSequence getPageTitle(int position) {
     return tabNames[position];
   }
 
-
   @Override
   public int getCount() {
-    return NUM_ITEMS;
+    return numTabs;
   }
 
 
