@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
@@ -18,15 +19,15 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
  */
 
 public class InfoFragment extends TabFragment {
-  public int test = 10;
 
   // new instance constructor
   public static InfoFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter) {
     // creates a new instance of the fragment and passes it the parent presenter
     InfoFragment newFragment = new InfoFragment();
     newFragment.setPresenter(presenter);
+    newFragment.setPosition(page);
 
-    Log.e("TEST TAG", newFragment.test + "");
+    //Log.e("TEST TAG", newFragment.test + "");
 
     return newFragment;
   }
@@ -38,8 +39,11 @@ public class InfoFragment extends TabFragment {
   }
 
   public void updateUI(Deck deck) {
+    Toast.makeText(getContext(), "TESSST "  +deck.getDeckName(), Toast.LENGTH_LONG).show();
     TextView textThing = getActivity().findViewById(R.id.infotab_deck_summary);
     textThing.setText(R.string.test_paragraph_long);
+    Toast.makeText(getContext(), "NAH B "  +deck.getDeckName(), Toast.LENGTH_LONG).show();
   }
+
 
 }

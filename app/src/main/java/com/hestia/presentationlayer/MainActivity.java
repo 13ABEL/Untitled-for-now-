@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity{
       // create the Display Decks fragment to be inserted into the activity
       DisplayDecksView displayDecksFrag = new DisplayDecksView();
       // Add the fragment to the container (content frame) in this activity
-      getSupportFragmentManager().beginTransaction().add(R.id.content_frame, displayDecksFrag).commit();
+      getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, displayDecksFrag).commit();
     }
   }
 
@@ -68,6 +68,8 @@ public class MainActivity extends AppCompatActivity{
     // syncs the current state of the toggle icon
     mDrawerToggle.syncState();
   }
+
+
 
 
 }

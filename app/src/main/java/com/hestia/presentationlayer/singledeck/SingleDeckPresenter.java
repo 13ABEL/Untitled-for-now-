@@ -28,22 +28,25 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
     deckRepository.getFullDeck(this, deckID);
   }
 
-
   @Override
   public void receiveFullDeck(Deck deck) {
     this.currentDeck = deck;
-    // iterate through each tab fragment to update its information
-//    for (TabFragment tabInstance: tabFragments) {
-//      tabInstance.updateUI(currentDeck);
+//    for (TabFragment tFrag: tabFragments) {
+//      tFrag.updateUI(currentDeck);
 //    }
-    // update ui to reflect deck changes
   }
 
   @Override
-  public void addTabFragment(TabFragment tabFragment) {
-    // adds the fragment into the current array of tab fragments
-    this.tabFragments.add(tabFragment);
-    tabFragment.updateUI(currentDeck);
+  public void addTabFragment(TabFragment tabFragment, int position) {
+    if (tabFragments.size() >= position) {
+      // adds the fragment into the current array of tab fragments
+      this.tabFragments.add(position, tabFragment);
+      tabFragment.updateUI(currentDeck);
+    } else {
+      this.tabFragments.add(tabFragment);
+      tabFragment.updateUI(currentDeck);
+    }
+
   }
 
 

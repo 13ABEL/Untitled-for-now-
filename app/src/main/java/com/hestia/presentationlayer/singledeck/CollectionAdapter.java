@@ -4,6 +4,7 @@ import android.icu.text.IDNA;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -17,12 +18,12 @@ import com.hestia.domainlayer.Deck;
  * Note that we use a FragmentPagerAdapter instead of a FragmentStatePagerAdapter
  * It's better for a small and fixed number of screens
  */
-public class CollectionAdapter extends FragmentPagerAdapter{
+public class CollectionAdapter extends FragmentStatePagerAdapter {
   private SingleDeckContract.Presenter cPresenter;
   private String [] tabNames = {"INFO", "LIST"};
   private int numTabs = tabNames.length;
 
-  public CollectionAdapter(FragmentManager fragManager, SingleDeckContract.Presenter presenter) {
+  CollectionAdapter(FragmentManager fragManager, SingleDeckContract.Presenter presenter) {
     super(fragManager);
     this.cPresenter = presenter;
   }
@@ -36,6 +37,7 @@ public class CollectionAdapter extends FragmentPagerAdapter{
     } else {
       newTabFragment = DeckListFragment.newInstance(1, "LIST", cPresenter);
     }
+
     return newTabFragment;
   }
 
@@ -48,4 +50,5 @@ public class CollectionAdapter extends FragmentPagerAdapter{
   public CharSequence getPageTitle(int position) {
     return tabNames[position];
   }
+
 }

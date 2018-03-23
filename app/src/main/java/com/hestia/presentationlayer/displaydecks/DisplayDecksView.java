@@ -74,7 +74,6 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   }
 
 
-
   public void addDecks (List <Deck> decks) {
     // add the list of decks to the adapter
     mAdapter.addDecks(decks);
@@ -108,6 +107,8 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
       transaction.commit();
     }
   }
+
+
 
 }
 

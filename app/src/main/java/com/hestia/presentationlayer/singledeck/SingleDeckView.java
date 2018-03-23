@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hestia.R;
@@ -60,6 +61,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     return rootView;
   }
+
 
 
 }
