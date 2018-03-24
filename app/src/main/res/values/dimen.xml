@@ -8,6 +8,11 @@
     <dimen name="toolbar_height">60dp</dimen>
 
 
+    <!-- display deck items -->
+    <dimen name="deck_item_padding">6dp</dimen>
+    <dimen name="deck_item_title">14sp</dimen>
+
+
     <!-- for the left nav -->
     <dimen name="left_nav_padding_top">10dp</dimen>
     <dimen name="left_nav_padding_left">20dp</dimen>
@@ -16,5 +21,7 @@
     <!-- for the single deck tabs -->
     <dimen name="tab_padding_top">24dp</dimen>
     <dimen name="tab_padding_side">14dp</dimen>
+
+
 
 </resources>
