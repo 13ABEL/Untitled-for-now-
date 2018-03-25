@@ -7,13 +7,14 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
     tools:context="com.hestia.presentationlayer.MainActivity">
 
     <!-- The main content view: container for fragments-->
     <FrameLayout
-    android:id="@+id/content_frame2"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:id="@+id/content_frame2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <!-- toolbar -->
         <android.support.v7.widget.Toolbar
@@ -28,7 +29,8 @@
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="@dimen/toolbar_height"
+
+            android:layout_marginTop="@dimen/main_activity_padding_top"
             android:orientation="vertical"/>
     </FrameLayout>
     <!-- end of the main content view -->

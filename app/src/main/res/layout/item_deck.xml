@@ -2,7 +2,10 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="@dimen/deck_item_margin"
+
+    android:layout_marginStart="@dimen/deck_item_margin"
+    android:layout_marginBottom="@dimen/deck_item_margin"
+
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
@@ -14,10 +17,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
 
-            android:paddingBottom="@dimen/deck_item_padding_ver"
-            android:paddingLeft="@dimen/deck_item_padding_hor"
-            android:paddingRight="@dimen/deck_item_padding_hor"
-            android:paddingTop="@dimen/deck_item_padding_ver">
+            android:paddingTop="@dimen/deck_item_padding_ver"
+            android:paddingBottom="@dimen/deck_item_padding_hor"
+            android:paddingStart="@dimen/deck_item_padding_ver"
+            android:paddingEnd="@dimen/deck_item_padding_hor">
 
             <TextView
                 android:id="@+id/deck_item_deckname"
@@ -39,6 +42,7 @@
                 android:layout_below="@id/deck_item_deckname"
                 android:layout_width="@dimen/deck_item_icon"
                 android:layout_height="@dimen/deck_item_icon"
+
                 android:layout_marginRight="@dimen/deck_item_icon_margin"
                 android:layout_marginTop="30dp"
 
