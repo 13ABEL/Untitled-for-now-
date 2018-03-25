@@ -27,8 +27,13 @@
 
 
     <!-- for the single deck tabs -->
-    <dimen name="tab_padding_top">24dp</dimen>
-    <dimen name="tab_padding_side">14dp</dimen>
+    <dimen name="tab_spacing_top">18dp</dimen>
+    <dimen name="tab_spacing_side">14dp</dimen>
+
+
+    <!-- theme sizes -->
+    <dimen name="summary_text">16sp</dimen>
+
 
 
 

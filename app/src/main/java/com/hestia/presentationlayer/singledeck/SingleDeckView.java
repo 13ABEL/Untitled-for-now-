@@ -5,21 +5,14 @@ import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hestia.R;
-import com.hestia.domainlayer.Deck;
-import com.hestia.presentationlayer.displaydecks.DisplayDecksPresenter;
+import com.hestia.presentationlayer.customadapter.SingleDeckTabAdapter;
 
 /**
  * Created by Richard on 3/14/2018.
@@ -28,7 +21,7 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksPresenter;
 public class SingleDeckView extends Fragment implements SingleDeckContract.View {
   private SingleDeckContract.Presenter singleDeckPresenter;
   private String [] tabNames = {"INFO", "LIST", "COMMENTS"};
-  private CollectionAdapter mCollectionAdapter;
+  private SingleDeckTabAdapter mSingleDeckTabAdapter;
   private ViewPager mPager;
 
   /**
@@ -51,11 +44,11 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     // gets supportFragmentManager bc ViewPage uses support library fragments
     FragmentManager fragManager = getActivity().getSupportFragmentManager();
-    mCollectionAdapter = new CollectionAdapter(fragManager, singleDeckPresenter);
+    mSingleDeckTabAdapter = new SingleDeckTabAdapter(fragManager, singleDeckPresenter);
 
     // sets the collection adapter with tabs as the pager adapter
     mPager = rootView.findViewById(R.id.single_deck_pager);
-    mPager.setAdapter(mCollectionAdapter);
+    mPager.setAdapter(mSingleDeckTabAdapter);
     TabLayout tabLayout = rootView.findViewById(R.id.sliding_tabs);
     tabLayout.setupWithViewPager(mPager);
 

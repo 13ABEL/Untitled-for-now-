@@ -30,7 +30,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
 
-            android:layout_marginTop="@dimen/main_activity_padding_top"
+            android:layout_marginTop="@dimen/toolbar_height"
             android:orientation="vertical"/>
     </FrameLayout>
     <!-- end of the main content view -->

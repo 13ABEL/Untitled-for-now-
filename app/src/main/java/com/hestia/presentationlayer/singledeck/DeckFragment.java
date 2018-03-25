@@ -1,7 +1,6 @@
 package com.hestia.presentationlayer.singledeck;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,13 +14,13 @@ import com.hestia.domainlayer.Deck;
  * Created by Richard on 3/17/2018.
  */
 
-public class DeckListFragment extends TabFragment {
+public class DeckFragment extends TabFragment {
   public int test = 0;
 
   // new instance constructor
-  public static DeckListFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter){
+  public static DeckFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter){
     // creates a new instance of the fragment and passes it the parent presenter
-    DeckListFragment newFragment = new DeckListFragment();
+    DeckFragment newFragment = new DeckFragment();
     newFragment.setPresenter(presenter);
 
     Log.e("TEST TAG", newFragment.test + "");

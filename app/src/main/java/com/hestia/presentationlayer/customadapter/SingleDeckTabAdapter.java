@@ -1,14 +1,13 @@
-package com.hestia.presentationlayer.singledeck;
+package com.hestia.presentationlayer.customadapter;
 
-import android.icu.text.IDNA;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.singledeck.DeckFragment;
+import com.hestia.presentationlayer.singledeck.InfoFragment;
+import com.hestia.presentationlayer.singledeck.SingleDeckContract;
+import com.hestia.presentationlayer.singledeck.TabFragment;
 
 /**
  * Created by Richard on 3/17/2018.
@@ -18,12 +17,12 @@ import com.hestia.domainlayer.Deck;
  * Note that we use a FragmentPagerAdapter instead of a FragmentStatePagerAdapter
  * It's better for a small and fixed number of screens
  */
-public class CollectionAdapter extends FragmentStatePagerAdapter {
+public class SingleDeckTabAdapter extends FragmentStatePagerAdapter {
   private SingleDeckContract.Presenter cPresenter;
   private String [] tabNames = {"INFO", "LIST"};
   private int numTabs = tabNames.length;
 
-  CollectionAdapter(FragmentManager fragManager, SingleDeckContract.Presenter presenter) {
+  public SingleDeckTabAdapter(FragmentManager fragManager, SingleDeckContract.Presenter presenter) {
     super(fragManager);
     this.cPresenter = presenter;
   }
@@ -35,7 +34,7 @@ public class CollectionAdapter extends FragmentStatePagerAdapter {
     if (position == 0) {
       newTabFragment = InfoFragment.newInstance(0, "INFO", cPresenter);
     } else {
-      newTabFragment = DeckListFragment.newInstance(1, "LIST", cPresenter);
+      newTabFragment = DeckFragment.newInstance(1, "LIST", cPresenter);
     }
 
     return newTabFragment;

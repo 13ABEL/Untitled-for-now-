@@ -22,13 +22,12 @@ public class InfoFragment extends TabFragment {
 
   // new instance constructor
   public static InfoFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter) {
-    // creates a new instance of the fragment and passes it the parent presenter
+    // creates a new instance of the fragment and passes it to the parent presenter
     InfoFragment newFragment = new InfoFragment();
     newFragment.setPresenter(presenter);
     newFragment.setPosition(page);
 
     //Log.e("TEST TAG", newFragment.test + "");
-
     return newFragment;
   }
 
@@ -39,7 +38,6 @@ public class InfoFragment extends TabFragment {
   }
 
   public void updateUI(Deck deck) {
-    Toast.makeText(getContext(), "TESSST "  +deck.getDeckName(), Toast.LENGTH_LONG).show();
     TextView textThing = getActivity().findViewById(R.id.infotab_deck_summary);
     textThing.setText(R.string.test_paragraph_long);
     Toast.makeText(getContext(), "NAH B "  +deck.getDeckName(), Toast.LENGTH_LONG).show();

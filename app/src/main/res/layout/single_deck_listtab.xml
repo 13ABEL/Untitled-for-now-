@@ -3,8 +3,10 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/tab_padding_side"
-    android:paddingRight="@dimen/tab_padding_side"
+
+    android:paddingStart="@dimen/tab_spacing_side"
+    android:paddingEnd="@dimen/tab_spacing_side"
+
     android:scrollbarStyle="outsideOverlay">
 
     <TextView
