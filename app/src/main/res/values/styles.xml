@@ -4,25 +4,23 @@
     <style name="AppTheme" parent="Theme.AppCompat">
         <!-- Customize your theme here -->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorAccent</item>
+        <item name="colorPrimaryDark">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
 
-        <item name="android:toolbarStyle">@color/deck_item_main</item>
+        <item name="android:background">@color/colorSecondary</item>
 
-        <item name="android:background">@color/colorPrimaryDark</item>
-        
         <item name="android:textSize">@dimen/summary_text</item>
         <item name="android:textColor">@color/deck_item_text</item>
-        
-
     </style>
-    
 
-    
-    <style name="DeckItemTheme">
-        <item name="android:background">@color/deck_item_main</item>
-        <item name="android:textColor">@color/deck_item_text</item>
-
+    <style name="ToolbarTheme" parent="AppTheme">
+        <item name="android:background">@color/colorPrimary</item>
     </style>
+
+    <style name="CardTheme" parent="AppTheme">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+
 
 </resources>

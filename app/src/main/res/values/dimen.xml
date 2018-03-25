@@ -10,7 +10,7 @@
 
 
     <!-- display deck items -->
-    <dimen name="deck_item_margin">8dp</dimen>
+    <dimen name="deck_item_margin">10dp</dimen>
     <dimen name="deck_item_padding_ver">14dp</dimen>
     <dimen name="deck_item_padding_hor">14dp</dimen>
 
@@ -25,6 +25,9 @@
     <dimen name="left_nav_padding_top">10dp</dimen>
     <dimen name="left_nav_padding_left">20dp</dimen>
 
+
+    <!-- for the single deck view -->
+    <dimen name="top_Bar_height">140dp</dimen>
 
     <!-- for the single deck tabs -->
     <dimen name="tab_spacing_top">18dp</dimen>

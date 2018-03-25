@@ -9,14 +9,15 @@
     android:scrollbarStyle="outsideOverlay">
 
     <TextView
-        android:layout_marginStart="@dimen/tab_spacing_side"
-        android:layout_margin="@dimen/tab_spacing_side"
-
         android:id="@+id/infotab_deck_summary"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
 
-        android:layout_marginTop="0dp"/>
+        android:layout_marginStart="@dimen/tab_spacing_side"
+        android:layout_marginEnd="@dimen/tab_spacing_side"
+        android:layout_marginTop="@dimen/tab_spacing_top"
+        android:layout_marginBottom="@dimen/tab_spacing_top"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
 
 
 </ScrollView>

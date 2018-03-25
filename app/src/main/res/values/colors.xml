@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#51545D</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorPrimary">#4b5159</color>
+    <color name="colorSecondary">#3c3d40</color>
 
-    <color name="deck_item_main">#6F7782</color>
-    <color name="deck_item_text">#C3C1BD</color>
+
+
+    <color name="colorPrimaryDark">#4b5159</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="colorBackground">#3c3d40</color>
+
+
+    <color name="deck_item_main">@color/colorSecondary1</color>
+    <color name="deck_item_text">#c3bfb9</color>
+    
+    <color name="colorSecondary1">#4b5159</color>
+    <color name="colorPrimaryDark1">#3c3d40</color>
+
+
 </resources>

@@ -71,6 +71,8 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     super.onActivityCreated(savedInstanceState);
     // create an instance of the presenter
     displayDeckPresenter = new DisplayDecksPresenter(this);
+    // resets the name of the title everytime this activity is resumed
+    getActivity().setTitle(R.string.app_name);
   }
 
 
@@ -107,6 +109,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
       transaction.commit();
     }
   }
+
 
 
 

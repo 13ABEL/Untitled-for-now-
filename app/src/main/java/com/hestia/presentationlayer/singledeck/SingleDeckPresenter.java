@@ -31,9 +31,6 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   @Override
   public void receiveFullDeck(Deck deck) {
     this.currentDeck = deck;
-//    for (TabFragment tFrag: tabFragments) {
-//      tFrag.updateUI(currentDeck);
-//    }
   }
 
   @Override
@@ -46,7 +43,6 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
       this.tabFragments.add(tabFragment);
       tabFragment.updateUI(currentDeck);
     }
-
   }
 
 
