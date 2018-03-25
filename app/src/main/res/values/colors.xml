@@ -3,4 +3,7 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+
+    <color name="deck_item_main">#6F7782</color>
+    <color name="deck_item_text">#C3C1BD</color>
 </resources>

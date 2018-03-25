@@ -9,8 +9,15 @@
 
 
     <!-- display deck items -->
-    <dimen name="deck_item_padding">6dp</dimen>
+    <dimen name="deck_item_margin">6dp</dimen>
+    <dimen name="deck_item_padding_ver">14dp</dimen>
+    <dimen name="deck_item_padding_hor">14dp</dimen>
+
     <dimen name="deck_item_title">14sp</dimen>
+
+    <dimen name="deck_item_icon">40dp</dimen>
+    <dimen name="deck_item_icon_margin">10dp</dimen>
+
 
 
     <!-- for the left nav -->

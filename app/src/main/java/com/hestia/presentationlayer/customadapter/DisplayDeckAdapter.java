@@ -102,8 +102,8 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
       context = itemView.getContext();
 
       // attaches the TextView objects to the item
-      deckName = itemView.findViewById(R.id.deck_name);
-      deckAuthor = itemView.findViewById(R.id.deck_author);
+      deckName = itemView.findViewById(R.id.deck_item_deckname);
+      deckAuthor = itemView.findViewById(R.id.deck_item_author);
 
       // sets the onClick listener
       itemView.setOnClickListener(listener);
