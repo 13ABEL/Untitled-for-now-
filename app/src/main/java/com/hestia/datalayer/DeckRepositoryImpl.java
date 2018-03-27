@@ -18,6 +18,7 @@ import com.hestia.presentationlayer.singledeck.SingleDeckContract;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 /**
  * Created by Richard on 3/10/2018.
@@ -82,10 +83,14 @@ public class DeckRepositoryImpl implements DeckRepository {
     });
   }
 
-
+  /**
+   * Used for getting a single deck from the firebase firestore
+   * @param presenter
+   * @param deckID
+   */
   public void getFullDeck(SingleDeckContract.Presenter presenter, String deckID) {
     this.singleDeckPresenter = presenter;
-    Deck fetchedDeck  = new DeckImpl();
+    Deck fetchedDeck  = new DeckImpl("TEST");
 
     // get the document reference for the deck with id deckID
     DocumentReference docRef = db.collection("decks").document(deckID);
@@ -97,10 +102,9 @@ public class DeckRepositoryImpl implements DeckRepository {
           DocumentSnapshot document = task.getResult();
           if (document != null && document.exists()) {
             // create a new deck by parsing the firebase data
-            Log.d("TESTERTESTER", "DocumentSnapshot data: " + document.getData());
-            //Deck newDeck = parseFirebaseReturn(document.getData());
-            // sends the new deck back to the presenter to handle
-            //singleDeckPresenter.receiveFullDeck(newDeck);
+            Log.d("REPOSITORY", "DocumentSnapshot data: " + document.getData());
+            // sends the data to the appropriate method to parse it
+            parseFullDeck(document.getData());
           }
         }
       }
@@ -109,11 +113,35 @@ public class DeckRepositoryImpl implements DeckRepository {
     singleDeckPresenter.receiveFullDeck(fetchedDeck);
   }
 
-
   private Deck parseFirebaseReturn (String returnString) {
     String parsedString = returnString;
 
     Deck newDeck = new DeckImpl(parsedString);
+    return newDeck;
+  }
+
+
+  private Deck parseFullDeck (Map <String, Object> deckMap) {
+    String deckName = (String) deckMap.get("deck_name");
+    Log.d("REPOSITORY MAP TESTING",
+        " deck_name " + deckName
+
+    );
+
+    //Deck newDeck = new DeckImpl();
+    Deck newDeck = new DeckImpl("TEST");
+
+    // get the data from the map
+    // (in this method to separate repo implementation from object representation)
+
+    try {
+      //
+      Log.e("PARSE FULL DECK", " object = " + deckMap.get("HI"));
+    }
+    catch (Exception e) {
+      Log.e("ERROR", "This object is missing some properties");
+    }
+
     return newDeck;
   }
 

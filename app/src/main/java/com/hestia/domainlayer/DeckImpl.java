@@ -1,21 +1,38 @@
 package com.hestia.domainlayer;
 
-import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Richard on 3/7/2018.
  */
 
 public class DeckImpl implements Deck {
-  int deck_id;
-  int author_id;
+  private ArrayList <String> deckList = new ArrayList<>();
+  int DECK_LENGTH = 30;
+  // variables that with default values
+  private String deckName = "No name";
+  private String username;
+  private String summary;
 
-  String deckName ="Discolock";
-  String temp2 = "Richard Wei";
-  String temp3 = "March 9th";
+  //
+  private String deckID;
+  private Date createdDate;
+  private String authorID;
+
+  public DeckImpl (String deckName, String author, String cardsString, String info) {
+    this.deckName = deckName;
+    this.username = author;
+    this.summary = info;
+
+    // parse the deck list into an arraylist
+    for (int i = 0; i < DECK_LENGTH; i ++) {
+      this.deckList.add(cardsString.substring(i*3, i*3 + 4));
+    }
+  }
 
   public DeckImpl () {
-
   }
 
   public DeckImpl (String author) {
@@ -31,8 +48,9 @@ public class DeckImpl implements Deck {
   }
 
   public String getAuthor() {
-    return temp2;
+    return username;
   }
+
 
 
 }

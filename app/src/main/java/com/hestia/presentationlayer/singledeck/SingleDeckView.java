@@ -57,7 +57,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-
     // sets the title of the navbar as the current deck name
     getActivity().setTitle("Single");
   }
