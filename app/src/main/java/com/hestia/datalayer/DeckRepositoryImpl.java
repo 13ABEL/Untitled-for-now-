@@ -18,6 +18,7 @@ import com.hestia.presentationlayer.singledeck.SingleDeckContract;
 import org.w3c.dom.Document;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -121,28 +122,28 @@ public class DeckRepositoryImpl implements DeckRepository {
   }
 
 
+  /**
+   * This parses a firestore return map to create a new deck object
+   * @param deckMap
+   * @return
+   */
   private Deck parseFullDeck (Map <String, Object> deckMap) {
+    // parse the data from the firestore map
+    String  author = deckMap.get("author").toString();
     String deckName = (String) deckMap.get("deck_name");
-    Log.d("REPOSITORY MAP TESTING",
-        " deck_name " + deckName
+    String summary = (String) deckMap.get("summary");
+    String deckList = (String) deckMap.get("list");
+    Date createdDate = (Date) deckMap.get("created");
 
+    Log.d("REPOSITORY MAP TESTING",
+        " deck_name = " + deckName
+        +" author = " + author
+        + " summary = " + summary
+        + " deckList = " + deckList
+        + " createdDate = " + createdDate.toString()
     );
 
-    //Deck newDeck = new DeckImpl();
-    Deck newDeck = new DeckImpl("TEST");
-
-    // get the data from the map
-    // (in this method to separate repo implementation from object representation)
-
-    try {
-      //
-      Log.e("PARSE FULL DECK", " object = " + deckMap.get("HI"));
-    }
-    catch (Exception e) {
-      Log.e("ERROR", "This object is missing some properties");
-    }
-
-    return newDeck;
+    return new DeckImpl(deckName, author, deckList, summary, createdDate);
   }
 
 

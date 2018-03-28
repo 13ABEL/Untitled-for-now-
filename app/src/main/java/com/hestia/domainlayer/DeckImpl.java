@@ -21,14 +21,15 @@ public class DeckImpl implements Deck {
   private Date createdDate;
   private String authorID;
 
-  public DeckImpl (String deckName, String author, String cardsString, String info) {
-    this.deckName = deckName;
+  public DeckImpl (String name, String author, String list, String info, Date date) {
+    this.deckName = name;
     this.username = author;
     this.summary = info;
+    this.createdDate = date;
 
     // parse the deck list into an arraylist
     for (int i = 0; i < DECK_LENGTH; i ++) {
-      this.deckList.add(cardsString.substring(i*3, i*3 + 4));
+      this.deckList.add(list.substring(i*3, i*3 + 4));
     }
   }
 
@@ -38,11 +39,7 @@ public class DeckImpl implements Deck {
   public DeckImpl (String author) {
     this.deckName = author;
   }
-
-  public String toString () {
-    return "haha yeet";
-  }
-
+  
   public String getDeckName() {
     return deckName;
   }
