@@ -55,12 +55,18 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     return rootView;
   }
 
-  public void displayInfo(String title) {
-    // sets the title for the current activity
-    getActivity().setTitle(title);
-    // TODO more lines when more info is used for this fragment
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+
+    // gets the current Deck ID and uses it to get the deck from the repository
+    //String deckName = this.getArguments().getString("deck_id");
+
+    // sets the title of the navbar as the current deck name
+    getActivity().setTitle("Single");
   }
 
-
+  public void displayInfo(String title) {
+    // TODO more lines when more info is used for this fragment
+  }
 
 }
