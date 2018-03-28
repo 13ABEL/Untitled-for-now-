@@ -38,6 +38,7 @@ public class DeckRepositoryImpl implements DeckRepository {
   private FirebaseFirestore db;
   private String returnString = "";
 
+  private Deck fetchedDeck;
 
 
   // testing purposes
@@ -84,14 +85,21 @@ public class DeckRepositoryImpl implements DeckRepository {
     });
   }
 
+
+  private Deck parseFirebaseReturn (String returnString) {
+    String parsedString = returnString;
+
+    Deck newDeck = new DeckImpl(parsedString);
+    return newDeck;
+  }
+
   /**
    * Used for getting a single deck from the firebase firestore
-   * @param presenter
-   * @param deckID
+   * @param presenter the presenter tied to the view displaying the deck
+   * @param deckID the id of the deck we want to get
    */
   public void getFullDeck(SingleDeckContract.Presenter presenter, String deckID) {
     this.singleDeckPresenter = presenter;
-    Deck fetchedDeck  = new DeckImpl("TEST");
 
     // get the document reference for the deck with id deckID
     DocumentReference docRef = db.collection("decks").document(deckID);
@@ -104,31 +112,30 @@ public class DeckRepositoryImpl implements DeckRepository {
           if (document != null && document.exists()) {
             // create a new deck by parsing the firebase data
             Log.d("REPOSITORY", "DocumentSnapshot data: " + document.getData());
-            // sends the data to the appropriate method to parse it
-            parseFullDeck(document.getData());
+            // parses the firebase return and sends it to the presenter to handle
+            fetchedDeck = parseFullDeck(document.getData());
+            if (fetchedDeck == null) {
+              Log.d("TEST OBJECT", "the deck is null");
+            }
+            Log.d("TEST OBJECT", fetchedDeck.toString());
+            singleDeckPresenter.receiveFullDeck(fetchedDeck);
+
           }
         }
       }
     });
 
-    singleDeckPresenter.receiveFullDeck(fetchedDeck);
-  }
-
-  private Deck parseFirebaseReturn (String returnString) {
-    String parsedString = returnString;
-
-    Deck newDeck = new DeckImpl(parsedString);
-    return newDeck;
   }
 
 
   /**
    * This parses a firestore return map to create a new deck object
-   * @param deckMap
-   * @return
+   * @param deckMap map representation of data from firestore
+   * @return the Deck object representation of data from firestore
    */
   private Deck parseFullDeck (Map <String, Object> deckMap) {
-    // parse the data from the firestore map
+    // parse the data from the firestore map (implementation dependent)
+    //TODO currently using author id -> need to change to username
     String  author = deckMap.get("author").toString();
     String deckName = (String) deckMap.get("deck_name");
     String summary = (String) deckMap.get("summary");

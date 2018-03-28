@@ -12,7 +12,7 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 public interface SingleDeckContract {
 
   interface View {
-
+    void displayInfo(String title);
   }
 
   interface Presenter {

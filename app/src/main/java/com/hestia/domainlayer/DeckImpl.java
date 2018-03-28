@@ -39,13 +39,17 @@ public class DeckImpl implements Deck {
   public DeckImpl (String author) {
     this.deckName = author;
   }
-  
+
   public String getDeckName() {
     return deckName;
   }
 
   public String getAuthor() {
     return username;
+  }
+
+  public String toString() {
+    return "not null";
   }
 
 

@@ -2,6 +2,7 @@ package com.hestia.presentationlayer.singledeck;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 
 import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
@@ -17,20 +18,27 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   private ArrayList <TabFragment> tabFragments = new ArrayList<>();
   private SingleDeckContract.View singleDeckView;
   private DeckRepository deckRepository;
-  Deck currentDeck;
+  private Deck currentDeck;
 
 
   public SingleDeckPresenter(SingleDeckContract.View view, String deckID) {
-    singleDeckView = view;
+    this.singleDeckView = view;
 
     // initialize the repository object to get data
     deckRepository = new DeckRepositoryImpl();
     deckRepository.getFullDeck(this, deckID);
   }
 
+  /**
+   * Callback method to recieve the deck object from repository after async call
+   * @param deck
+   */
   @Override
   public void receiveFullDeck(Deck deck) {
     this.currentDeck = deck;
+
+    // tells the view what to display
+    singleDeckView.displayInfo(deck.getDeckName());
   }
 
   @Override

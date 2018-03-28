@@ -40,7 +40,7 @@ public class InfoFragment extends TabFragment {
   public void updateUI(Deck deck) {
     TextView textThing = getActivity().findViewById(R.id.infotab_deck_summary);
     textThing.setText(R.string.test_paragraph_long);
-    Toast.makeText(getContext(), "NAH B "  +deck.getDeckName(), Toast.LENGTH_LONG).show();
+    Toast.makeText(getContext(), "NAH B "  , Toast.LENGTH_LONG).show();
   }
 
 
