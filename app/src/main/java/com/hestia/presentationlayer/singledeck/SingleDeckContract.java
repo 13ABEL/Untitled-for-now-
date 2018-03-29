@@ -3,6 +3,7 @@ package com.hestia.presentationlayer.singledeck;
 import android.support.v4.app.Fragment;
 
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 
 /**
@@ -16,7 +17,7 @@ public interface SingleDeckContract {
   }
 
   interface Presenter {
-    void receiveFullDeck(Deck deck);
+    void receiveFullDeck(DeckDecorator deck);
     void addTabFragment(TabFragment tabFragment, int position);
   }
 

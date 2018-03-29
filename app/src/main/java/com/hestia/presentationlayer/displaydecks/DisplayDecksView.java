@@ -85,19 +85,22 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
   /**
    * Custom adapter class to circumvent RecyclerView's lack of an OnItemClickListener
-   * Allows us to keep view code in our this view class
+   * Allows us to keep view code in this view class
    */
   class AdapterListener implements View.OnClickListener {
     @Override
     public void onClick(View view) {
-      // get the tag from the view
-      String position = view.getTag().toString();
-      //Toast.makeText(getContext(), position, Toast.LENGTH_SHORT).show();
+      // get the tag from the view and the deck from the adapter
+      int position = (int) view.getTag();
+      DeckDecorator passedDeck = mAdapter.getDeck(position);
+
+      Toast.makeText(getContext(), position + " POSITION", Toast.LENGTH_SHORT).show();
 
       // create a bundle to pass the new fragment the id of the deck
       SingleDeckView singleDeckFragment = new SingleDeckView();
+
       Bundle args = new Bundle();
-      args.putString("deck_id", position);
+      args.putParcelable("deck", passedDeck);
       singleDeckFragment.setArguments(args);
 
       FragmentTransaction transaction = getFragmentManager().beginTransaction();

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hestia.R;
+import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.SingleDeckTabAdapter;
 
 /**
@@ -36,11 +37,12 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     // inflate the layout for this view
     View rootView = inflater.inflate(R.layout.single_deck, container, false);
 
-    // gets the current Deck ID and uses it to get the deck from the repository
-    String currentDeckID = this.getArguments().getString("deck_id");
-    Toast.makeText(getContext(), "Single Deck Screen " + currentDeckID, Toast.LENGTH_SHORT).show();
+    // gets the deckDecorator object from the bundle
+    DeckDecorator currentDeck = this.getArguments().getParcelable("deck");
+    Toast.makeText(getContext(), "Single Deck Screen " + currentDeck.getDeckName(), Toast.LENGTH_SHORT).show();
+
     // create instance of the presenter
-    singleDeckPresenter = new SingleDeckPresenter(this, currentDeckID);
+    singleDeckPresenter = new SingleDeckPresenter(this, currentDeck);
 
     // gets supportFragmentManager bc ViewPage uses support library fragments
     FragmentManager fragManager = getActivity().getSupportFragmentManager();

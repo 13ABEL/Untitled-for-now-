@@ -44,7 +44,6 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
     decksVHolder = new ViewHolder(view);
 
     //view.setOnClickListener(this);
-
     return decksVHolder;
   }
 
@@ -57,7 +56,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
   public void onBindViewHolder(@NonNull DisplayDeckAdapter.ViewHolder holder, int position) {
     // get the object to be bound from our array and bind it
     DeckDecorator deck = deckSet.get(position);
-    holder.bindRestraint(deck);
+    holder.bindRestraint(deck, position);
   }
 
   /**
@@ -111,25 +110,33 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
     }
 
     // binds a deck object to the view holder
-    public void bindRestraint(DeckDecorator deck) {
+    public void bindRestraint(DeckDecorator deck, int position) {
       deckName.setText(deck.getDeckName());
       deckAuthor.setText(deck.getAuthor());
 
-      itemView.setTag(deck.getDeckName());
+      itemView.setTag(position);
     }
 
     @Override
     public void onClick(View view) {
       // get the tag from the view
-      String position = view.getTag().toString();
-      Toast.makeText(myContext, position, Toast.LENGTH_SHORT).show();
+      int position = (int) view.getTag();
+      Toast.makeText(myContext, position + " ", Toast.LENGTH_SHORT).show();
+
+      // get the deck at the position
+      DeckDecorator openingDeck = deckSet.get((int) view.getTag());
 
       SingleDeckView singleDeckFragment = new SingleDeckView();
       Bundle args = new Bundle();
-      args.putString("POSITION", position);
+      // passes te object to the new fragment
+      args.putParcelable("deck", openingDeck);
       singleDeckFragment.setArguments(args);
     }
 
+  }
+  public DeckDecorator getDeck(int position) {
+    // getw the deck at the specified position
+    return deckSet.get(position);
   }
 
 }

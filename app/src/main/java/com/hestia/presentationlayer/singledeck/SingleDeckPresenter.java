@@ -7,6 +7,7 @@ import android.util.Log;
 import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.DeckDecorator;
 
 import java.util.ArrayList;
 
@@ -21,12 +22,13 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   private Deck currentDeck;
 
 
-  public SingleDeckPresenter(SingleDeckContract.View view, String deckID) {
+  public SingleDeckPresenter(SingleDeckContract.View view, DeckDecorator deck) {
     this.singleDeckView = view;
 
     // initialize the repository object to get data
-    deckRepository = new DeckRepositoryImpl();
-    deckRepository.getFullDeck(this, deckID);
+    //deckRepository = new DeckRepositoryImpl();
+    // deckRepository.getFullDeck(this, deckID);
+    this.currentDeck = deck;
   }
 
   /**
@@ -34,7 +36,7 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
    * @param deck
    */
   @Override
-  public void receiveFullDeck(Deck deck) {
+  public void receiveFullDeck(DeckDecorator deck) {
     this.currentDeck = deck;
 
     // tells the view what to display
