@@ -19,7 +19,7 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   private ArrayList <TabFragment> tabFragments = new ArrayList<>();
   private SingleDeckContract.View singleDeckView;
   private DeckRepository deckRepository;
-  private Deck currentDeck;
+  private DeckDecorator currentDeck;
 
 
   public SingleDeckPresenter(SingleDeckContract.View view, DeckDecorator deck) {

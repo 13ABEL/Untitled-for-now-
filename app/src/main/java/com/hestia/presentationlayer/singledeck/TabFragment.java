@@ -7,6 +7,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.DeckDecorator;
 
 /**
  * Created by Richard on 3/19/2018.
@@ -16,7 +17,7 @@ public abstract class TabFragment extends Fragment {
   SingleDeckContract.Presenter parentPresenter;
   int position;
 
-  public abstract void updateUI(Deck deck);
+  public abstract void updateUI(DeckDecorator deck);
 
   public void setPresenter(SingleDeckContract.Presenter presenter) {
     // uses the parent presenter to update information

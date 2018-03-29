@@ -61,6 +61,7 @@ public class DeckImpl implements Deck {
     return "not null";
   }
 
+  public String getSummary() { return this.summary;}
 
 
   public Map<String, Object> generateMap() {

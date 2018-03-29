@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 
 /**
@@ -37,10 +38,9 @@ public class InfoFragment extends TabFragment {
     return view;
   }
 
-  public void updateUI(Deck deck) {
+  public void updateUI(DeckDecorator deck) {
     TextView textThing = getActivity().findViewById(R.id.infotab_deck_summary);
-    textThing.setText(R.string.test_paragraph_long);
-    Toast.makeText(getContext(), "NAH B "  , Toast.LENGTH_LONG).show();
+    textThing.setText(deck.getSummary());
   }
 
 

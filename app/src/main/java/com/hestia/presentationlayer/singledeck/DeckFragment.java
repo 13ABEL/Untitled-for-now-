@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.DeckDecorator;
 
 /**
  * Created by Richard on 3/17/2018.
@@ -33,9 +34,9 @@ public class DeckFragment extends TabFragment {
     return view;
   }
 
-  public void updateUI(Deck deck) {
+  public void updateUI(DeckDecorator deck) {
     TextView textThing = getActivity().findViewById(R.id.listtab_test);
-    textThing.setText(R.string.test_paragraph_long);
+    textThing.setText(deck.getSummary());
   }
 }
 
