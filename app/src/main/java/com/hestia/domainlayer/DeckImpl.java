@@ -50,11 +50,11 @@ public class DeckImpl implements Deck {
   }
 
   public String getDeckName() {
-    return deckName;
+    return this.deckName;
   }
 
   public String getAuthor() {
-    return username;
+    return this.username;
   }
 
   public String toString() {

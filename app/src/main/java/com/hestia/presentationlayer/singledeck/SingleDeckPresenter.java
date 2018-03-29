@@ -24,15 +24,11 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
 
   public SingleDeckPresenter(SingleDeckContract.View view, DeckDecorator deck) {
     this.singleDeckView = view;
-
-    // initialize the repository object to get data
-    //deckRepository = new DeckRepositoryImpl();
-    // deckRepository.getFullDeck(this, deckID);
     this.currentDeck = deck;
   }
 
   /**
-   * Callback method to recieve the deck object from repository after async call
+   * Callback method to receive the deck object from repository after async call
    * @param deck
    */
   @Override

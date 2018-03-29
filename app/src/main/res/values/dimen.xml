@@ -16,6 +16,10 @@
 
     <dimen name="deck_item_title">14sp</dimen>
 
+    <dimen name="deck_item_name_height">40dp</dimen>
+    <dimen name="deck_item_height">130dp</dimen>
+
+
     <dimen name="deck_item_icon">40dp</dimen>
     <dimen name="deck_item_icon_margin">10dp</dimen>
 

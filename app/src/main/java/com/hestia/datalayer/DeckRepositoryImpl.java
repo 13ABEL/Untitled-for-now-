@@ -73,7 +73,9 @@ public class DeckRepositoryImpl implements DeckRepository {
             returnString = document.getId();// + " = " + document.getData();
 
             // formats the data into a deck object and adds it into the array of decks
-            DeckDecorator newDeck = parseFirebaseReturn(returnString);
+            // DeckDecorator newDeck = parseFirebaseReturn(returnString);
+            DeckDecorator newDeck = parseFullDeck(document.getData());
+            Log.d("NEW DECK", "newDeck = " + newDeck.getDeckName() );
             newDecks.add(newDeck);
           }
           displayDecksPresenter.receiveDeckBatch(newDecks);
@@ -137,7 +139,7 @@ public class DeckRepositoryImpl implements DeckRepository {
   private DeckDecorator parseFullDeck (Map <String, Object> deckMap) {
     // parse the data from the firestore map (implementation dependent)
     //TODO currently using author id -> need to change to username
-    String  author = deckMap.get("author").toString();
+    String  authorID = deckMap.get("author_id").toString();
     String deckName = (String) deckMap.get("deck_name");
     String summary = (String) deckMap.get("summary");
     String deckList = (String) deckMap.get("list");
@@ -145,13 +147,13 @@ public class DeckRepositoryImpl implements DeckRepository {
 
     Log.d("REPOSITORY MAP TESTING",
         " deck_name = " + deckName
-        +" author = " + author
+        +" authorID = " + authorID
         + " summary = " + summary
         + " deckList = " + deckList
         + " createdDate = " + createdDate.toString()
     );
 
-    return new DeckDecorator(deckName, author, deckList, summary, createdDate);
+    return new DeckDecorator(deckName, authorID, deckList, summary, createdDate);
   }
 
 

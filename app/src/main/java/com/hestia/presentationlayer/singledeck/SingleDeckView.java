@@ -71,4 +71,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     // TODO more lines when more info is used for this fragment
   }
 
+  //TODO implement a pull downwards refresh listener
+
 }

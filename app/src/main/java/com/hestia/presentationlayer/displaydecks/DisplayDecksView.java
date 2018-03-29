@@ -45,6 +45,9 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   private RecyclerView mRecyclerView;
   private RecyclerView.LayoutManager mLayoutManager;
 
+  //TODO implement a pull downwards refresh listener
+
+
   @Override
     public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
       // inflate the layout for this view
