@@ -1,31 +1,40 @@
 package com.hestia.domainlayer;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Richard on 3/7/2018.
  */
 
 public class DeckImpl implements Deck {
-  private ArrayList <String> deckList = new ArrayList<>();
+  protected ArrayList <String> deckList = new ArrayList<>();
   int DECK_LENGTH = 30;
   // variables that with default values
-  private String deckName = "No name";
-  private String username;
-  private String summary;
+  protected String deckName = "No name";
+  protected String username;
+  protected String summary;
 
   //
-  private String deckID;
-  private Date createdDate;
-  private String authorID;
+  protected String deckID;
+  protected Date createdDate;
+  protected String createdDateString;
+  protected String authorID;
 
   public DeckImpl (String name, String author, String list, String info, Date date) {
     this.deckName = name;
     this.username = author;
     this.summary = info;
     this.createdDate = date;
+
+    // format the Date as a string
+    DateFormat df = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss");
+   this.createdDateString = df.format(this.createdDate);
 
     // parse the deck list into an arraylist
     for (int i = 0; i < DECK_LENGTH; i ++) {
@@ -52,6 +61,21 @@ public class DeckImpl implements Deck {
     return "not null";
   }
 
+
+
+  public Map<String, Object> generateMap() {
+    Map <String, Object> mapRep = new HashMap();
+
+    // puts the object info into the map
+    mapRep.put("name", this.deckName);
+    mapRep.put("author", this.username);
+    mapRep.put("summary", this.summary);
+    mapRep.put("deckID", this.deckID);
+    mapRep.put("createdDate", this.createdDate);
+    mapRep.put("author", this.authorID);
+
+    return mapRep;
+  }
 
 
 }

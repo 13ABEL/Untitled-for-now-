@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.DisplayDeckAdapter;
 import com.hestia.presentationlayer.singledeck.SingleDeckView;
 
@@ -76,7 +77,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   }
 
 
-  public void addDecks (List <Deck> decks) {
+  public void addDecks (List <DeckDecorator> decks) {
     // add the list of decks to the adapter
     mAdapter.addDecks(decks);
   }

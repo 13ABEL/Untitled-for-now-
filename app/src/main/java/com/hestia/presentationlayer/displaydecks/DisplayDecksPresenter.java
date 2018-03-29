@@ -6,6 +6,7 @@ import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.domainlayer.Deck;
 import com.hestia.domainlayer.DeckImpl;
+import com.hestia.presentationlayer.DeckDecorator;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -54,7 +55,7 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
    * Receives method call after async task resolves to update the UI
    * @param decks
    */
-  public void receiveDeckBatch(List<Deck> decks) {
+  public void receiveDeckBatch(List<DeckDecorator> decks) {
     // adds to the list of decks
     displayDeckView.addDecks(decks);
   }

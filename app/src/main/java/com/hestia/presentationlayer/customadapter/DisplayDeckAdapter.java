@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.singledeck.SingleDeckView;
 
@@ -24,7 +25,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
    // View.OnClickListener{
   private View.OnClickListener listener;
   private Context myContext;
-  private ArrayList <Deck> deckSet;
+  private ArrayList <DeckDecorator> deckSet;
   private ViewHolder decksVHolder;
 
   public DisplayDeckAdapter(Context context) {
@@ -55,7 +56,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
   @Override
   public void onBindViewHolder(@NonNull DisplayDeckAdapter.ViewHolder holder, int position) {
     // get the object to be bound from our array and bind it
-    Deck deck = deckSet.get(position);
+    DeckDecorator deck = deckSet.get(position);
     holder.bindRestraint(deck);
   }
 
@@ -67,7 +68,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
     return deckSet.size();
   }
 
-  public void addDecks (List<Deck> addedDecks){
+  public void addDecks (List<DeckDecorator> addedDecks){
     deckSet.addAll(addedDecks);
     // notifies the adapter
     this.notifyDataSetChanged();
@@ -110,7 +111,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
     }
 
     // binds a deck object to the view holder
-    public void bindRestraint(Deck deck) {
+    public void bindRestraint(DeckDecorator deck) {
       deckName.setText(deck.getDeckName());
       deckAuthor.setText(deck.getAuthor());
 

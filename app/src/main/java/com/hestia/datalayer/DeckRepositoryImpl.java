@@ -11,6 +11,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hestia.domainlayer.Deck;
 import com.hestia.domainlayer.DeckImpl;
+import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksPresenter;
 import com.hestia.presentationlayer.singledeck.SingleDeckContract;
@@ -38,7 +39,7 @@ public class DeckRepositoryImpl implements DeckRepository {
   private FirebaseFirestore db;
   private String returnString = "";
 
-  private Deck fetchedDeck;
+  private DeckDecorator fetchedDeck;
 
 
   // testing purposes
@@ -64,7 +65,7 @@ public class DeckRepositoryImpl implements DeckRepository {
       public void onComplete(@NonNull Task<QuerySnapshot> task) {
         if (task.isSuccessful()) {
           //creates a new array for the decks
-          ArrayList <Deck> newDecks = new ArrayList<>();
+          ArrayList <DeckDecorator> newDecks = new ArrayList<>();
 
           for (DocumentSnapshot document: task.getResult()) {
             //test += document.getId() + " = " + document.getData();
@@ -72,7 +73,7 @@ public class DeckRepositoryImpl implements DeckRepository {
             returnString = document.getId();// + " = " + document.getData();
 
             // formats the data into a deck object and adds it into the array of decks
-            Deck newDeck = parseFirebaseReturn(returnString);
+            DeckDecorator newDeck = parseFirebaseReturn(returnString);
             newDecks.add(newDeck);
           }
           displayDecksPresenter.receiveDeckBatch(newDecks);
@@ -86,10 +87,10 @@ public class DeckRepositoryImpl implements DeckRepository {
   }
 
 
-  private Deck parseFirebaseReturn (String returnString) {
+  private DeckDecorator parseFirebaseReturn (String returnString) {
     String parsedString = returnString;
 
-    Deck newDeck = new DeckImpl(parsedString);
+    DeckDecorator newDeck = new DeckDecorator();
     return newDeck;
   }
 
@@ -133,7 +134,7 @@ public class DeckRepositoryImpl implements DeckRepository {
    * @param deckMap map representation of data from firestore
    * @return the Deck object representation of data from firestore
    */
-  private Deck parseFullDeck (Map <String, Object> deckMap) {
+  private DeckDecorator parseFullDeck (Map <String, Object> deckMap) {
     // parse the data from the firestore map (implementation dependent)
     //TODO currently using author id -> need to change to username
     String  author = deckMap.get("author").toString();
@@ -150,7 +151,7 @@ public class DeckRepositoryImpl implements DeckRepository {
         + " createdDate = " + createdDate.toString()
     );
 
-    return new DeckImpl(deckName, author, deckList, summary, createdDate);
+    return new DeckDecorator(deckName, author, deckList, summary, createdDate);
   }
 
 
@@ -158,10 +159,7 @@ public class DeckRepositoryImpl implements DeckRepository {
 
 
 
-
-
-  @Override
-  public void saveDeck(Deck deck) {
+  public void saveDeck(DeckDecorator deck) {
 
   }
 
