@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.domainlayer.Card;
@@ -57,13 +58,14 @@ public class DeckFragment extends TabFragment {
       test += deckList.get(i).getID() + " \n";
     }
 
+    Toast.makeText(getContext(), test, Toast.LENGTH_SHORT).show();
     // checks if the adapter instance already exists
-    if (deckListAdapter != null) {
+    //if (deckListAdapter != null) {
       // creates the new adapter instance and sets it as the adapter for the listview
       deckListAdapter = new SingleDeckCardAdapter(getContext(), deckList);
       ListView deckListview = getActivity().findViewById(R.id.deck_card_list);
       deckListview.setAdapter(deckListAdapter);
-    }
+    //}
 
     //textThing.setText(test);
   }

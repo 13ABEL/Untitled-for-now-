@@ -39,11 +39,13 @@ public class InfoFragment extends TabFragment {
     return view;
   }
 
+
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
     // adds the current fragment to the parent presenter once everything is loaded
     parentPresenter.addInfoTabFragment(this);
   }
+
 
   public void updateUI(DeckDecorator deck) {
     TextView textThing = getActivity().findViewById(R.id.infotab_deck_summary);

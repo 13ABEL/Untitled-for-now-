@@ -11,7 +11,7 @@ public class CardImpl implements Card{
   String name;
   String cardClass;
   String text;
-  int cost;
+  int cost = 0;
 
   public CardImpl() {
 
@@ -19,6 +19,8 @@ public class CardImpl implements Card{
 
   public CardImpl (String id) {
     this.cardID = id;
+    // temporary
+    this.name = id;
   }
 
   public String getID () {

@@ -3,6 +3,7 @@ package com.hestia.presentationlayer.customadapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.text.Layout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,32 +23,34 @@ import java.util.List;
 
 public class SingleDeckCardAdapter extends ArrayAdapter <Card> {
   private ArrayList<Card> deckList;
-  private Context parentContext;
+  private Context mContext;
 
   // viewholder for lookup cache
   private static class ViewHolder {
     TextView cardName;
     TextView cardCost;
-    ImageView cardImage;
+    //ImageView cardImage;
   }
 
   public SingleDeckCardAdapter(@NonNull Context context, List <Card> cardList) {
     super(context, R.layout.deck_card_item, cardList);
 
-    this.parentContext = context;
+    this.mContext = context;
     this.deckList = (ArrayList) cardList;
+
+    Log.d("TESTING ADAPTER", "TEST " +deckList.get(0).getName() + " " + deckList.get(1).getName() );
   }
 
   public View getView (int position, View convertView, ViewGroup parent) {
     // view to be returned
     View resultView;
     // retrieve the Card object based on position
-    Card currentCard = (Card) getItem(position);
+    Card currentCard = getItem(position);
 
     ViewHolder viewHolder;
     // creates the new view if it doesn't already exist
     if (convertView == null) {
-      LayoutInflater inflater = LayoutInflater.from(parentContext);
+      LayoutInflater inflater = LayoutInflater.from(mContext);
       resultView = inflater.inflate(R.layout.deck_card_item, parent, false);
 
       // Initializes the viewholder and its references to the newly inflated layout
@@ -55,25 +58,23 @@ public class SingleDeckCardAdapter extends ArrayAdapter <Card> {
       viewHolder.cardName = resultView.findViewById(R.id.deck_card_name);
       viewHolder.cardCost = resultView.findViewById(R.id.deck_card_cost);
 
-      // allows the viewholder to be accessed later on
+      // allows the view holder to be accessed later on
       resultView.setTag(viewHolder);
     }
     else {
-      // retrieves the viewholder object from the view
+      // retrieves the view holder object from the view
       viewHolder = (ViewHolder) convertView.getTag();
-      // since the view already exists, just use that and update its values instead
       resultView = convertView;
     }
 
-    // use the viewholder to update the layout values
+    // use the view holder to update the layout values
     viewHolder.cardName.setText(currentCard.getName());
-    viewHolder.cardCost.setText(currentCard.getCost());
+    viewHolder.cardCost.setText(currentCard.getCost() + "");
+    Log.d("viewholder set", "TEST " +currentCard.getName() + " " + currentCard.getCost() );
 
     // return completed view to be rendered
     return resultView;
   }
-
-
 
 
 
