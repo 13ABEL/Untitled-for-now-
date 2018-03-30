@@ -54,8 +54,8 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:paddingTop="@dimen/left_nav_padding_top"
-        android:paddingStart="@dimen/left_nav_padding_left">
+        app:menu="@menu/bottom_navigation_menu">
+
     </android.support.design.widget.NavigationView>
 
 </android.support.v4.widget.DrawerLayout>

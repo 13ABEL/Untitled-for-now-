@@ -13,7 +13,7 @@ import java.util.Map;
  */
 
 public class DeckImpl implements Deck {
-  protected ArrayList <String> deckList = new ArrayList<>();
+  protected ArrayList <Card> deckList = new ArrayList<>();
   int DECK_LENGTH = 30;
   // variables that with default values
   protected String deckName = "No name";
@@ -38,16 +38,15 @@ public class DeckImpl implements Deck {
 
     // parse the deck list into an arraylist
     for (int i = 0; i < DECK_LENGTH; i ++) {
-      this.deckList.add(list.substring(i*3, i*3 + 4));
+      // gets the card id from the string
+      String cardID = list.substring(i*3, i*3 + 4);
+      this.deckList.add(new CardImpl(cardID));
     }
   }
 
   public DeckImpl () {
   }
 
-  public DeckImpl (String author) {
-    this.deckName = author;
-  }
 
   public String getDeckName() {
     return this.deckName;
@@ -63,20 +62,10 @@ public class DeckImpl implements Deck {
 
   public String getSummary() { return this.summary;}
 
-
-  public Map<String, Object> generateMap() {
-    Map <String, Object> mapRep = new HashMap();
-
-    // puts the object info into the map
-    mapRep.put("name", this.deckName);
-    mapRep.put("author", this.username);
-    mapRep.put("summary", this.summary);
-    mapRep.put("deckID", this.deckID);
-    mapRep.put("createdDate", this.createdDate);
-    mapRep.put("author", this.authorID);
-
-    return mapRep;
+  public ArrayList<Card> getDeckList () {
+    return this.deckList;
   }
+
 
 
 }
