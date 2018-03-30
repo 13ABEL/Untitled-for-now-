@@ -1,6 +1,8 @@
 package com.hestia.presentationlayer.singledeck;
 
 import android.os.Bundle;
+import android.support.v7.widget.GridLayoutManager;
+import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -61,10 +63,13 @@ public class DeckFragment extends TabFragment {
     Toast.makeText(getContext(), test, Toast.LENGTH_SHORT).show();
     // checks if the adapter instance already exists
     //if (deckListAdapter != null) {
+
       // creates the new adapter instance and sets it as the adapter for the listview
       deckListAdapter = new SingleDeckCardAdapter(getContext(), deckList);
       ListView deckListview = getActivity().findViewById(R.id.deck_card_list);
       deckListview.setAdapter(deckListAdapter);
+
+
     //}
 
     //textThing.setText(test);
