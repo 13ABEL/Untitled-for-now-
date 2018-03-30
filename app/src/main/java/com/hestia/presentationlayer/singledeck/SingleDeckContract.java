@@ -19,6 +19,8 @@ public interface SingleDeckContract {
   interface Presenter {
     void receiveFullDeck(DeckDecorator deck);
     void addTabFragment(TabFragment tabFragment, int position);
+    void addInfoTabFragment(InfoFragment newInfoFrag);
+    void addDeckTabFragment(DeckFragment newInfoFrag);
   }
 
 

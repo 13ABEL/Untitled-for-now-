@@ -5,17 +5,26 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.hestia.R;
+import com.hestia.domainlayer.Card;
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
+import com.hestia.presentationlayer.customadapter.SingleDeckCardAdapter;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 /**
  * Created by Richard on 3/17/2018.
  */
 
 public class DeckFragment extends TabFragment {
+  private SingleDeckCardAdapter deckListAdapter = null;
   public int test = 0;
 
   // new instance constructor
@@ -34,10 +43,33 @@ public class DeckFragment extends TabFragment {
     return view;
   }
 
-  public void updateUI(DeckDecorator deck) {
-    TextView textThing = getActivity().findViewById(R.id.listtab_test);
-    textThing.setText(deck.getSummary());
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    // adds the current fragment to the parent presenter once everything is loaded
+    parentPresenter.addDeckTabFragment(this);
   }
+
+  public void updateUI(List <Card> deckList) {
+    //TextView textThing = getActivity().findViewById(R.id.listtab_test);
+
+    String test = "";
+    for (int i = 0; i < deckList.size(); i ++) {
+      test += deckList.get(i).getID() + " \n";
+    }
+
+    // checks if the adapter instance already exists
+    if (deckListAdapter != null) {
+      // creates the new adapter instance and sets it as the adapter for the listview
+      deckListAdapter = new SingleDeckCardAdapter(getContext(), deckList);
+      ListView deckListview = getActivity().findViewById(R.id.deck_card_list);
+      deckListview.setAdapter(deckListAdapter);
+    }
+
+    //textThing.setText(test);
+  }
+
+
+
 }
 
 

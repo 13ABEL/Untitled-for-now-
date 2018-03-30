@@ -17,7 +17,7 @@ public abstract class TabFragment extends Fragment {
   SingleDeckContract.Presenter parentPresenter;
   int position;
 
-  public abstract void updateUI(DeckDecorator deck);
+  // public abstract void updateUI(DeckDecorator deck);
 
   public void setPresenter(SingleDeckContract.Presenter presenter) {
     // uses the parent presenter to update information

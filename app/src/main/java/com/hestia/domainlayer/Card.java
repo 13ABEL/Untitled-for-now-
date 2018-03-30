@@ -5,6 +5,8 @@ package com.hestia.domainlayer;
  */
 
 public interface Card {
-
+  String getID();
+  String getName();
+  int getCost();
 
 }

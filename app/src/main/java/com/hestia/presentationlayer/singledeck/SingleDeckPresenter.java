@@ -1,5 +1,6 @@
 package com.hestia.presentationlayer.singledeck;
 
+import android.icu.text.IDNA;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -10,12 +11,20 @@ import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Richard on 3/14/2018.
  */
 
 public class SingleDeckPresenter implements SingleDeckContract.Presenter{
+  private final int INFO_TAB = 1;
+  private final int DECK_TAB = 2;
+  private final int EX_TAB = 3;
+
+  private InfoFragment infoFragment;
+  private DeckFragment deckFragment;
+
   private ArrayList <TabFragment> tabFragments = new ArrayList<>();
   private SingleDeckContract.View singleDeckView;
   private DeckRepository deckRepository;
@@ -40,16 +49,31 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   }
 
   @Override
-  public void addTabFragment(TabFragment tabFragment, int position) {
-    if (tabFragments.size() >= position) {
-      // adds the fragment into the current array of tab fragments
-      this.tabFragments.add(position, tabFragment);
-      tabFragment.updateUI(currentDeck);
-    } else {
-      this.tabFragments.add(tabFragment);
-      tabFragment.updateUI(currentDeck);
+  public void addTabFragment(TabFragment tabFragment, int tabPosition) {
+    // adds the fragment into the current array of tab fragments
+    this.tabFragments.add(tabPosition, tabFragment);
+
+    // passes the correct method to update the UI based on tab position
+    if (tabPosition == INFO_TAB) {
+      InfoFragment specificFrag = (InfoFragment) tabFragment;
+      specificFrag.updateUI(currentDeck);
+    }
+    else if (tabPosition == DECK_TAB) {
+      DeckFragment specificFrag = (DeckFragment) tabFragment;
+      specificFrag.updateUI(currentDeck.getDeckList());
     }
   }
 
+  public void addInfoTabFragment(InfoFragment newInfoFrag) {
+    this.infoFragment = newInfoFrag;
+    // updates the UI
+    newInfoFrag.updateUI(currentDeck);
+  }
 
-}
+  public void addDeckTabFragment(DeckFragment newDeckFrag) {
+    this.deckFragment = newDeckFrag;
+    // updates the UI
+    newDeckFrag.updateUI(currentDeck.getDeckList());
+  }
+
+  }

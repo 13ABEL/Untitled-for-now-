@@ -4,15 +4,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
 
-    android:paddingStart="@dimen/tab_spacing_side"
-    android:paddingEnd="@dimen/tab_spacing_side"
-
     android:scrollbarStyle="outsideOverlay">
 
-    <TextView
+    <ListView
+        android:id="@+id/deck_card_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+
+    </ListView>
+
+    <!-- <TextView
         android:id="@+id/listtab_test"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+
+        android:paddingStart="@dimen/tab_spacing_side"
+        android:paddingEnd="@dimen/tab_spacing_side"/>-->
 
 
 

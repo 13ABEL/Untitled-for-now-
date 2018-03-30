@@ -20,6 +20,7 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
  */
 
 public class InfoFragment extends TabFragment {
+  //
 
   // new instance constructor
   public static InfoFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter) {
@@ -36,6 +37,12 @@ public class InfoFragment extends TabFragment {
     // inflates the layout into a view
     View view = inflater.inflate(R.layout.single_deck_infotab, container, false);
     return view;
+  }
+
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    // adds the current fragment to the parent presenter once everything is loaded
+    parentPresenter.addInfoTabFragment(this);
   }
 
   public void updateUI(DeckDecorator deck) {

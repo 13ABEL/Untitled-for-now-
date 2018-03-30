@@ -21,5 +21,16 @@ public class CardImpl implements Card{
     this.cardID = id;
   }
 
+  public String getID () {
+    return this.cardID;
+  }
+
+  public String getName () {
+    return this.name;
+  }
+  public int getCost () {
+    return this.cost;
+  }
+
 
 }
