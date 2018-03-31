@@ -24,9 +24,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       displayCardsPresenter = new DisplayCardsPresenter(this);
     }
 
-
     return rootView;
   }
+
+
 
 
 

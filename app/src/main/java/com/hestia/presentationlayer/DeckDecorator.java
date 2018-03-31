@@ -1,5 +1,7 @@
 package com.hestia.presentationlayer;
 
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -18,6 +20,7 @@ import java.util.Map;
  *
  */
 
+@Entity
 public class DeckDecorator extends DeckImpl implements Parcelable {
 
   public DeckDecorator () {

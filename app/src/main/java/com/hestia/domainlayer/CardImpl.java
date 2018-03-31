@@ -6,7 +6,7 @@ import android.widget.CalendarView;
  * Created by Richard on 3/29/2018.
  */
 
-public class CardImpl implements Card{
+public class CardImpl implements Card {
   String cardID;
   String name;
   String cardClass;

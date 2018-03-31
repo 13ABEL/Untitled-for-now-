@@ -90,7 +90,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
   }
 
   // class for caching item data
-  class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+  class ViewHolder extends RecyclerView.ViewHolder { //implements View.OnClickListener{
     private Context context;
 
     // cache the data
@@ -117,21 +117,21 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
       itemView.setTag(position);
     }
 
-    @Override
-    public void onClick(View view) {
-      // get the tag from the view
-      int position = (int) view.getTag();
-      Toast.makeText(myContext, position + " ", Toast.LENGTH_SHORT).show();
-
-      // get the deck at the position
-      DeckDecorator openingDeck = deckSet.get((int) view.getTag());
-
-      SingleDeckView singleDeckFragment = new SingleDeckView();
-      Bundle args = new Bundle();
-      // passes te object to the new fragment
-      args.putParcelable("deck", openingDeck);
-      singleDeckFragment.setArguments(args);
-    }
+//    @Override
+//    public void onClick(View view) {
+//      // get the tag from the view
+//      int position = (int) view.getTag();
+//      Toast.makeText(myContext, position + " ", Toast.LENGTH_SHORT).show();
+//
+//      // get the deck at the position
+//      DeckDecorator openingDeck = deckSet.get((int) view.getTag());
+//
+//      SingleDeckView singleDeckFragment = new SingleDeckView();
+//      Bundle args = new Bundle();
+//      // passes te object to the new fragment
+//      args.putParcelable("deck", openingDeck);
+//      singleDeckFragment.setArguments(args);
+//    }
 
   }
   public DeckDecorator getDeck(int position) {

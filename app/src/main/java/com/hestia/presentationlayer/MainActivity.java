@@ -89,7 +89,7 @@ public class MainActivity extends AppCompatActivity{
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             // Fragment that will be displayed
-            Fragment displayFragment;
+            Fragment displayFragment = null;
             // switch to select the appropriate fragment to start based on item id
             int  displayID = item.getItemId();
 
@@ -103,19 +103,22 @@ public class MainActivity extends AppCompatActivity{
             }
             else if (displayID == R.id.bottom_navigation_3) {
               Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
-              displayFragment = new DisplayCardsView();
+              //displayFragment = new DisplayCardsView();
             }
             else if (displayID == R.id.bottom_navigation_4) {
               Toast.makeText(getBaseContext(), "NAV 4", Toast.LENGTH_SHORT).show();
-              displayFragment = new DisplayCardsView();
+              //displayFragment = new DisplayCardsView();
             }
             else {
               Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
               displayFragment = new DisplayCardsView();
             }
 
-            // replace the current screen with the appropriate fragment
-            getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, displayFragment).commit();
+            if (displayFragment != null) {
+              // replace the current screen with the appropriate fragment
+              getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, displayFragment).commit();
+            }
+
             return true;
           }
         }
