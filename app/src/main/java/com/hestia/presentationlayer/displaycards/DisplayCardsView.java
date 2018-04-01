@@ -33,11 +33,19 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       // creates a new instance of the presenter
       displayCardsPresenter = new DisplayCardsPresenter(this);
     }
-
-    // temp testing
-    Toast.makeText(this.getContext(), "HI", Toast.LENGTH_SHORT);
+    // fetches the first batch of cards to be displayed
+    displayCardsPresenter.fetchCardBatch();
 
     return rootView;
+  }
+
+
+
+  public void displayCardBatch(List <CardDecorator> cardBatch) {
+    Toast.makeText(this.getContext(), "MHM", Toast.LENGTH_SHORT);
+    TextView test = getActivity().findViewById(R.id.tester_id);
+    String testText = cardBatch.size() + " BIG MANS ";
+    test.setText(testText);
   }
 
   /**
@@ -50,8 +58,4 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     return this.getContext();
   }
 
-  public void displayCardBatch(List <CardDecorator> cardBatch) {
-    TextView test = getActivity().findViewById(R.id.tester_id);
-    test.setText(cardBatch.size() + " WOIW BIG MANS ");
-  }
 }

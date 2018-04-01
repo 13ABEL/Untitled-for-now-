@@ -16,24 +16,41 @@ import java.util.List;
  */
 
 public class CardRepositoryImpl implements CardRepository {
+  private CardDatabase cardDatabase;
+
   @Override
   public Card getCardByID(String ID) {
     return null;
   }
 
-  public List<CardDecorator> getCardBatch (DisplayCardsContract.Presenter presenter, int numCards) {
-    // gets the context of the view
+
+  public void getCardBatch (DisplayCardsContract.Presenter presenter, int numCards) {
+    // gets the context of the view and updates the database instance
     Context viewContext = presenter.getView().getViewContext();
+    cardDatabase = CardDatabase.getDatabase(viewContext);
 
-    CardDatabase cardDatabase = CardDatabase.getDatabase(viewContext);
-    List <CardDecorator> returnedCards = cardDatabase.cardModel().getBatch(numCards);
-
-    // routes the information back to the presenter
-    presenter.receiveCardBatch(returnedCards);
-
-    return returnedCards;
+    NewTask fetchBatchTask = new NewTask();
+    fetchBatchTask.execute(presenter, numCards);
   }
 
+
+
+  class NewTask extends AsyncTask <Object, Integer, List<CardDecorator>>{
+    private  DisplayCardsContract.Presenter presenter;
+
+    @Override
+    protected List<CardDecorator> doInBackground(Object... objects) {
+      this.presenter = (DisplayCardsContract.Presenter) objects[0];
+      int numCards = (int) objects[1];
+      // gets the batch of cards
+      return cardDatabase.cardModel().getBatch(numCards);
+    }
+
+    protected void onPostExecute(List<CardDecorator> returnedCards) {
+      // routes the information back to the presenter
+      presenter.receiveCardBatch(returnedCards);
+    }
+  }
 
 
 }

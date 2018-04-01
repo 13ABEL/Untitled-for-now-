@@ -22,6 +22,7 @@ public interface DisplayCardsContract {
 
   interface Presenter extends Base.BasePresenter {
     View getView();
+    void fetchCardBatch();
     void receiveCardBatch(List <CardDecorator> cardBatch);
   }
 
