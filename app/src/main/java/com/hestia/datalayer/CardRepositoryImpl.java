@@ -24,11 +24,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.*;
+import org.json.JSONObject;
+import org.json.simple.*;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 /**
  * Created by Richard on 3/31/2018.
  */
 
 public class CardRepositoryImpl implements CardRepository {
+  static final String TAG = "CARD REPOSITOR";
   static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards";
 
   private CardDatabase cardDatabase;
@@ -97,6 +104,21 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
+  public void initializeDatabase (String jsonReturn) {
+    JSONParser parser = new JSONParser();
+
+    try {
+      Object object = parser.parse(jsonReturn);
+      org.json.JSONObject jsonObject = (JSONObject) object;
+
+
+
+    } catch (ParseException e) {
+      Log.e (TAG, "There was an issue parsing the JSON return: " + e.getMessage());
+    }
+
+
+  }
 
 
 
