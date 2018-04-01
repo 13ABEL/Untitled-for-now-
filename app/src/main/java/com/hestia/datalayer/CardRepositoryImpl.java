@@ -19,29 +19,32 @@ import com.hestia.domainlayer.CardImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import org.json.*;
-import org.json.JSONObject;
-import org.json.simple.*;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
+
 
 /**
  * Created by Richard on 3/31/2018.
  */
 
 public class CardRepositoryImpl implements CardRepository {
-  static final String TAG = "CARD REPOSITOR";
-  static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards";
+  static final String TAG = "CARD_REPOSITORY";
+  static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1";
 
   private CardDatabase cardDatabase;
 
   private DisplayCardsContract.Presenter presenter;
   private Context viewContext;
+
 
   public CardRepositoryImpl(DisplayCardsContract.Presenter newPresenter) {
 
@@ -63,6 +66,7 @@ public class CardRepositoryImpl implements CardRepository {
     fetchBatchTask.execute(presenter, numCards);
   }
 
+
   public void initializeDatabase () {
     // gets the endpoint key from the secrets xml file
     final String API_KEY = viewContext.getString(R.string.hearthstone_api_key);
@@ -74,8 +78,8 @@ public class CardRepositoryImpl implements CardRepository {
         new Response.Listener<String>() {
           @Override
           public void onResponse(String response) {
-            Log.e("RESPONSE", response);
-            Toast.makeText(viewContext, response.substring(0, 500), Toast.LENGTH_SHORT).show();
+            // calls the method to parse the JSON results and insert them into the database
+            insertJSONReturn(response);
           }
         }, new Response.ErrorListener() {
           @Override
@@ -85,7 +89,7 @@ public class CardRepositoryImpl implements CardRepository {
           }
         }) {
 
-      // overrides the getheaders method to add custom headers
+      // overrides the getheaders method to add custom headers (for auth)
       @Override
       public Map<String, String> getHeaders() {
         Map<String, String> params = new HashMap<String, String>();
@@ -93,7 +97,6 @@ public class CardRepositoryImpl implements CardRepository {
         return params;
       }
     };
-
     // Add the request to the RequestQueue.
     rQueue.add(stringRequest);
   }
@@ -104,20 +107,36 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
-  public void initializeDatabase (String jsonReturn) {
+  private void insertJSONReturn (String jsonReturn) {
+    // create the new instance of the parser to iteract with the data
     JSONParser parser = new JSONParser();
 
     try {
       Object object = parser.parse(jsonReturn);
-      org.json.JSONObject jsonObject = (JSONObject) object;
+      JSONObject jsonObject = (JSONObject) object;
 
+      JSONArray expansionSet;
+      JSONObject card;
 
+      // create the iterator for each expansion set
+      Iterator expansionIterator = jsonObject.keySet().iterator();
+      while (expansionIterator.hasNext()) {
+        String expansionKey = (String) expansionIterator.next();
+        expansionSet = (JSONArray) jsonObject.get(expansionKey);
 
+        // iterate through the cards in each expansion using the JSON object iterator
+        Iterator expansionCardIterator = expansionSet.iterator();
+        while (expansionCardIterator.hasNext()) {
+          // get the next key for the loop
+          card = (JSONObject) expansionCardIterator.next();
+          Log.e(TAG, (String) card.get("name"));
+        }
+
+        Toast.makeText(viewContext, "Finished import cards from the " + expansionKey + " set", Toast.LENGTH_SHORT).show();
+      }
     } catch (ParseException e) {
       Log.e (TAG, "There was an issue parsing the JSON return: " + e.getMessage());
     }
-
-
   }
 
 
