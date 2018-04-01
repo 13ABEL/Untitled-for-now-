@@ -24,7 +24,8 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
     this.displayCardsView = view;
 
     // initialize the instance of the repository
-    cardRepo = new CardRepositoryImpl();
+    cardRepo = new CardRepositoryImpl(this);
+    cardRepo.initializeDatabase();
   }
 
   public DisplayCardsContract.View getView () {
@@ -33,7 +34,7 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
 
 
   public void fetchCardBatch() {
-    cardRepo.getCardBatch(this, BATCH_SIZE);
+    cardRepo.getCardBatch(BATCH_SIZE);
     //TODO update the currentBatchEnd value
   }
 

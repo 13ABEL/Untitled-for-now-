@@ -1,6 +1,7 @@
 package com.hestia.datalayer.Card;
 
 import android.arch.persistence.room.Dao;
+import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 import com.hestia.domainlayer.CardImpl;
@@ -30,4 +31,8 @@ public interface CardDao {
   // selects all cards with a certain cost
   @Query("SELECT * FROM CardDecorator WHERE card_cost LIKE :cost")
   List<CardDecorator> getAllWithCost(int cost);
+
+  // inserts all card into the database
+  @Insert
+  void insertAll(CardDecorator ... cardDecorators);
 }

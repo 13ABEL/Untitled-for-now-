@@ -11,7 +11,8 @@ public interface CardRepository {
 
   Card getCardByID(String ID);
 
-  void getCardBatch(DisplayCardsContract.Presenter presenter, int batchSize);
+  void getCardBatch(int batchSize);
+  void initializeDatabase();
 
 
 
