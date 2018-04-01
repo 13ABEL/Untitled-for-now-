@@ -10,4 +10,7 @@ public interface CardRepository {
 
   Card getCardByID(String ID);
 
+
+
+
 }

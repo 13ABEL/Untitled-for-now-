@@ -3,6 +3,7 @@ package com.hestia.datalayer.Card;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Query;
 
+import com.hestia.domainlayer.CardImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 
 import java.util.List;
@@ -14,19 +15,19 @@ import java.util.List;
 @Dao
 public interface CardDao {
   // selects all cards
-  @Query("SELECT * FROM carddecorator")
-  List<CardDecorator> getAll();
+  @Query("SELECT * FROM CardDecorator LIMIT :batchSize")
+  List<CardDecorator> getBatch(int batchSize);
 
   // selects all cards in a class
-  @Query("SELECT * FROM carddecorator")
+  @Query("SELECT * FROM CardDecorator")
   List<CardDecorator> getAllInClass();
 
   //TODO make column
   // selects all cards in an expansion
-  @Query("SELECT * FROM carddecorator")
+  @Query("SELECT * FROM CardDecorator")
   List<CardDecorator> getAllInExpansion();
 
   // selects all cards with a certain cost
-  @Query("SELECT * FROM carddecorator WHERE card_cost LIKE :cost")
+  @Query("SELECT * FROM CardDecorator WHERE card_cost LIKE :cost")
   List<CardDecorator> getAllWithCost(int cost);
 }
