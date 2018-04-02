@@ -34,5 +34,9 @@ public interface CardDao {
 
   // inserts all card into the database
   @Insert
-  void insertAll(CardDecorator ... cardDecorators);
+  void insertAll(List <CardDecorator> cards);
+  // inserts all card into the database
+
+  @Insert
+  void insert(CardDecorator cardDecorator);
 }

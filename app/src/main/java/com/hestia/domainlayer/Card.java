@@ -10,8 +10,7 @@ import android.support.annotation.NonNull;
 
 
 public interface Card {
-
-  String getID();
+  int getID();
   String getName();
   int getCost();
 

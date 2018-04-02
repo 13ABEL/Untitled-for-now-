@@ -6,15 +6,17 @@ import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 import android.widget.CalendarView;
 
+import static java.lang.Integer.parseInt;
+
 /**
  * Created by Richard on 3/29/2018.
  */
 
 @Entity
 public class CardImpl implements Card {
-  @PrimaryKey
+  @PrimaryKey(autoGenerate = true)
   @NonNull
-  public String cardID;
+  public int cardID;
 
   @ColumnInfo(name = "card_name")
   public String name;
@@ -25,8 +27,19 @@ public class CardImpl implements Card {
   @ColumnInfo(name = "card_text")
   public String text;
 
+  @ColumnInfo(name = "card_rarity")
+  public String rarity;
+
+  @ColumnInfo(name = "card_type")
+  public String type;
+
+  @ColumnInfo(name = "card_tribe")
+  public String tribe;
+
   @ColumnInfo(name = "card_cost")
   public int cost;
+
+
 
 
   public CardImpl() {
@@ -34,15 +47,16 @@ public class CardImpl implements Card {
   }
 
   public CardImpl (String id) {
-    this.cardID = id;
+    this.cardID = parseInt(id);
     // temporary
     this.name = id;
     this.cost = 0;
   }
 
-  public String getID () {
+  public int getID () {
     return this.cardID;
   }
+
 
   public String getName () {
     return this.name;

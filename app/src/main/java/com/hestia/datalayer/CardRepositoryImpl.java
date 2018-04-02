@@ -30,6 +30,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import static java.lang.Integer.parseInt;
 
 
 /**
@@ -107,30 +108,60 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
+  /**
+   * Used to parse the JSON response from the hearthstone API (non official)
+   * @param jsonReturn the response from the GET query to the api endpoint
+   */
   private void insertJSONReturn (String jsonReturn) {
     // create the new instance of the parser to iteract with the data
     JSONParser parser = new JSONParser();
 
     try {
-      Object object = parser.parse(jsonReturn);
-      JSONObject jsonObject = (JSONObject) object;
-
+      JSONObject jsonObject = (JSONObject) parser.parse(jsonReturn);
       JSONArray expansionSet;
       JSONObject card;
 
-      // create the iterator for each expansion set
+      Object testNull;
+
+      // create the iterator for each expansion set using its keyset
       Iterator expansionIterator = jsonObject.keySet().iterator();
       while (expansionIterator.hasNext()) {
         String expansionKey = (String) expansionIterator.next();
         expansionSet = (JSONArray) jsonObject.get(expansionKey);
 
-        // iterate through the cards in each expansion using the JSON object iterator
+        ArrayList <CardDecorator> newCards = new ArrayList<>();
+
+        // create the iterator for this expansion directly because it's a JSON Array
         Iterator expansionCardIterator = expansionSet.iterator();
+        // iterate through the cards in each expansion
         while (expansionCardIterator.hasNext()) {
           // get the next key for the loop
           card = (JSONObject) expansionCardIterator.next();
-          Log.e(TAG, (String) card.get("name"));
+
+          int cardCost = -1;
+          testNull = card.get("cost");
+          if (testNull != null) {
+            Long longCost = (Long) testNull;
+            cardCost = longCost.intValue();
+          }
+
+          Log.i(TAG, (String) card.get("name"));
+          // inserts the card into the database
+          newCards.add( new CardDecorator(
+              (String) card.get("dbfId"),
+              (String) card.get("name"),
+              (String) card.get("faction"),
+              (String) card.get("type"),
+              (String) card.get("rarity"),
+              (String) card.get("text"),
+              "",
+              cardCost
+              )
+          );
         }
+
+        InsertTask insertCardsTask = new InsertTask();
+        insertCardsTask.execute(newCards);
 
         Toast.makeText(viewContext, "Finished import cards from the " + expansionKey + " set", Toast.LENGTH_SHORT).show();
       }
@@ -138,6 +169,7 @@ public class CardRepositoryImpl implements CardRepository {
       Log.e (TAG, "There was an issue parsing the JSON return: " + e.getMessage());
     }
   }
+
 
 
 
@@ -159,6 +191,16 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
+  class InsertTask extends AsyncTask <List <CardDecorator>, Integer, Integer>{
+    @Override
+    protected Integer doInBackground(List <CardDecorator> ... cards) {
+      List<CardDecorator> cardList = cards[0];
+      // insert all the cards async
+      cardDatabase.cardModel().insertAll(cardList);
+
+      return cards.length;
+    }
+  }
 
 
 

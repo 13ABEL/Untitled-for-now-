@@ -14,7 +14,7 @@ import com.hestia.domainlayer.CardImpl;
  * Created by Richard on 3/31/2018.
  */
 
-@Database(entities = {CardDecorator.class}, version = 1, exportSchema = false)
+@Database(entities = {CardDecorator.class}, version = 2, exportSchema = false)
 public abstract class CardDatabase extends RoomDatabase {
   private static CardDatabase INSTANCE = null;
 

@@ -18,7 +18,21 @@ import com.hestia.domainlayer.CardImpl;
 
 @Entity
 public class CardDecorator extends CardImpl {
+  // Room uses this to access the class
+  public CardDecorator() {
+    super();
+  }
 
-
+  public CardDecorator(String cardID, String name, String cardClass, String type, String rarity,
+                       String text, String tribe, int cost ) {
+    //this.cardID = cardID;
+    this.name = name;
+    this.cardClass = cardClass;
+    this.type = type;
+    this.rarity = rarity;
+    this.text = text;
+    this.tribe = tribe;
+    this.cost = cost;
+  }
 
 }
