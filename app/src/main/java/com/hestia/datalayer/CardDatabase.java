@@ -25,6 +25,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -37,32 +38,42 @@ import java.util.Map;
 
 @Database(entities = {CardDecorator.class}, version = 2, exportSchema = false)
 public abstract class CardDatabase extends RoomDatabase {
-  static final String TAG = "CARD_REPOSITORY";
-  static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1";
+  private static final String TAG = "CARD_DATABASE";
+  private static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1";
 
   private static CardDatabase INSTANCE = null;
-  private static Context mContext;
 
   public abstract CardDao cardModel();
 
   public static CardDatabase getDatabase (Context mContext) {
     // following singleton pattern - generates instance if it doesn't already exist
     if (INSTANCE == null) {
+      // code to check if the database file exists
+      File currentDB = mContext.getDatabasePath("CardDatabase");
+      Boolean initializeDB = !currentDB.exists();
+
       // create a new instance of the database
       INSTANCE = Room.databaseBuilder(mContext, CardDatabase.class, "CardDatabase")
           .build();
 
-      // initializes the database
-      INSTANCE.initializeDatabase(mContext);
+      // initializes the database based on earlier check, after room instance has been created
+      if (initializeDB) {
+        INSTANCE.initializeDatabase(mContext);
+      }
+      else {
+        Log.i(TAG, "Database exists - no need to reinitialize");
+      }
     }
+
     return INSTANCE;
   }
 
   public static void destroyInstance() {
     INSTANCE = null;
   }
+
   // since we're only calling this once, no need for repository
-  public static void initializeDatabase(final Context mContext) {
+  private void initializeDatabase(final Context mContext) {
     // gets the endpoint key from the secrets xml file
     final String API_KEY = mContext.getString(R.string.hearthstone_api_key);
     // create the request queue
