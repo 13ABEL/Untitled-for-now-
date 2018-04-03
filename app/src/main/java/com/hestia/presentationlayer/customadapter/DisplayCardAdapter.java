@@ -1,5 +1,6 @@
 package com.hestia.presentationlayer.customadapter;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,13 @@ import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
  */
 
 public class DisplayCardAdapter extends RecyclerView.Adapter<DisplayCardAdapter.ViewHolder> {
+  private Context mContext;
+
+  public DisplayCardAdapter(Context context) {
+    super();
+    this.mContext = context;
+  }
+
 
   @Override
   public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {

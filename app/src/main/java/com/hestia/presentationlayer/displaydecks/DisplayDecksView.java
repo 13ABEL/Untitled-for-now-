@@ -50,17 +50,17 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
   @Override
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-      // inflate the layout for this view
-      View rootView = inflater.inflate(R.layout.display_decks, container, false);
+    // inflate the layout for this view
+    View rootView = inflater.inflate(R.layout.display_decks, container, false);
 
     // initialize the instance of the recycler view
     mRecyclerView = rootView.findViewById(R.id.recycler_list);
     mRecyclerView.setHasFixedSize(true);
 
     // initializes and sets the layout manager plus adapter
-    mLayoutManager = new GridLayoutManager(getActivity(), 2);
+    mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
     mRecyclerView.setLayoutManager(mLayoutManager);
-    mAdapter = new DisplayDeckAdapter(getActivity());
+    mAdapter = new DisplayDeckAdapter(rootView.getContext());
 
     // creates a new onclick and passes it to the adapter
     AdapterListener listener = new AdapterListener();

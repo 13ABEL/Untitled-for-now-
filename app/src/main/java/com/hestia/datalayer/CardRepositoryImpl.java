@@ -2,35 +2,16 @@ package com.hestia.datalayer;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
-import com.android.volley.Response;
-import com.android.volley.VolleyError;
-import com.android.volley.toolbox.StringRequest;
-import com.android.volley.toolbox.Volley;
-import com.google.android.gms.tasks.Task;
-import com.hestia.R;
 import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
-import com.hestia.domainlayer.CardImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 
-import static java.lang.Integer.parseInt;
+import java.util.List;
 
 
 /**

@@ -29,6 +29,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
   private ViewHolder decksVHolder;
 
   public DisplayDeckAdapter(Context context) {
+    super();
     this.myContext = context;
     this.deckSet = new ArrayList<>();
   }
@@ -54,7 +55,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
    */
   @Override
   public void onBindViewHolder(@NonNull DisplayDeckAdapter.ViewHolder holder, int position) {
-    // get the object to be bound from our array and bind it
+    // get the object to be bound from our array and bind it to the viewholder
     DeckDecorator deck = deckSet.get(position);
     holder.bindRestraint(deck, position);
   }
