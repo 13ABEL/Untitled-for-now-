@@ -12,7 +12,7 @@ public interface CardRepository {
   Card getCardByID(String ID);
 
   void getCardBatch(int batchSize);
-  void initializeDatabase();
+  //void initializeDatabase();
 
 
 

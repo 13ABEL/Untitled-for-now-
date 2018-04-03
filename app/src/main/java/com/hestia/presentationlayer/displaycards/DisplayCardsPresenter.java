@@ -25,7 +25,6 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
 
     // initialize the instance of the repository
     cardRepo = new CardRepositoryImpl(this);
-    cardRepo.initializeDatabase();
   }
 
   public DisplayCardsContract.View getView () {
