@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="activity_top_margin">30px</dimen>
-    <dimen name="activity_bottom_margin">25px</dimen>
+    <dimen name="activity_bottom_padding">8dp</dimen>
 
 
     <dimen name="activity_horizontal_margin">12dp</dimen>
@@ -23,6 +23,9 @@
     <dimen name="deck_item_icon">40dp</dimen>
     <dimen name="deck_item_icon_margin">10dp</dimen>
 
+    <!-- display card items -->
+    <dimen name="item_card_height">40dp</dimen>
+    <dimen name="item_card_padding">6dp</dimen>
 
 
     <!-- for the left nav -->
@@ -42,6 +45,9 @@
     <dimen name="summary_text">16sp</dimen>
 
 
+
+    <!--bottom navigation -->
+    <dimen name="nav_bottom_height">56dp</dimen>
 
 
 </resources>

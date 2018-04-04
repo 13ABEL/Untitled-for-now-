@@ -33,7 +33,8 @@
             android:layout_height="match_parent"
 
             android:layout_marginTop="@dimen/toolbar_height"
-            android:orientation="vertical"/>
+            android:orientation="vertical"
+            android:layout_marginBottom="@dimen/nav_bottom_height"/>
 
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation"
