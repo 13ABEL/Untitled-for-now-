@@ -1,7 +1,5 @@
 package com.hestia.presentationlayer.customadapter;
 
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -13,9 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.hestia.R;
-import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
-import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.singledeck.SingleDeckView;
 
 import java.util.ArrayList;
@@ -26,7 +22,6 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
   private View.OnClickListener listener;
   private Context myContext;
   private ArrayList <DeckDecorator> deckSet;
-  private ViewHolder decksVHolder;
 
   public DisplayDeckAdapter(Context context) {
     super();
@@ -36,17 +31,17 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
 
   // inflates new views from xml layout
   @Override
-  public DisplayDeckAdapter.ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
+  public ViewHolder onCreateViewHolder (ViewGroup parent, int viewType) {
     // gets the context of the parent
     Context parentContext = parent.getContext();
 
-    // create new view and caches it in the a ViewHolder
+    // create new view and caches it in a ViewHolder
     View view = LayoutInflater.from(parentContext).inflate(R.layout.item_deck, parent, false);
-    decksVHolder = new ViewHolder(view);
+    ViewHolder decksVHolder = new ViewHolder(view);
 
-    //view.setOnClickListener(this);
     return decksVHolder;
   }
+
 
   /**
    *  Invoked by layout manager to replace the contents of each item view
@@ -54,7 +49,7 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
    * @param position
    */
   @Override
-  public void onBindViewHolder(@NonNull DisplayDeckAdapter.ViewHolder holder, int position) {
+  public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     // get the object to be bound from our array and bind it to the viewholder
     DeckDecorator deck = deckSet.get(position);
     holder.bindRestraint(deck, position);

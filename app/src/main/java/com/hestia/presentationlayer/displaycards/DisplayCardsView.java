@@ -37,6 +37,9 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
     View rootView = inflater.inflate(R.layout.display_cards, container, false);
 
+    // creates a new instance of the presenter
+    displayCardsPresenter = new DisplayCardsPresenter(this);
+
     // initializes the instance of the recycler view using the newly inflated view
     mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
     mRecyclerView.setHasFixedSize(true);
@@ -46,15 +49,9 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     mRecyclerView.setLayoutManager(mLayoutManager);
 
     // initializes and sets the adapter for the recycler view (not the root)
-    mLayoutAdapter = new DisplayCardAdapter(rootView.getContext());
+    mLayoutAdapter = new DisplayCardAdapter(displayCardsPresenter, rootView.getContext());
     mRecyclerView.setAdapter(mLayoutAdapter);
 
-
-    // check if presenter doesn't already exist for this view
-    if (displayCardsPresenter == null) {
-      // creates a new instance of the presenter
-      displayCardsPresenter = new DisplayCardsPresenter(this);
-    }
     // fetches the first batch of cards to be displayed
     displayCardsPresenter.fetchCardBatch();
 
@@ -63,29 +60,30 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
 
 
-  public void displayCardBatch(List <CardDecorator> cardBatch) {
-    Toast.makeText(this.getContext(), "MHM", Toast.LENGTH_SHORT).show();
+  public void displayCardBatch(List <Card> cardBatch) {
     TextView test = getActivity().findViewById(R.id.tester_id);
     String testText = cardBatch.size() + " BIG MANS ";
     test.setText(testText);
 
 
     //TODO need to move the adapter list to the presenter - the view should not be involved
-
-    // add items, notify the adapter that the dataset has changed
-    // NOTE: the position is the the size of current list - 1
-    mLayoutAdapter.notifyItemInserted(cardBatch.size() - 1);
   }
 
 
   /**
    * implemented this method to allow the repository to access this context
    * Room needs the context to generate an instance
-   *
    * @return
    */
   public Context getViewContext () {
     return this.getContext();
   }
 
+
+  /**
+   * Tells adapter that there are new items to display
+   */
+  public void notifyAdapter(int position) {
+    mLayoutAdapter.notifyItemInserted(position);
+  }
 }

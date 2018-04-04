@@ -19,9 +19,6 @@ import java.util.List;
  */
 
 public class CardRepositoryImpl implements CardRepository {
-  static final String TAG = "CARD_REPOSITORY";
-  static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1";
-
   private CardDatabase cardDatabase;
 
   private DisplayCardsContract.Presenter presenter;
@@ -54,8 +51,6 @@ public class CardRepositoryImpl implements CardRepository {
   public ArrayList<DeckDecorator> parseReturn(String requestReturn) {
     return null;
   }
-
-
 
 
 
