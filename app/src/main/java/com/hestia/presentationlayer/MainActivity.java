@@ -79,7 +79,9 @@ public class MainActivity extends AppCompatActivity{
   }
 
 
-  //
+  /**
+   *  Sets up the navigation in general (onclicks)
+   */
   public void setupNavigation () {
     BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
     // sets up the listener for the page items
@@ -105,10 +107,6 @@ public class MainActivity extends AppCompatActivity{
               Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
               //displayFragment = new DisplayCardsView();
             }
-            else if (displayID == R.id.bottom_navigation_4) {
-              Toast.makeText(getBaseContext(), "NAV 4", Toast.LENGTH_SHORT).show();
-              //displayFragment = new DisplayCardsView();
-            }
             else {
               Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
               displayFragment = new DisplayCardsView();
@@ -122,8 +120,5 @@ public class MainActivity extends AppCompatActivity{
             return true;
           }
         });
-  }
-
-
-
+    }
 }

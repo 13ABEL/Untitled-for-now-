@@ -49,6 +49,14 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
 
   @Override
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    // create an instance of the presenter
+    displayDeckPresenter = new DisplayDecksPresenter(this);
+  }
+
+  @Override
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
     // inflate the layout for this view
     View rootView = inflater.inflate(R.layout.display_decks, container, false);
@@ -73,8 +81,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    // create an instance of the presenter
-    displayDeckPresenter = new DisplayDecksPresenter(this);
+
     // resets the name of the title everytime this activity is resumed
     getActivity().setTitle(R.string.app_name);
   }
@@ -84,7 +91,6 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     // add the list of decks to the adapter
     mAdapter.addDecks(decks);
   }
-
 
   /**
    * Custom adapter class to circumvent RecyclerView's lack of an OnItemClickListener
