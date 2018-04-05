@@ -11,15 +11,18 @@
 
     <!-- main app theme -->
     <style name="AppTheme" parent="Base.Apptheme">
-
         <item name="android:background">@color/colorSecondary</item>
         <item name="android:textColor">@color/deck_item_text</item>
 
+
         <item name="android:textSize">@dimen/summary_text</item>
     </style>
-    
+
+
     <style name="ToolbarTheme" parent="Theme.AppCompat">
         <item name="android:background">@color/colorPrimary</item>
+        <item name="android:itemBackground">@color/deck_item_text</item>
+
     </style>
 
 

@@ -43,6 +43,7 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom"
             android:background="?attr/colorPrimary"
+            android:theme="@style/ToolbarTheme"
             app:menu="@menu/bottom_navigation_menu" />
 
     </FrameLayout>

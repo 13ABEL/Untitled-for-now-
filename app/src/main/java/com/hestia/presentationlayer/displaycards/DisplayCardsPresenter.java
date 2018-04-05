@@ -21,7 +21,7 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
 
   // holds the items that the adapter displays, want to keep it T H I N
   private ArrayList<Card> cardSet;
-  private static final int BATCH_SIZE = 100;
+  private static final int BATCH_SIZE = 25;
   int currentBatchEnd = 0;
 
   public DisplayCardsPresenter (DisplayCardsContract.View view) {
@@ -30,8 +30,6 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
     // initialize the instance of the repository and the item set used by the adapter
     cardRepo = new CardRepositoryImpl(this);
     cardSet = new ArrayList<>();
-
-    fetchCardBatch();
   }
 
   public DisplayCardsContract.View getView () {

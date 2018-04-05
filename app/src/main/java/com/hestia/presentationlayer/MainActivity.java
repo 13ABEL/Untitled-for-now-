@@ -117,13 +117,11 @@ public class MainActivity extends AppCompatActivity{
             if (displayFragment != null) {
               // replace the current screen with the appropriate fragment
               getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, displayFragment).commit();
-            }
 
+            }
             return true;
           }
-        }
-    );
-
+        });
   }
 
 

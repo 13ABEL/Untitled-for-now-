@@ -26,6 +26,7 @@ import java.util.List;
  */
 
 public class DisplayCardsView extends Fragment implements DisplayCardsContract.View{
+  private final String FRAGMENT_TAG = "DISPLAY_CARDS_FRAGMENT";
   DisplayCardsContract.Presenter displayCardsPresenter;
 
   private RecyclerView mRecyclerView;
@@ -33,13 +34,25 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
   private DisplayCardAdapter mLayoutAdapter;
 
+  /**
+   * This method is called only when the fragment is created
+   * @param savedInstanceState
+   */
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    //creates a new instance of the presenter
+    this.displayCardsPresenter = new DisplayCardsPresenter(this);
+  }
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
     View rootView = inflater.inflate(R.layout.display_cards, container, false);
+    // sets tag to allow manager to recognise this fragment
+    rootView.setTag(FRAGMENT_TAG);
 
-    // creates a new instance of the presenter
-    displayCardsPresenter = new DisplayCardsPresenter(this);
-
+    if (savedInstanceState != null) {
+      Toast.makeText(this.getContext(), "RESTORED", Toast.LENGTH_SHORT).show();
+    }
     // initializes the instance of the recycler view using the newly inflated view
     mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
     mRecyclerView.setHasFixedSize(true);
@@ -51,11 +64,16 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     // initializes and sets the adapter for the recycler view (not the root)
     mLayoutAdapter = new DisplayCardAdapter(displayCardsPresenter, rootView.getContext());
     mRecyclerView.setAdapter(mLayoutAdapter);
+    mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
+
+    return rootView;
+  }
+
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
 
     // fetches the first batch of cards to be displayed
     displayCardsPresenter.fetchCardBatch();
-
-    return rootView;
   }
 
 
@@ -64,9 +82,6 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     TextView test = getActivity().findViewById(R.id.tester_id);
     String testText = cardBatch.size() + " BIG MANS ";
     test.setText(testText);
-
-
-    //TODO need to move the adapter list to the presenter - the view should not be involved
   }
 
 
@@ -85,5 +100,22 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
    */
   public void notifyAdapter(int position) {
     mLayoutAdapter.notifyItemInserted(position);
+  }
+
+
+  /**
+   *  Used to load more cards once the bottom of the recyclerview is "reached"
+   */
+  class RecyclerScrollListener extends RecyclerView.OnScrollListener {
+    @Override
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+      // TODO: implement boolean currentlyLoading to display loading animation later
+      // if the bottom of the recyclerview is reached (cannot scroll downwards)
+      if (!recyclerView.canScrollVertically(1)) {
+        Toast.makeText(recyclerView.getContext(), " HAHA ", Toast.LENGTH_SHORT);
+        displayCardsPresenter.fetchCardBatch();
+      }
+
+    }
   }
 }
