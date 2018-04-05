@@ -42,7 +42,6 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
     return decksVHolder;
   }
 
-
   /**
    *  Invoked by layout manager to replace the contents of each item view
    * @param holder

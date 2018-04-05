@@ -34,6 +34,9 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
   private DisplayCardAdapter mLayoutAdapter;
 
+  String created = "NEW";
+
+
   /**
    * This method is called only when the fragment is created
    * @param savedInstanceState
@@ -43,6 +46,13 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
     //creates a new instance of the presenter
     this.displayCardsPresenter = new DisplayCardsPresenter(this);
+
+    if (created != "NEW") {
+      Toast.makeText(this.getContext(), "RESTORED " + created, Toast.LENGTH_SHORT).show();
+    }
+    else {
+      Toast.makeText(this.getContext(), "NEW", Toast.LENGTH_SHORT).show();
+    }
   }
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -50,9 +60,9 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     // sets tag to allow manager to recognise this fragment
     rootView.setTag(FRAGMENT_TAG);
 
-    if (savedInstanceState != null) {
-      Toast.makeText(this.getContext(), "RESTORED", Toast.LENGTH_SHORT).show();
-    }
+
+    created = "NOT NEW";
+
     // initializes the instance of the recycler view using the newly inflated view
     mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
     mRecyclerView.setHasFixedSize(true);

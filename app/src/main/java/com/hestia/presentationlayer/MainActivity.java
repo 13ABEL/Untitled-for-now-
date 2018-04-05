@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.presentationlayer.displaycards.DisplayCardsView;
+import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
 
 /**
@@ -25,6 +26,11 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
 
 public class MainActivity extends AppCompatActivity{
   private ActionBarDrawerToggle mDrawerToggle;
+
+  // for each view
+  private Fragment displayDecksView;
+  private Fragment displayCardsView;
+
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -97,15 +103,24 @@ public class MainActivity extends AppCompatActivity{
 
             if (displayID ==  R.id.bottom_navigation_1) {
               Toast.makeText(getBaseContext(), "NAV 1", Toast.LENGTH_SHORT).show();
-              displayFragment = new DisplayDecksView();
+              // creates a new display decks view if one doesn't already exist
+              if (displayDecksView == null) {
+                displayDecksView = new DisplayDecksView();
+              }
+              displayFragment = displayDecksView;
+
             }
             else if (displayID == R.id.bottom_navigation_2) {
               Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
-              displayFragment = new DisplayCardsView();
+              //displayFragment = new DisplayCardsView();
             }
             else if (displayID == R.id.bottom_navigation_3) {
               Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
-              //displayFragment = new DisplayCardsView();
+              // creates a new display cards view if one doesn't already exist
+              if (displayCardsView == null) {
+                displayCardsView = new DisplayCardsView();
+              }
+              displayFragment = displayCardsView;
             }
             else {
               Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
