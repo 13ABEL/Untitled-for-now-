@@ -2,14 +2,14 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <item
         android:id="@+id/bottom_navigation_1"
-        android:title="TEST"
+        android:title="DECKS"
         android:icon="@drawable/placeholder"/>
     <item
         android:id="@+id/bottom_navigation_2"
-        android:title="TEST"
+        android:title="MINE"
         android:icon="@drawable/placeholder"/>
     <item
         android:id="@+id/bottom_navigation_3"
-        android:title="TEST"
+        android:title="CARDS"
         android:icon="@drawable/placeholder"/>
 </menu>

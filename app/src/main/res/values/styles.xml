@@ -5,15 +5,14 @@
         <!-- Customize your theme here -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/deck_item_text</item>
     </style>
 
     <!-- main app theme -->
     <style name="AppTheme" parent="Base.Apptheme">
-        <item name="android:background">@color/colorSecondary</item>
         <item name="android:textColor">@color/deck_item_text</item>
-
 
         <item name="android:textSize">@dimen/summary_text</item>
     </style>
