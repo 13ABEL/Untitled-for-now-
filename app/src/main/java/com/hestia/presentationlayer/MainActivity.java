@@ -24,7 +24,7 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
  * Created by Richard on 3/6/2018.
  */
 
-public class MainActivity extends AppCompatActivity{
+public class MainActivity extends AppCompatActivity {
   private ActionBarDrawerToggle mDrawerToggle;
 
   // for each view
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity{
             int  displayID = item.getItemId();
 
             if (displayID ==  R.id.bottom_navigation_1) {
-              Toast.makeText(getBaseContext(), "NAV 1", Toast.LENGTH_SHORT).show();
+              //Toast.makeText(getBaseContext(), "NAV 1", Toast.LENGTH_SHORT).show();
               // creates a new display decks view if one doesn't already exist
               if (displayDecksView == null) {
                 displayDecksView = new DisplayDecksView();
@@ -111,11 +111,11 @@ public class MainActivity extends AppCompatActivity{
 
             }
             else if (displayID == R.id.bottom_navigation_2) {
-              Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
+              //Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
               //displayFragment = new DisplayCardsView();
             }
             else if (displayID == R.id.bottom_navigation_3) {
-              Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
+              //Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
               // creates a new display cards view if one doesn't already exist
               if (displayCardsView == null) {
                 displayCardsView = new DisplayCardsView();
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity{
               displayFragment = displayCardsView;
             }
             else {
-              Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
+              //Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
               displayFragment = new DisplayCardsView();
             }
 
