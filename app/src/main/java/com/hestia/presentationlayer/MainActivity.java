@@ -23,6 +23,7 @@ import com.hestia.R;
 import com.hestia.presentationlayer.displaycards.DisplayCardsView;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
+import com.hestia.presentationlayer.displaysaved.DisplaySavedView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
 
   // for each view
   private Fragment displayDecksView;
+  private Fragment displaySavedView;
   private Fragment displayCardsView;
+
 
 
   public void onCreate(Bundle savedInstanceState) {
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
     setContentView(R.layout.activity_main);
 
 
-//    // initializes the floating action button and its onlick
+//    // initializes the floating action button and its onclick
 //    FloatingActionButton fab = findViewById(R.id.fab);
 //    fab.setOnClickListener(new View.OnClickListener() {
 //      @Override
@@ -124,6 +127,11 @@ public class MainActivity extends AppCompatActivity {
             else if (displayID == R.id.bottom_navigation_2) {
               //Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
               //displayFragment = new DisplayCardsView();
+              if (displaySavedView == null) {
+                displaySavedView = new DisplaySavedView();
+              }
+              displayFragment = displaySavedView;
+
             }
             else if (displayID == R.id.bottom_navigation_3) {
               //Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
