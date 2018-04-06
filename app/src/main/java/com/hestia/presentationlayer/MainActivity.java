@@ -15,10 +15,17 @@ import android.view.View;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.firebase.ui.auth.AuthUI;
+import com.firebase.ui.auth.data.model.User;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.hestia.R;
 import com.hestia.presentationlayer.displaycards.DisplayCardsView;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
+
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Richard on 3/6/2018.
@@ -26,6 +33,7 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
 
 public class MainActivity extends AppCompatActivity {
   private ActionBarDrawerToggle mDrawerToggle;
+  private static final int RC_SIGN_IN = 123;
 
   // for each view
   private Fragment displayDecksView;
@@ -37,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
 
     setContentView(R.layout.activity_main);
 
+
 //    // initializes the floating action button and its onlick
 //    FloatingActionButton fab = findViewById(R.id.fab);
 //    fab.setOnClickListener(new View.OnClickListener() {
@@ -46,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
 //            .setAction("Action", null).show();
 //      }
 //    });
+
+    startSignIn();
 
     // sets the toolbar as the actionbar for this activity
     Toolbar mToolBar = findViewById(R.id.my_toolbar);
@@ -136,4 +147,33 @@ public class MainActivity extends AppCompatActivity {
           }
         });
     }
+
+  /**
+   * Currently a quick way to sign in - will implement custom fragment without the UI dependency later
+   * when there is some free time
+   */
+  public void startSignIn () {
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    // check if the current user is not signed in
+    if (currentUser == null) {
+      // list of authentication providers
+      List <AuthUI.IdpConfig> authProviders = Arrays.asList(
+          new AuthUI.IdpConfig.EmailBuilder().build(),
+          new AuthUI.IdpConfig.GoogleBuilder().build());
+      //new AuthUI.IdpConfig.FacebookBuilder().build()
+      startActivityForResult(
+          AuthUI.getInstance()
+              .createSignInIntentBuilder()
+              .setAvailableProviders(authProviders)
+              .build(), 123
+      );
+    }
+    else {
+      Toast.makeText(this, "Welcome back " + currentUser.getDisplayName(), Toast.LENGTH_SHORT)
+      .show();
+    }
+
+  }
+
+
 }
