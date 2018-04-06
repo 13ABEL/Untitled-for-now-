@@ -39,6 +39,9 @@ captures/
 .idea/gradle.xml
 .idea/dictionaries
 .idea/libraries
+# i added these 
+.idea/codeStyles
+.idea/caches
 
 # Keystore files
 *.jks
@@ -57,3 +60,6 @@ freeline_project_description.json
 
 # api keys
 secrets.xml
+
+#
+*.ser
