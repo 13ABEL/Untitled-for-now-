@@ -45,6 +45,8 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   private RecyclerView mRecyclerView;
   private RecyclerView.LayoutManager mLayoutManager;
 
+  private View rootView = null;
+
   //TODO implement a pull downwards refresh listener
 
 
@@ -58,24 +60,26 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
   @Override
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-    // inflate the layout for this view
-    View rootView = inflater.inflate(R.layout.display_decks, container, false);
+    // recall: popping off backstack returns a fragment without a view
+    if (rootView == null) {
+      // inflate the layout for this view
+      rootView = inflater.inflate(R.layout.display_decks, container, false);
+      // initialize the instance of the recycler view
+      mRecyclerView = rootView.findViewById(R.id.recycler_list);
+      mRecyclerView.setHasFixedSize(true);
 
-    // initialize the instance of the recycler view
-    mRecyclerView = rootView.findViewById(R.id.recycler_list);
-    mRecyclerView.setHasFixedSize(true);
+      // initializes and sets the layout manager plus adapter
+      mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+      mRecyclerView.setLayoutManager(mLayoutManager);
+      mAdapter = new DisplayDeckAdapter(rootView.getContext());
 
-    // initializes and sets the layout manager plus adapter
-    mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-    mRecyclerView.setLayoutManager(mLayoutManager);
-    mAdapter = new DisplayDeckAdapter(rootView.getContext());
+      // creates a new onclick and passes it to the adapter
+      AdapterListener listener = new AdapterListener();
+      mAdapter.addOnClickListener(listener);
 
-    // creates a new onclick and passes it to the adapter
-    AdapterListener listener = new AdapterListener();
-    mAdapter.addOnClickListener(listener);
-
-    mRecyclerView.setAdapter(mAdapter);
-
+      mRecyclerView.setAdapter(mAdapter);
+    }
+    
     return rootView;
   }
 

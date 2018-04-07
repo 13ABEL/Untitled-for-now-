@@ -34,9 +34,9 @@
             android:layout_height="match_parent"
 
             android:layout_marginTop="@dimen/toolbar_height"
-            android:orientation="vertical"
-            android:layout_marginBottom="@dimen/nav_bottom_height"/>
+            android:orientation="vertical"/>
 
+        <!-- end of the main content view -->
         <android.support.design.widget.BottomNavigationView
             android:id="@+id/bottom_navigation"
             android:layout_width="match_parent"
@@ -45,9 +45,7 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ToolbarTheme"
             app:menu="@menu/bottom_navigation_menu" />
-
     </FrameLayout>
-    <!-- end of the main content view -->
 
 
     <!-- The navigation drawer -->

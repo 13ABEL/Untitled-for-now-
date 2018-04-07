@@ -12,12 +12,9 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hestia.R;
-import com.hestia.datalayer.Card.CardDao;
-import com.hestia.datalayer.Card.CardDao_Impl;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
 
-import java.util.ArrayList;
 
 /**
  * Created by Richard on 3/30/2018.
