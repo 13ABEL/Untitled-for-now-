@@ -21,6 +21,8 @@ import com.firebase.ui.auth.data.model.User;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.hestia.R;
+import com.hestia.datalayer.UserRepository;
+import com.hestia.datalayer.UserRepositoryImpl;
 import com.hestia.presentationlayer.displaycards.DisplayCardsView;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
@@ -160,9 +162,13 @@ public class MainActivity extends AppCompatActivity {
    * when there is some free time
    */
   public void startSignIn () {
-    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
+
+    UserRepository userRepository = new UserRepositoryImpl();
+    userRepository.getCurrentUser("test");
+
     // check if the current user is not signed in
-    if (currentUser == null) {
+    if (firebaseUser == null) {
       // list of authentication providers
       List <AuthUI.IdpConfig> authProviders = Arrays.asList(
           new AuthUI.IdpConfig.EmailBuilder().build(),
@@ -176,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
       );
     }
     else {
-      Toast.makeText(this, "Welcome back " + currentUser.getDisplayName(), Toast.LENGTH_SHORT)
+      Toast.makeText(this, "Welcome back " + firebaseUser.getDisplayName(), Toast.LENGTH_SHORT)
       .show();
     }
 
