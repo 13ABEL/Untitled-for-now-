@@ -29,6 +29,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   private final String FRAGMENT_TAG = "DISPLAY_CARDS_FRAGMENT";
   DisplayCardsContract.Presenter displayCardsPresenter;
 
+  private View rootView;
   private RecyclerView mRecyclerView;
   private RecyclerView.LayoutManager mLayoutManager;
 
@@ -44,8 +45,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    //creates a new instance of the presenter
-    this.displayCardsPresenter = new DisplayCardsPresenter(this);
+    //creates a new instance of the presenter if there isn't already one
+    if (displayCardsPresenter == null) {
+      this.displayCardsPresenter = new DisplayCardsPresenter(this);
+    }
 
     if (created != "NEW") {
       Toast.makeText(this.getContext(), "RESTORED " + created, Toast.LENGTH_SHORT).show();
@@ -56,26 +59,30 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   }
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
-    View rootView = inflater.inflate(R.layout.display_cards, container, false);
-    // sets tag to allow manager to recognise this fragment
-    rootView.setTag(FRAGMENT_TAG);
+    if (rootView == null) {
+      rootView = inflater.inflate(R.layout.display_cards, container, false);
+      // sets tag to allow manager to recognise this fragment
+      rootView.setTag(FRAGMENT_TAG);
 
+      created = "NOT NEW";
+      // initializes the instance of the recycler view using the newly inflated view
+      mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
+      mRecyclerView.setHasFixedSize(true);
 
-    created = "NOT NEW";
+      // initialize and sets the layout manager for the recycler view
+      if (mLayoutManager == null) {
+        mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+      }
 
-    // initializes the instance of the recycler view using the newly inflated view
-    mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
-    mRecyclerView.setHasFixedSize(true);
+      // initializes and sets the adapter for the recycler view (not the root)
+      if (mLayoutAdapter == null) {
+        mLayoutAdapter = new DisplayCardAdapter(displayCardsPresenter, rootView.getContext());
+        mRecyclerView.setAdapter(mLayoutAdapter);
+        mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
+      }
 
-    // initialize and sets the layout manager for the recycler view
-    mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-    mRecyclerView.setLayoutManager(mLayoutManager);
-
-    // initializes and sets the adapter for the recycler view (not the root)
-    mLayoutAdapter = new DisplayCardAdapter(displayCardsPresenter, rootView.getContext());
-    mRecyclerView.setAdapter(mLayoutAdapter);
-    mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
-
+    }
     return rootView;
   }
 

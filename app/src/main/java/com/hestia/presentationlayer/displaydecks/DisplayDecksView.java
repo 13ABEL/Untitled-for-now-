@@ -42,8 +42,8 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   private DisplayDecksContract.Presenter displayDeckPresenter;
   private DisplayDeckAdapter mAdapter;
 
-  private RecyclerView mRecyclerView;
-  private RecyclerView.LayoutManager mLayoutManager;
+  private RecyclerView mRecyclerView = null;
+  private RecyclerView.LayoutManager mLayoutManager = null;
 
   private View rootView = null;
 
@@ -54,8 +54,10 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    // create an instance of the presenter
-    displayDeckPresenter = new DisplayDecksPresenter(this);
+    // create an instance of the presenter if it doesn't already exist
+    if (displayDeckPresenter == null) {
+      displayDeckPresenter = new DisplayDecksPresenter(this);
+    }
   }
 
   @Override
@@ -69,17 +71,21 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
       mRecyclerView.setHasFixedSize(true);
 
       // initializes and sets the layout manager plus adapter
-      mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-      mRecyclerView.setLayoutManager(mLayoutManager);
-      mAdapter = new DisplayDeckAdapter(rootView.getContext());
+      if (mLayoutManager == null) {
+        mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+      }
+      if (mAdapter == null) {
+        mAdapter = new DisplayDeckAdapter(rootView.getContext());
+      }
 
+      mRecyclerView.setLayoutManager(mLayoutManager);
       // creates a new onclick and passes it to the adapter
       AdapterListener listener = new AdapterListener();
       mAdapter.addOnClickListener(listener);
 
       mRecyclerView.setAdapter(mAdapter);
     }
-    
+
     return rootView;
   }
 
