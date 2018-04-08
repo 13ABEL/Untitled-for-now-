@@ -65,7 +65,7 @@ public class DisplaySavedView extends Fragment implements Contract.View {
 
   @Override
   public void addDecks(List<DeckDecorator> decks) {
-
+    mAdapter.addDecks(decks);
   }
 
   /**

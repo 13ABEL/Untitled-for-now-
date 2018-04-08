@@ -3,6 +3,7 @@ package com.hestia.datalayer;
 import android.content.Context;
 import android.os.AsyncTask;
 
+import com.hestia.datalayer.Card.CardDatabase;
 import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.DeckDecorator;
@@ -44,8 +45,6 @@ public class CardRepositoryImpl implements CardRepository {
     NewTask fetchBatchTask = new NewTask();
     fetchBatchTask.execute(presenter, numCards);
   }
-
-
 
 
   public ArrayList<DeckDecorator> parseReturn(String requestReturn) {

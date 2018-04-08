@@ -1,4 +1,4 @@
-package com.hestia.datalayer;
+package com.hestia.datalayer.Card;
 
 import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
@@ -15,10 +15,6 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.hestia.R;
-import com.hestia.datalayer.Card.CardDao;
-import com.hestia.datalayer.Card.CardDecorator;
-import com.hestia.domainlayer.Card;
-import com.hestia.domainlayer.CardImpl;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -36,7 +32,7 @@ import java.util.Map;
  * Created by Richard on 3/31/2018.
  */
 
-@Database(entities = {CardDecorator.class}, version = 2, exportSchema = false)
+@Database(entities = {CardDao.class}, version = 2, exportSchema = false)
 public abstract class CardDatabase extends RoomDatabase {
   private static final String TAG = "CARD_DATABASE";
   private static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1";
