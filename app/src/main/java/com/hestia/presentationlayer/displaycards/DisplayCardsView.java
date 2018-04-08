@@ -132,7 +132,6 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
         Toast.makeText(recyclerView.getContext(), " HAHA ", Toast.LENGTH_SHORT);
         displayCardsPresenter.fetchCardBatch();
       }
-
     }
   }
 }

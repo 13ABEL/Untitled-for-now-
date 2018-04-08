@@ -94,6 +94,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
     // resets the name of the title everytime this activity is resumed
     getActivity().setTitle(R.string.app_name);
+    mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
   }
 
 
@@ -134,7 +135,20 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   }
 
 
-
+  /**
+   * used to load more decks once the "bottom of the page" is loaded
+   */
+  class RecyclerScrollListener extends RecyclerView.OnScrollListener {
+    @Override
+    public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+      // TODO: implement boolean currentlyLoading to display loading animation later
+      // if the bottom of the recyclerview is reached (cannot scroll downwards)
+      if (!mRecyclerView.canScrollVertically(1)) {
+        Toast.makeText(mRecyclerView.getContext(), " HAHA ", Toast.LENGTH_SHORT);
+        displayDeckPresenter.getDeckBatch();
+      }
+    }
+  }
 
 }
 

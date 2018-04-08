@@ -1,15 +1,10 @@
 package com.hestia.presentationlayer.displaydecks;
 
-import android.view.Display;
-
 import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.domainlayer.Deck;
-import com.hestia.domainlayer.DeckImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -42,8 +37,8 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
     deckRepository.getDeckBatch(this, 100);
   }
 
-  public void getNextDecks (int numDecks) {
-    deckRepository.getDeckBatch(this, numDecks);
+  public void getDeckBatch() {
+    deckRepository.getDeckBatch(this, 10);
   }
 
 

@@ -4,10 +4,13 @@ import android.support.annotation.NonNull;
 import android.util.Log;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.hestia.domainlayer.Deck;
 import com.hestia.domainlayer.DeckImpl;
@@ -41,13 +44,19 @@ public class DeckRepositoryImpl implements DeckRepository {
 
   private DeckDecorator fetchedDeck;
 
+  private CollectionReference deckCollection;
 
+
+  private Query queryDeckBatch = null;
   // testing purposes
+
+  final int BATCH_SIZE = 15;
   
 
   public DeckRepositoryImpl () {
     // initializes the instance of the Cloud Firestore db
     this.db = FirebaseFirestore.getInstance();
+    deckCollection = db.collection( "decks");
   }
 
   public DeckRepositoryImpl (DisplayDecksPresenter displayDeckPresenter) {
@@ -56,18 +65,32 @@ public class DeckRepositoryImpl implements DeckRepository {
     //this.displayDeckPresenter = displayDeckPresenter;
   }
 
-  public void getDeckBatch(DisplayDecksContract.Presenter presenter, int numDecks) {
+  public void getDeckBatch(DisplayDecksContract.Presenter presenter, final int numDecks) {
     this.displayDecksPresenter = presenter;
 
-    Task <QuerySnapshot> task = db.collection( "decks").get();
-    task.addOnCompleteListener(new OnCompleteListener<QuerySnapshot> (){
-      @Override
-      public void onComplete(@NonNull Task<QuerySnapshot> task) {
-        if (task.isSuccessful()) {
-          //creates a new array for the decks
-          ArrayList <DeckDecorator> newDecks = new ArrayList<>();
+    // initialize the query for the deck batch
+    if (queryDeckBatch == null) {
+      queryDeckBatch = deckCollection.limit(BATCH_SIZE);
+    }
 
-          for (DocumentSnapshot document: task.getResult()) {
+    Task <QuerySnapshot> task = queryDeckBatch.get();
+    task.addOnSuccessListener(new OnSuccessListener<QuerySnapshot> () {
+      @Override
+      public void onSuccess(QuerySnapshot documentSnapshots) {
+        int currentBatchSize = documentSnapshots.size();
+        // only gets more decks if there are any left to get
+        if (currentBatchSize > 0) {
+          // gets the last document loaded (used to construct next query)
+          DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
+              .get(currentBatchSize - 1);
+
+          // constructs a new query starting at the last document (for pagination)
+          queryDeckBatch = deckCollection.orderBy("created").startAfter(lastVisible).limit(BATCH_SIZE);
+
+          //creates a new array for the decks
+          ArrayList<DeckDecorator> newDecks = new ArrayList<>();
+
+          for (DocumentSnapshot document : documentSnapshots) {
             //test += document.getId() + " = " + document.getData();
             Log.d("-----------------pixel", document.getId() + " = " + document.getData());
             returnString = document.getId();// + " = " + document.getData();
@@ -75,14 +98,10 @@ public class DeckRepositoryImpl implements DeckRepository {
             // formats the data into a deck object and adds it into the array of decks
             // DeckDecorator newDeck = parseFirebaseReturn(returnString);
             DeckDecorator newDeck = parseFullDeck(document.getData());
-            Log.d("NEW DECK", "newDeck = " + newDeck.getDeckName() );
+            Log.d("NEW DECK", "newDeck = " + newDeck.getDeckName());
             newDecks.add(newDeck);
           }
           displayDecksPresenter.receiveDeckBatch(newDecks);
-        }
-        else {
-          // displays error message if there is a problem retrieving the deck
-          Log.w("----------------hi", "Error getting documents.", task.getException());
         }
       }
     });

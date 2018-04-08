@@ -1,6 +1,5 @@
 package com.hestia.presentationlayer.displaydecks;
 
-import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.Base;
 import com.hestia.presentationlayer.DeckDecorator;
 
@@ -17,8 +16,7 @@ import java.util.List;
 public interface DisplayDecksContract {
 
   interface Presenter extends Base.BasePresenter {
-    void getNextDecks(int numDecks);
-
+    void getDeckBatch();
     void receiveDeckBatch(List<DeckDecorator> deck);
   }
 
