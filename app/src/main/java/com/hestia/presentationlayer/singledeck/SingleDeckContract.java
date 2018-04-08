@@ -21,6 +21,7 @@ public interface SingleDeckContract {
     void addTabFragment(TabFragment tabFragment, int position);
     void addInfoTabFragment(InfoFragment newInfoFrag);
     void addDeckTabFragment(DeckFragment newInfoFrag);
+    void saveDeck();
   }
 
 

@@ -7,6 +7,8 @@ import android.util.Log;
 
 import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
+import com.hestia.datalayer.UserRepository;
+import com.hestia.datalayer.UserRepositoryImpl;
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
 
@@ -76,4 +78,10 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
     newDeckFrag.updateUI(currentDeck.getDeckList());
   }
 
+  @Override
+  public void saveDeck() {
+    UserRepository userRepository = new UserRepositoryImpl();
+    userRepository.saveDeck(currentDeck);
   }
+
+}

@@ -60,7 +60,7 @@ public class DeckFragment extends TabFragment {
       test += deckList.get(i).getID() + " \n";
     }
 
-    Toast.makeText(getContext(), test, Toast.LENGTH_SHORT).show();
+    //Toast.makeText(getContext(), test, Toast.LENGTH_SHORT).show();
     // checks if the adapter instance already exists
     //if (deckListAdapter != null) {
 

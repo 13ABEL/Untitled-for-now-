@@ -17,24 +17,31 @@
         android:paddingLeft="@dimen/tab_spacing_side"
         android:paddingRight="@dimen/tab_spacing_side">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ZOOLOCK"
-        android:textSize="16dp"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ZOOLOCK"
+            android:textSize="16dp"/>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/test_paragraph"
-        android:textSize="14dp"/>
+        <Button
+            android:id="@+id/single_deck_add_fav"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="5px"
+            android:text="Favourite"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/test_paragraph"
+            android:textSize="14dp"/>
 
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="ZOOLOCK"/>
-    </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ZOOLOCK"/>
+        </LinearLayout>
 
     <android.support.design.widget.TabLayout
         android:id="@+id/sliding_tabs"

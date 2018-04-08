@@ -20,6 +20,7 @@ public class DeckImpl implements Deck {
   protected String username;
   protected String summary;
 
+  private String deckString;
   //
   protected String deckID;
   protected Date createdDate;
@@ -31,6 +32,7 @@ public class DeckImpl implements Deck {
     this.username = author;
     this.summary = info;
     this.createdDate = date;
+    this.deckString = list;
 
     // format the Date as a string
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss");
@@ -66,6 +68,15 @@ public class DeckImpl implements Deck {
     return this.deckList;
   }
 
+  public Map<String, Object> generateMap () {
+    Map<String, Object> deckRep = new HashMap<String, Object>();
+    deckRep.put("deckName", this.deckName);
+    deckRep.put("username", this.username);
+    deckRep.put("summary", this.summary);
+    deckRep.put("createdDate", this.createdDate);
+    deckRep.put("deckString", this.deckString);
 
+    return deckRep;
+  }
 
 }

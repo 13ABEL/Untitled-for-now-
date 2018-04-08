@@ -9,6 +9,7 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.hestia.R;
@@ -24,6 +25,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
   private String [] tabNames = {"INFO", "LIST", "COMMENTS"};
   private SingleDeckTabAdapter mSingleDeckTabAdapter;
   private ViewPager mPager;
+  private DeckDecorator currentDeck;
 
   /**
    * Inflates the xml file into a view
@@ -38,7 +40,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     View rootView = inflater.inflate(R.layout.single_deck, container, false);
 
     // gets the deckDecorator object from the bundle
-    DeckDecorator currentDeck = this.getArguments().getParcelable("deck");
+    currentDeck = this.getArguments().getParcelable("deck");
     Toast.makeText(getContext(), "Single Deck Screen " + currentDeck.getDeckName(), Toast.LENGTH_SHORT).show();
 
     // create instance of the presenter
@@ -64,7 +66,19 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     //String deckName = this.getArguments().getString("deck_id");
 
     // sets the title of the navbar as the current deck name
-    getActivity().setTitle("Single");
+    getActivity().setTitle(currentDeck.getDeckName());
+
+    // attach listeners to buttons (TODO swap out buttons for actionbar icons)
+    final Button addFav = getActivity().findViewById(R.id.single_deck_add_fav);
+    addFav.setOnClickListener(
+        new View.OnClickListener() {
+          @Override
+          public void onClick(View v) {
+            singleDeckPresenter.saveDeck();
+          }
+        }
+    );
+
   }
 
   public void displayInfo(String title) {

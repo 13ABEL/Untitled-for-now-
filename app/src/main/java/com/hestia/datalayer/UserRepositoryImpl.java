@@ -11,29 +11,34 @@ import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.hestia.domainlayer.User;
-import com.hestia.domainlayer.UserImpl;
+import com.hestia.domainlayer.Deck;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class UserRepositoryImpl implements UserRepository {
+  private FirebaseUser currentUser;
   private String TAG = "USER_REPOSITORY";
   private String COLLECTION_NAME = "users";
+
   private CollectionReference userCollection;
+  private CollectionReference userSavedDeckCollection;
+  private CollectionReference userFavedDeckCollection;
 
   public UserRepositoryImpl() {
     // initializes the firestore collection reference
     userCollection = FirebaseFirestore.getInstance().collection(COLLECTION_NAME);
+    userSavedDeckCollection = FirebaseFirestore.getInstance().collection("savedDecks");
+    userFavedDeckCollection = FirebaseFirestore.getInstance().collection("favedDecks");
+
+    // initialize the user
+    currentUser = FirebaseAuth.getInstance().getCurrentUser();
   }
 
   @Override
   public void initializeAccount() {
-    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-
+    currentUser = FirebaseAuth.getInstance().getCurrentUser();
   }
 
   @Override
@@ -57,26 +62,48 @@ public class UserRepositoryImpl implements UserRepository {
           }
           else {
             Log.d(TAG,(String) userAccount.getData().get("email"));
-
           }
-        }
-        else {
-          Log.d(TAG,"Call not successful");
         }
       }
     });
   }
 
+
+
   private void createUserAccount(FirebaseUser firebaseUser) {
     // create the map that will represent the user
     Map <String, Object> userMap = new HashMap<>();
     userMap.put("username", "TEST");
-    userMap.put("created_decks", new ArrayList<>());
-    userMap.put("saved_decks", new ArrayList<>());
+    userMap.put("email", firebaseUser.getEmail());
     userMap.put("created", new Date());
 
     // add the user to the collection using the auth uid as the document id
-    userCollection.document(firebaseUser.getUid()).set(userMap);
+    userCollection.document(firebaseUser.getUid()).set(userMap)
+        .addOnCompleteListener(new OnCompleteListener<Void>() {
+          @Override
+          public void onComplete(@NonNull Task<Void> task) {
+            // calls method to create the local user account
+          }
+        });
+
+    // add a document for saved, faved deckss for the user
+    userSavedDeckCollection.document(firebaseUser.getUid()).set(new HashMap<String, Object>());
+    userFavedDeckCollection.document(firebaseUser.getUid()).set(new HashMap<String, Object>());
+  }
+
+  @Override
+  public void favDeck (Deck deck) {
+    // create the map that will represent the deck to be saved
+    Map <String, Object> userMap = new HashMap<>();
+    userFavedDeckCollection.document(currentUser.getUid()).set(deck);
+
+  }
+
+  @Override
+  public void saveDeck(Deck deck) {
+    // generates the map rep of the deck to be used in firestore
+    Map <String, Object> deckRep = deck.generateMap();
+    userSavedDeckCollection.document(currentUser.getUid()).set(deckRep);
   }
 
 
