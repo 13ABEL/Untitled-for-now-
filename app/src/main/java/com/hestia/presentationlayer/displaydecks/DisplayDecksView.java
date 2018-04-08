@@ -104,7 +104,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   }
 
   /**
-   * Custom adapter class to circumvent RecyclerView's lack of an OnItemClickListener
+   * Custom adapter listener class to circumvent RecyclerView's lack of an OnItemClickListener
    * Allows us to keep view code in this view class
    */
   class AdapterListener implements View.OnClickListener {

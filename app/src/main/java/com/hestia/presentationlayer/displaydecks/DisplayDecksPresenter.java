@@ -31,9 +31,8 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   public DisplayDecksPresenter (DisplayDecksContract.View view) {
     this.displayDeckView = view;
 
+    // initialize the instance of the deck repository and retrieve the first deck batch
     deckRepository = new DeckRepositoryImpl();
-
-    // get the Deck object
     deckRepository.getDeckBatch(this, 100);
   }
 
