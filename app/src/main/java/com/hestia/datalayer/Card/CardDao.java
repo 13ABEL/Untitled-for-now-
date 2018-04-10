@@ -1,8 +1,12 @@
 package com.hestia.datalayer.Card;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.paging.DataSource;
+import android.arch.paging.LivePagedListBuilder;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.database.Cursor;
 
 import com.hestia.domainlayer.CardImpl;
 import com.hestia.presentationlayer.DeckDecorator;
@@ -39,4 +43,10 @@ public interface CardDao {
 
   @Insert
   void insert(CardDecorator cardDecorator);
+
+
+  // testing
+  // selects all cards in a class "WHERE card_cost LIKE :cost"
+  @Query("SELECT * FROM CardDecorator")
+  DataSource.Factory<Integer, CardDecorator> getByCost();
 }

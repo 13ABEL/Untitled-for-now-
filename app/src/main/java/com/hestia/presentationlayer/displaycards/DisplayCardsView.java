@@ -1,11 +1,15 @@
 package com.hestia.presentationlayer.displaycards;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.ViewModelProviders;
+import android.arch.paging.PagedList;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.TestLooperManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +41,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
   String created = "NEW";
 
+  DisplayCardsVM viewModel;
 
   /**
    * This method is called only when the fragment is created
@@ -56,6 +61,9 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     else {
       Toast.makeText(this.getContext(), "NEW", Toast.LENGTH_SHORT).show();
     }
+
+    // gets the viewmodel instance associated with the fragment
+    viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
   }
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
@@ -79,6 +87,11 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       if (mLayoutAdapter == null) {
         mLayoutAdapter = new DisplayCardAdapter(displayCardsPresenter, rootView.getContext());
         mRecyclerView.setAdapter(mLayoutAdapter);
+
+        viewModel.getCards(this.getContext()).observe(this, liveCardList ->
+            mLayoutAdapter.setList(liveCardList));
+        Log.d("AFTER LIVEW", viewModel.getCards(this.getContext()).hasObservers() + "");
+
         mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
       }
 

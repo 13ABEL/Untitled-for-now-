@@ -43,15 +43,17 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
   }
 
   public void receiveCardBatch (List <CardDecorator> cardBatch) {
-    //Toast.makeText(displayCardsView.getViewContext(), cardBatch.size(), Toast.LENGTH_SHORT).show();
-    // gets position of last element in items array
-    int position = cardSet.size() - 1;
-    // adds all the new cards to the current list of cards
-    cardSet.addAll(cardBatch);
-    // notifies the adapter that data has been added
-    displayCardsView.notifyAdapter(position);
-    // passes the cards to the view to display
-    displayCardsView.displayCardBatch(cardSet);
+    if (cardBatch != null) {
+      //Toast.makeText(displayCardsView.getViewContext(), cardBatch.size(), Toast.LENGTH_SHORT).show();
+      // gets position of last element in items array
+      int position = cardSet.size() - 1;
+      // adds all the new cards to the current list of cards
+      cardSet.addAll(cardBatch);
+      // notifies the adapter that data has been added
+      displayCardsView.notifyAdapter(position);
+      // passes the cards to the view to display
+      displayCardsView.displayCardBatch(cardSet);
+    }
   }
 
   public List<Card> getCardSet(){

@@ -1,18 +1,22 @@
 package com.hestia.presentationlayer.customadapter;
 
+import android.arch.lifecycle.LiveData;
 import android.arch.paging.PagedList;
 import android.arch.paging.PagedListAdapter;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.hestia.R;
+import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
+import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
 
 
@@ -20,8 +24,8 @@ import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
  * Created by Richard on 3/30/2018.
  */
 
-public class DisplayCardAdapter extends RecyclerView.Adapter<DisplayCardAdapter.ViewHolder> {
-  private PagedList<Card> cardSet;
+public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayCardAdapter.ViewHolder> {
+  private PagedList<CardDecorator> cardSet;
   private DisplayCardsContract.Presenter presenter;
   private Context mContext;
 
@@ -30,8 +34,8 @@ public class DisplayCardAdapter extends RecyclerView.Adapter<DisplayCardAdapter.
    * Used to present items and allow item details to be changed easily
    */
   public static class ViewHolder extends RecyclerView.ViewHolder {
-    TextView cardName;
-    TextView cardCost;
+      TextView cardName;
+      TextView cardCost;
 
     ViewHolder (View view) {
       super(view);
@@ -42,11 +46,15 @@ public class DisplayCardAdapter extends RecyclerView.Adapter<DisplayCardAdapter.
   }
 
   public DisplayCardAdapter(DisplayCardsContract.Presenter presenter, Context context) {
+    super(DIFF_CALLBACK);
     // initializes the paged list
     this.presenter = presenter;
     this.mContext = context;
   }
 
+  public CardDecorator getItem(int position) {
+    return cardSet.get(position);
+  }
   /**
    * Layout manager calls this to create new view items
    * Inflates the view for each item in the recyclerview
@@ -70,15 +78,38 @@ public class DisplayCardAdapter extends RecyclerView.Adapter<DisplayCardAdapter.
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     // get element from room at this position
-    Card currentCard = presenter.getCardSet().get(position);
-    // bind the element to our viewholder
-    holder.cardName.setText(currentCard.getName());
-    holder.cardCost.setText(currentCard.getCost()+"");
+    // Card currentCard = presenter.getCardSet().get(position);
+
+    CardDecorator currentCard = getItem(position);
+    if (currentCard != null) {
+      // bind the element to our viewholder
+      holder.cardName.setText(currentCard.getName());
+      holder.cardCost.setText(currentCard.getCost()+"");
+    }
   }
 
   @Override
   public int getItemCount() {
-    return presenter.getCardSet().size();
+    //return presenter.getCardSet().size();
+    return cardSet.size();
   }
 
+  public void setList(PagedList<CardDecorator> liveCardList) {
+    this.cardSet = liveCardList;
+    Log.e("LIVE_CARD_LIST", liveCardList.get(12).name);
+  }
+
+
+  public static final DiffUtil.ItemCallback<CardDecorator> DIFF_CALLBACK = new
+      DiffUtil.ItemCallback<CardDecorator>() {
+    @Override
+    public boolean areItemsTheSame(CardDecorator oldCard, CardDecorator newCard) {
+      return (oldCard.getID() == newCard.getID());
+    }
+
+    @Override
+    public boolean areContentsTheSame(CardDecorator oldCard, CardDecorator newCard) {
+      return (oldCard.getCost() == newCard.getCost());
+    }
+  };
 }

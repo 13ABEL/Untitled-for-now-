@@ -32,7 +32,7 @@ import java.util.Map;
  * Created by Richard on 3/31/2018.
  */
 
-@Database(entities = {CardDao.class}, version = 2, exportSchema = false)
+@Database(entities = {CardDecorator.class}, version = 2, exportSchema = false)
 public abstract class CardDatabase extends RoomDatabase {
   private static final String TAG = "CARD_DATABASE";
   private static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1";
@@ -60,7 +60,6 @@ public abstract class CardDatabase extends RoomDatabase {
         Log.i(TAG, "Database exists - no need to reinitialize");
       }
     }
-
     return INSTANCE;
   }
 
