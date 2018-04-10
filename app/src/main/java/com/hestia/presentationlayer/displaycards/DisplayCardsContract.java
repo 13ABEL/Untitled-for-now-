@@ -18,8 +18,6 @@ public interface DisplayCardsContract {
     Context getViewContext();
     //void displayCardBatch(List <CardDecorator> cardBatch);
     void displayCardBatch(List <Card> cardBatch);
-
-    void notifyAdapter(int position);
   }
 
 

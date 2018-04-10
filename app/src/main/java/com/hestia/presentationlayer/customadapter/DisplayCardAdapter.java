@@ -26,9 +26,6 @@ import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
  */
 
 public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayCardAdapter.ViewHolder> {
-  private DisplayCardsContract.Presenter presenter;
-  private Context mContext;
-
   /**
    * Follows the viewholder pattern
    * Used to present items and allow item details to be changed easily
@@ -45,11 +42,18 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     }
   }
 
-  public DisplayCardAdapter(DisplayCardsContract.Presenter presenter, Context context) {
-    super(DIFF_CALLBACK);
-    // initializes the paged list
-    this.presenter = presenter;
-    this.mContext = context;
+  public DisplayCardAdapter() {
+    super(new DiffUtil.ItemCallback<CardDecorator>() {
+      @Override
+      public boolean areItemsTheSame(CardDecorator oldCard, CardDecorator newCard) {
+        return (oldCard.getID() == newCard.getID());
+      }
+
+      @Override
+      public boolean areContentsTheSame(CardDecorator oldCard, CardDecorator newCard) {
+        return (oldCard.getCost() == newCard.getCost());
+      }
+    });
   }
 
   /**
@@ -74,9 +78,6 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     // get element from room at this position
-    ///Card currentCard = presenter.getCardSet().get(position);
-    Log.d("viewholder", "TEST");
-
     CardDecorator currentCard = getItem(position);
 
     if (currentCard != null) {
@@ -86,19 +87,5 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       holder.cardCost.setText(currentCost);
     }
   }
-
-  private static final DiffUtil.ItemCallback<CardDecorator> DIFF_CALLBACK = new
-      DiffUtil.ItemCallback<CardDecorator>() {
-    @Override
-    public boolean areItemsTheSame(CardDecorator oldCard, CardDecorator newCard) {
-      return (oldCard.getID() == newCard.getID());
-    }
-
-    @Override
-    public boolean areContentsTheSame(CardDecorator oldCard, CardDecorator newCard) {
-      return (oldCard.getCost() == newCard.getCost());
-    }
-  };
-
 
 }

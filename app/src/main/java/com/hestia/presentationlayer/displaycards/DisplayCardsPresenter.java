@@ -50,7 +50,7 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
       // adds all the new cards to the current list of cards
       cardSet.addAll(cardBatch);
       // notifies the adapter that data has been added
-      displayCardsView.notifyAdapter(position);
+      //displayCardsView.notifyAdapter(position);
       // passes the cards to the view to display
       displayCardsView.displayCardBatch(cardSet);
     }

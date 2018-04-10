@@ -45,8 +45,15 @@ public interface CardDao {
   void insert(CardDecorator cardDecorator);
 
 
-  // testing
-  // selects all cards in a class "WHERE card_cost LIKE :cost"
-  @Query("SELECT * FROM CardDecorator")
-  DataSource.Factory<Integer, CardDecorator> getByCost();
+  // selects all cards in a class
+  @Query("SELECT * FROM CardDecorator WHERE card_cost LIKE :cost")
+  DataSource.Factory<Integer, CardDecorator> getByCost(int cost);
+
+  // selects all cards and order by
+  @Query("SELECT * FROM CardDecorator ORDER BY :column DESC")
+  DataSource.Factory<Integer, CardDecorator> getByColumnDesc(String column);
+
+  // selects all cards and order by
+  @Query("SELECT * FROM CardDecorator ORDER BY :column ASC")
+  DataSource.Factory<Integer, CardDecorator> getByColumnAsc(String column);
 }
