@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.datalayer.Card.CardDecorator;
@@ -25,7 +26,6 @@ import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
  */
 
 public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayCardAdapter.ViewHolder> {
-  private PagedList<CardDecorator> cardSet;
   private DisplayCardsContract.Presenter presenter;
   private Context mContext;
 
@@ -52,9 +52,6 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     this.mContext = context;
   }
 
-  public CardDecorator getItem(int position) {
-    return cardSet.get(position);
-  }
   /**
    * Layout manager calls this to create new view items
    * Inflates the view for each item in the recyclerview
@@ -69,7 +66,6 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     return new ViewHolder(view);
   }
 
-
   /**
    * Layout manager calls this to replace contents of view
    * @param holder: the viewholder with contents we want to replace
@@ -78,29 +74,20 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     // get element from room at this position
-    // Card currentCard = presenter.getCardSet().get(position);
+    ///Card currentCard = presenter.getCardSet().get(position);
+    Log.d("viewholder", "TEST");
 
     CardDecorator currentCard = getItem(position);
+
     if (currentCard != null) {
       // bind the element to our viewholder
       holder.cardName.setText(currentCard.getName());
-      holder.cardCost.setText(currentCard.getCost()+"");
+      String currentCost = currentCard.getCost()+ "";
+      holder.cardCost.setText(currentCost);
     }
   }
 
-//  @Override
-//  public int getItemCount() {
-//    //return presenter.getCardSet().size();
-//    return cardSet.size();
-//  }
-
-  public void setList(PagedList<CardDecorator> liveCardList) {
-    this.cardSet = liveCardList;
-    Log.e("LIVE_CARD_LIST", liveCardList.get(12).name);
-  }
-
-
-  public static final DiffUtil.ItemCallback<CardDecorator> DIFF_CALLBACK = new
+  private static final DiffUtil.ItemCallback<CardDecorator> DIFF_CALLBACK = new
       DiffUtil.ItemCallback<CardDecorator>() {
     @Override
     public boolean areItemsTheSame(CardDecorator oldCard, CardDecorator newCard) {
@@ -112,4 +99,6 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       return (oldCard.getCost() == newCard.getCost());
     }
   };
+
+
 }

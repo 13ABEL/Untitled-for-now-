@@ -36,7 +36,7 @@ public class DisplayCardsVM extends ViewModel {
     if (cardList == null) {
       // page config to customize how our data is loaded
       PagedList.Config pagedListConfig=(new PagedList.Config.Builder()).setEnablePlaceholders(true)
-          .setPrefetchDistance(10)
+          .setPrefetchDistance(15)
           .setPageSize(30).build();
 
       this.cardList = new LivePagedListBuilder<>(cardDao.getByCost(), pagedListConfig).build();

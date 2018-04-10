@@ -89,7 +89,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
         mRecyclerView.setAdapter(mLayoutAdapter);
 
         viewModel.getCards(this.getContext()).observe(this, liveCardList ->
-            mLayoutAdapter.setList(liveCardList));
+            mLayoutAdapter.submitList(liveCardList));
         Log.d("AFTER LIVEW", viewModel.getCards(this.getContext()).hasObservers() + "");
 
         mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
