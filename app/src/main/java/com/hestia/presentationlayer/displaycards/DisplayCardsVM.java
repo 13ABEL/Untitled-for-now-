@@ -19,9 +19,7 @@ import java.util.concurrent.Executor;
 public class DisplayCardsVM extends ViewModel {
   public LiveData<PagedList<CardDecorator>> cardList = null;
 
-  public DisplayCardsVM() {
-    super();
-  }
+  public DisplayCardsVM() {}
 
   public LiveData<PagedList<CardDecorator>> getCards(Context currentContext) {
 
@@ -33,16 +31,17 @@ public class DisplayCardsVM extends ViewModel {
 
     CardDao cardDao = cardDatabase.cardModel();
 
-    //if (cardList == null) {
-      this.cardList = new LivePagedListBuilder<>(cardDao.getByCost(), 12).build();
 
-    //}
 
     if (cardList == null) {
-      Log.d("CARDLISTNULL", "YES");
-    } else {
-      Log.d("CARDLISTNULL", "NO");
+      // page config to customize how our data is loaded
+      PagedList.Config pagedListConfig=(new PagedList.Config.Builder()).setEnablePlaceholders(true)
+          .setPrefetchDistance(10)
+          .setPageSize(30).build();
+
+      this.cardList = new LivePagedListBuilder<>(cardDao.getByCost(), pagedListConfig).build();
     }
+
 
     return cardList;
   }

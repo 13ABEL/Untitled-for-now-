@@ -88,11 +88,11 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     }
   }
 
-  @Override
-  public int getItemCount() {
-    //return presenter.getCardSet().size();
-    return cardSet.size();
-  }
+//  @Override
+//  public int getItemCount() {
+//    //return presenter.getCardSet().size();
+//    return cardSet.size();
+//  }
 
   public void setList(PagedList<CardDecorator> liveCardList) {
     this.cardSet = liveCardList;
