@@ -52,7 +52,7 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
       // notifies the adapter that data has been added
       //displayCardsView.notifyAdapter(position);
       // passes the cards to the view to display
-      displayCardsView.displayCardBatch(cardSet);
+      //displayCardsView.displayCardBatch(cardSet);
     }
   }
 

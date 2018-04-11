@@ -38,9 +38,9 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
   private DisplayCardAdapter mLayoutAdapter;
 
+  DisplayCardsVM viewModel;
   String created = "NEW";
 
-  DisplayCardsVM viewModel;
 
   /**
    * This method is called only when the fragment is created
@@ -56,7 +56,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       Toast.makeText(this.getContext(), "NEW", Toast.LENGTH_SHORT).show();
     }
 
-    // gets the viewmodel instance associated with the fragment
+    // gets the ViewModel instance associated with the fragment
     viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
   }
 
@@ -84,24 +84,16 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
         viewModel.getCards(this.getContext(), 4).observe(this, liveCardList ->
             mLayoutAdapter.submitList(liveCardList));
-        Log.d("AFTER LIVEW", viewModel.getCards(this.getContext(), 4).hasObservers() + "");
-
-        //mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
-      }
+        }
     }
     return rootView;
   }
 
-  public void displayCardBatch(List <Card> cardBatch) {
-    TextView test = getActivity().findViewById(R.id.tester_id);
-    String testText = cardBatch.size() + " BIG MANS ";
-    test.setText(testText);
-  }
 
   /**
    * implemented this method to allow the repository to access this context
    * Room needs the context to generate an instance
-   * @return
+   * @return the context for this view
    */
   public Context getViewContext () {
     return this.getContext();

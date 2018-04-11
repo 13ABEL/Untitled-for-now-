@@ -17,7 +17,6 @@ public interface DisplayCardsContract {
   interface View extends Base.BaseView {
     Context getViewContext();
     //void displayCardBatch(List <CardDecorator> cardBatch);
-    void displayCardBatch(List <Card> cardBatch);
   }
 
 

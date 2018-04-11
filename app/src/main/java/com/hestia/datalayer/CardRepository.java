@@ -1,5 +1,9 @@
 package com.hestia.datalayer;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
+
+import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
 
@@ -14,6 +18,8 @@ public interface CardRepository {
 
 
   void getCardBatch(int batchSize);
+
+  LiveData<PagedList<CardDecorator>> generateOrdered(String column, boolean desc);
   //void initializeDatabase();
 
 
