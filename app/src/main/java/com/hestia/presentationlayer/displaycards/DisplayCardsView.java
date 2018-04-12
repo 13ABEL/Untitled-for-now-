@@ -18,6 +18,8 @@ import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.datalayer.Card.CardDecorator;
+import com.hestia.datalayer.CardRepository;
+import com.hestia.datalayer.CardRepositoryImpl;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 
@@ -89,6 +91,12 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     return rootView;
   }
 
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    // Just doing some extra testing
+    CardRepositoryImpl cardRepo = new CardRepositoryImpl(this.getContext());
+  }
+
 
   /**
    * implemented this method to allow the repository to access this context
@@ -98,5 +106,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   public Context getViewContext () {
     return this.getContext();
   }
+
+  // TODO initialize a new actionbar with custom menus (filtering, sorting)
+  // TODO allow custom OnClicks to be applied to this view (it'll be reused in a variety of scenarios later on
+
+
 
 }

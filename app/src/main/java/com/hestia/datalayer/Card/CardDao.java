@@ -1,15 +1,10 @@
 package com.hestia.datalayer.Card;
 
-import android.arch.lifecycle.LiveData;
 import android.arch.paging.DataSource;
-import android.arch.paging.LivePagedListBuilder;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
-import android.database.Cursor;
 
-import com.hestia.domainlayer.CardImpl;
-import com.hestia.presentationlayer.DeckDecorator;
 
 import java.util.List;
 
@@ -55,4 +50,19 @@ public interface CardDao {
   // selects all cards, ordering by name
   @Query("SELECT * FROM CardDecorator ORDER BY card_name DESC")
   DataSource.Factory<Integer, CardDecorator> getByNameOrder();
+
+
+  // TODO add the expansion column to entity
+  // selects all cards, ordering by name
+  @Query("SELECT * FROM CardDecorator")
+  DataSource.Factory<Integer, CardDecorator> getByExpansion(String Expansion);
+
+  // selects all cards with the selected cost
+  @Query("SELECT * FROM CardDecorator WHERE card_cost LIKE :cardCost")
+  DataSource.Factory<Integer, CardDecorator> getByCost(String cardCost);
+
+  // selects all cards from the selected class
+  @Query("SELECT * FROM CardDecorator ORDER BY card_name DESC")
+  DataSource.Factory<Integer, CardDecorator> getByClass(String className);
+
 }

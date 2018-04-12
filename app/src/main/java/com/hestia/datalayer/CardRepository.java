@@ -15,13 +15,9 @@ public interface CardRepository {
 
   Card getCardByID(String ID);
 
-
-
   void getCardBatch(int batchSize);
 
   LiveData<PagedList<CardDecorator>> generateOrdered(String column, boolean desc);
-  //void initializeDatabase();
-
-
+  LiveData<PagedList<CardDecorator>> generateFiltered(String column, String value);
 
 }

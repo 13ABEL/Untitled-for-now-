@@ -27,8 +27,9 @@ public class DisplayCardsVM extends ViewModel {
       // creates an instance of the repository to interact with the database
       CardRepository cardRepo = new CardRepositoryImpl(currentContext);
       // generate the livedata paged list and attach it to this viewmodel
-      cardList = cardRepo.generateOrdered("default", true);
+      cardList = cardRepo.generateOrdered("name", true);
     }
     return cardList;
   }
+
 }

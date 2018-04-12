@@ -45,6 +45,7 @@ public class UserRepositoryImpl implements UserRepository {
   public void getCurrentUser(String userId) {
     final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
+    //TODO add a check for this
     Log.d(TAG, firebaseUser.getUid());
     // checks if the account already exists in the database
     DocumentReference userRef = userCollection.document(firebaseUser.getUid());

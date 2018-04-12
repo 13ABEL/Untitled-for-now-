@@ -36,11 +36,9 @@ public class CardRepositoryImpl implements CardRepository {
   private CardDao cardModel;
 
   // configuration for paged list
-  PagedList.Config pagedListConfig;
+  private PagedList.Config pagedListConfig;
 
-
-
-  LiveData<PagedList<CardDecorator>> livePagedCards;
+  private LiveData<PagedList<CardDecorator>> livePagedCards;
 
 
   public CardRepositoryImpl(DisplayCardsContract.Presenter newPresenter) {
@@ -50,7 +48,6 @@ public class CardRepositoryImpl implements CardRepository {
     this.viewContext = presenter.getView().getViewContext();
     this.cardDatabase = CardDatabase.getDatabase(viewContext);
 
-
     // page config to customize how our data is loaded
     pagedListConfig =(new PagedList.Config.Builder()).setEnablePlaceholders(true)
         .setPrefetchDistance(15)
@@ -58,8 +55,7 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
   public CardRepositoryImpl(Context currentContext) {
-
-    // gets the context of the view and updates the database instance
+    // gets the context of the view and gets the database instance based on it
     this.viewContext = currentContext;
     this.cardDatabase = CardDatabase.getDatabase(viewContext);
 
@@ -102,24 +98,43 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
-  public void getByCost(int cardCost) {
-    //new RetrieveByCost().execute(cardCost);
-  }
 
-  //TODO create a page for generating ordered by
-  public LiveData<PagedList<CardDecorator>> generateFiltered(String column, int value) {
+  /**
+   * Generates a filtered live paged-list based on filter value
+   * @param column column to filter
+   * @param value value of column to display
+   * @return the live page data associated with the filter applied
+   */
+  public LiveData<PagedList<CardDecorator>> generateFiltered(String column, String value) {
     cardModel = cardDatabase.cardModel();
+    DataSource.Factory <Integer, CardDecorator> cardFactory;
 
     // redirects the query based on the column name
-    if (column == "expansion") {
-      new LivePagedListBuilder<>(cardModel.getByCost(), pagedListConfig).build();
+    if (column.equals("expansion")) {
+      cardFactory = cardModel.getByExpansion(value);
     }
-    else if (column == "") {
+    else if (column.equals("cost")) {
+      cardFactory = cardModel.getByCost(value);
+    }
+    else if (column.equals("class")) {
+      cardFactory = cardModel.getByClass(value);
+    }
+    else {
+      cardFactory = cardModel.getByExpansion(value);
+    }
 
-    }
-    return null;
+    // build the new Live paged list based on the factory produced
+    this.livePagedCards = new LivePagedListBuilder<>(cardFactory, this.pagedListConfig).build();
+    return livePagedCards;
   }
 
+
+  /**
+   * Generates an ordered live paged lists based on column
+   * @param column the general name of the column to be rerouted
+   * @param desc orders the results descending if true
+   * @return the live page data associated with the method call
+   */
   public LiveData<PagedList<CardDecorator>> generateOrdered(String column, boolean desc) {
     cardModel = cardDatabase.cardModel();
     DataSource.Factory <Integer, CardDecorator> cardFactory;
@@ -139,7 +154,6 @@ public class CardRepositoryImpl implements CardRepository {
     this.livePagedCards = new LivePagedListBuilder<Integer, CardDecorator>(cardFactory, pagedListConfig).build();
     return livePagedCards;
   }
-
 
 
 }
