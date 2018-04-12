@@ -9,6 +9,7 @@ import android.os.TestLooperManager;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,8 +87,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
         viewModel.getCards(this.getContext(), 4).observe(this, liveCardList ->
             mLayoutAdapter.submitList(liveCardList));
-        }
+      }
     }
+    
+
     return rootView;
   }
 

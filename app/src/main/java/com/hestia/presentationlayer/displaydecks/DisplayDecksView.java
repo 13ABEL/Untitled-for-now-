@@ -86,6 +86,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
       mRecyclerView.setAdapter(mAdapter);
     }
 
+
     return rootView;
   }
 

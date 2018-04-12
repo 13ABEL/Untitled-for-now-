@@ -59,22 +59,24 @@ public class MainActivity extends AppCompatActivity {
 //            .setAction("Action", null).show();
 //      }
 //    });
-
-    startSignIn();
+    // starts the signin if the current user is null
+    if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+      startSignIn();
+    }
 
     // sets the toolbar as the actionbar for this activity
-    Toolbar mToolBar = findViewById(R.id.my_toolbar);
-    setSupportActionBar(mToolBar);
+    //Toolbar mToolBar = findViewById(R.id.my_toolbar);
+    //setSupportActionBar(mToolBar);
 
     // gets the layout for the navigation drawer and creates its toggle
-    DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);
-    mDrawerToggle = new ActionBarDrawerToggle(
-        this,
-        mDrawerLayout,
-        mToolBar,
-        R.string.drawer_open,
-        R.string.drawer_close);
-    mDrawerLayout.addDrawerListener(mDrawerToggle);
+    //DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);
+//    mDrawerToggle = new ActionBarDrawerToggle(
+//        this,
+//        mDrawerLayout,
+//        mToolBar,
+//        R.string.drawer_open,
+//        R.string.drawer_close);
+//    mDrawerLayout.addDrawerListener(mDrawerToggle);
 
     // checks if app is not being restored from another state (savedInstanceState is null)
     if (savedInstanceState == null ) {
@@ -92,11 +94,11 @@ public class MainActivity extends AppCompatActivity {
     super.onPostCreate(savedInstanceState);
 
     // displays the "opening" icon in the drawer
-    getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-    getSupportActionBar().setHomeButtonEnabled(true);
+    //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    //getSupportActionBar().setHomeButtonEnabled(true);
 
     // syncs the current state of the toggle icon
-    mDrawerToggle.syncState();
+    //mDrawerToggle.syncState();
   }
 
 
@@ -112,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
           @Override
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             // Fragment that will be displayed
-            Fragment displayFragment = null;
+            Fragment displayFragment;
             // switch to select the appropriate fragment to start based on item id
             int  displayID = item.getItemId();
 

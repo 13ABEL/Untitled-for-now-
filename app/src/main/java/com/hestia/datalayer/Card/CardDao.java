@@ -53,16 +53,16 @@ public interface CardDao {
 
 
   // TODO add the expansion column to entity
-  // selects all cards, ordering by name
-  @Query("SELECT * FROM CardDecorator")
-  DataSource.Factory<Integer, CardDecorator> getByExpansion(String Expansion);
+  // selects all cards, ordering by expansion
+  @Query("SELECT * FROM CardDecorator WHERE card_name LIKE :expansion ")
+  DataSource.Factory<Integer, CardDecorator> getByExpansion(String expansion);
 
   // selects all cards with the selected cost
   @Query("SELECT * FROM CardDecorator WHERE card_cost LIKE :cardCost")
   DataSource.Factory<Integer, CardDecorator> getByCost(String cardCost);
 
-  // selects all cards from the selected class
-  @Query("SELECT * FROM CardDecorator ORDER BY card_name DESC")
+  // selects all cards from the selected classs
+  @Query("SELECT * FROM CardDecorator WHERE card_class LIKE :className")
   DataSource.Factory<Integer, CardDecorator> getByClass(String className);
 
 }

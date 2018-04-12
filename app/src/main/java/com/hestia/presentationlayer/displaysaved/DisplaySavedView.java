@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
 import com.hestia.R;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.DisplayDeckAdapter;
@@ -29,8 +30,15 @@ public class DisplaySavedView extends Fragment implements Contract.View {
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    // create the instance of the presenter
-    displaySavedPresenter = new DisplaySavedPresenter(this);
+    // checks to see if the user is signed in
+    if (FirebaseAuth.getInstance().getCurrentUser() == null) {
+      // TODO create a new screen to tell the user that they're not logged in
+      Toast.makeText(this.getContext(), "Sorry, but you must sign in to save decks", Toast.LENGTH_SHORT);
+    }
+    else {
+      // create the instance of the presenter
+      displaySavedPresenter = new DisplaySavedPresenter(this);
+    }
   }
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

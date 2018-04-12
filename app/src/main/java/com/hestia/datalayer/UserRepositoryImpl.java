@@ -46,27 +46,31 @@ public class UserRepositoryImpl implements UserRepository {
     final FirebaseUser firebaseUser = FirebaseAuth.getInstance().getCurrentUser();
 
     //TODO add a check for this
-    Log.d(TAG, firebaseUser.getUid());
-    // checks if the account already exists in the database
-    DocumentReference userRef = userCollection.document(firebaseUser.getUid());
+    if (firebaseUser != null) {
+      Log.d(TAG, firebaseUser.getUid());
 
-    // retrieves the userData
-    Task <DocumentSnapshot> future = userRef.get();
-    future.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-      @Override
-      public void onComplete(@NonNull Task<DocumentSnapshot> task) {
-        if (task.isSuccessful()) {
-          DocumentSnapshot userAccount = task.getResult();
-          // create the new user account if it doesn't exist already
-          if (!userAccount.exists()) {
-            createUserAccount(firebaseUser);
-          }
-          else {
-            Log.d(TAG,(String) userAccount.getData().get("email"));
+      // checks if the account already exists in the database
+      DocumentReference userRef = userCollection.document(firebaseUser.getUid());
+
+      // retrieves the userData
+      Task <DocumentSnapshot> future = userRef.get();
+      future.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+        @Override
+        public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+          if (task.isSuccessful()) {
+            DocumentSnapshot userAccount = task.getResult();
+            // create the new user account if it doesn't exist already
+            if (!userAccount.exists()) {
+              createUserAccount(firebaseUser);
+            }
+            else {
+              Log.d(TAG,(String) userAccount.getData().get("email"));
+            }
           }
         }
-      }
-    });
+      });
+
+    }
   }
 
 

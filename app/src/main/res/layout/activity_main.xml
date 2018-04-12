@@ -17,7 +17,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <!-- toolbar -->
+        <!-- toolbar
         <android.support.v7.widget.Toolbar
             android:id="@+id/my_toolbar"
             android:layout_width="match_parent"
@@ -27,13 +27,12 @@
             android:theme="@style/ToolbarTheme"
             android:elevation="2dp">
         </android.support.v7.widget.Toolbar>
+        -->
 
         <LinearLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-
-            android:layout_marginTop="@dimen/toolbar_height"
             android:orientation="vertical"/>
 
         <!-- end of the main content view -->

@@ -60,16 +60,22 @@ public class DeckRepositoryImpl implements DeckRepository {
   DocumentReference savedDecks;
 
   final int BATCH_SIZE = 15;
-  
+
 
   public DeckRepositoryImpl () {
-    String currentUser = FirebaseAuth.getInstance().getCurrentUser().getUid();
-
+    // gets the user instance
+    FirebaseUser currentUSer = FirebaseAuth.getInstance().getCurrentUser();
     // initializes the instance of the Cloud Firestore db
     this.db = FirebaseFirestore.getInstance();
+
+
+    if (currentUSer != null) {
+      String currentUSerUid = currentUSer.getUid();
+      savedDecks = db.collection( "savedDecks").document(currentUSerUid);
+    }
+
     deckCollection = db.collection( "decks");
 
-    savedDecks = db.collection( "savedDecks").document(currentUser);
   }
 
   public DeckRepositoryImpl (DisplayDecksPresenter displayDeckPresenter) {
