@@ -1,5 +1,6 @@
 package com.hestia.presentationlayer.displaycards;
 
+import android.app.ActionBar;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedList;
@@ -12,6 +13,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -68,6 +71,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       rootView = inflater.inflate(R.layout.display_cards, container, false);
       // sets tag to allow manager to recognise this fragment
       rootView.setTag(FRAGMENT_TAG);
+      setHasOptionsMenu(true);
 
       created = "NOT NEW";
       // initializes the instance of the recycler view using the newly inflated view
@@ -99,6 +103,8 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     // Just doing some extra testing
     CardRepositoryImpl cardRepo = new CardRepositoryImpl(this.getContext());
   }
+
+
 
 
   /**

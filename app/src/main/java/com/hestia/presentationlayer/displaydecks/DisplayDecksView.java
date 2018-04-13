@@ -10,6 +10,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
@@ -66,6 +68,9 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     if (rootView == null) {
       // inflate the layout for this view
       rootView = inflater.inflate(R.layout.display_decks, container, false);
+      // enables the menu for this activity
+      setHasOptionsMenu(true);
+
       // initialize the instance of the recycler view
       mRecyclerView = rootView.findViewById(R.id.recycler_list);
       mRecyclerView.setHasFixedSize(true);
@@ -97,6 +102,15 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
     getActivity().setTitle(R.string.app_name);
     mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
   }
+
+
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    // clear the previous menu
+    // inflate the menu layout into the Menu object
+    inflater.inflate(R.menu.display_decks_menu, menu);
+    super.onCreateOptionsMenu(menu, inflater);
+  }
+
 
 
   public void addDecks (List <DeckDecorator> decks) {

@@ -50,7 +50,7 @@ public class DeckRepositoryImpl implements DeckRepository {
 
   private Query queryDeckBatch = null;
   private Query querySavedDeckBatch = null;
-  
+
 
   final int BATCH_SIZE = 15;
 

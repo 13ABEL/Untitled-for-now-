@@ -65,8 +65,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // sets the toolbar as the actionbar for this activity
-    //Toolbar mToolBar = findViewById(R.id.my_toolbar);
-    //setSupportActionBar(mToolBar);
+    Toolbar mToolBar = findViewById(R.id.my_toolbar);
+    setSupportActionBar(mToolBar);
 
     // gets the layout for the navigation drawer and creates its toggle
     //DrawerLayout mDrawerLayout = findViewById(R.id.drawer_layout);

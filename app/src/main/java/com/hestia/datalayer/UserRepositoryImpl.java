@@ -99,8 +99,8 @@ public class UserRepositoryImpl implements UserRepository {
   public void favDeck (Deck deck) {
     // create the map that will represent the deck to be saved
     Map <String, Object> userMap = new HashMap<>();
-    userFavedDeckCollection.document(currentUser.getUid()).set(deck);
-
+    userSavedDeckCollection.document(currentUser.getUid())
+        .collection("savedDecks").document(deck.getDeckID());
   }
 
   @Override
@@ -111,7 +111,7 @@ public class UserRepositoryImpl implements UserRepository {
     Map <String, Object> deckRep = deck.generateMap();
     // adds the deck (using its id) to the collection of saved decks for the specific user
     userSavedDeckCollection.document(currentUser.getUid())
-        .collection("savedDecks").document(deck.getDeckID()).set(deckRep);
+        .collection("savedDecks").document().set(deckRep);
   }
 
 

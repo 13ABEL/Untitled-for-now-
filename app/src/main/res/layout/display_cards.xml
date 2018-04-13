@@ -4,16 +4,6 @@
       android:layout_width="match_parent"
       android:layout_height="match_parent">
 
-    <!-- toolbar -->
-    <android.support.v7.widget.Toolbar
-        android:id="@+id/display_cards_bar"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/toolbar_height"
-
-        android:theme="@style/ToolbarTheme"
-        android:elevation="2dp">
-    </android.support.v7.widget.Toolbar>
-
     <android.support.v7.widget.RecyclerView
         android:id="@+id/display_cards_recyclerview"
         android:layout_width="match_parent"
