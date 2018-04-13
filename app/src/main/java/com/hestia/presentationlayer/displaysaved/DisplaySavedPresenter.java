@@ -7,14 +7,14 @@ import com.hestia.presentationlayer.DeckDecorator;
 
 import java.util.List;
 
-public class DisplaySavedPresenter implements Contract.Presenter {
-  Contract.View displaySavedView;
+public class DisplaySavedPresenter implements DisplaySavedContract.Presenter {
+  DisplaySavedContract.View displaySavedView;
 
   private DeckRepository savedDeckRepository;
 
   private List<Deck> savedDeckList;
 
-  public DisplaySavedPresenter(Contract.View view){
+  public DisplaySavedPresenter(DisplaySavedContract.View view){
     this.displaySavedView = view;
 
     // initialize the instance of the deck repository and retrieve the first deck batch

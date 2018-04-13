@@ -39,8 +39,6 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   public void getDeckBatch() {
     deckRepository.getDeckBatch(this, 10);
   }
-
-
   // TODO
   private void getUser() {
   }

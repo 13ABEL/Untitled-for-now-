@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Richard on 4/5/2018.
  */
 
-public interface Contract {
+public interface DisplaySavedContract {
   interface View {
     void addDecks(List<DeckDecorator> decks);
   }

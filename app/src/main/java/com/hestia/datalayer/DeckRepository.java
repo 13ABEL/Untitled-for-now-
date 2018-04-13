@@ -1,9 +1,8 @@
 package com.hestia.datalayer;
 
-import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
-import com.hestia.presentationlayer.displaysaved.Contract;
+import com.hestia.presentationlayer.displaysaved.DisplaySavedContract;
 import com.hestia.presentationlayer.singledeck.SingleDeckContract;
 
 /**
@@ -12,7 +11,7 @@ import com.hestia.presentationlayer.singledeck.SingleDeckContract;
 
 public interface DeckRepository {
   void getDeckBatch (DisplayDecksContract.Presenter presenter, int numDecks);
-  void getSavedBatch (Contract.Presenter presenter);
+  void getSavedBatch (DisplaySavedContract.Presenter presenter);
 
   void getFullDeck(SingleDeckContract.Presenter presenter, String deckID);
 

@@ -27,7 +27,8 @@ public class DeckImpl implements Deck {
   protected String createdDateString;
   protected String authorID;
 
-  public DeckImpl (String name, String author, String list, String info, Date date) {
+  public DeckImpl (String ID, String name, String author, String list, String info, Date date) {
+    this.deckID = ID;
     this.deckName = name;
     this.username = author;
     this.summary = info;
@@ -49,6 +50,9 @@ public class DeckImpl implements Deck {
   public DeckImpl () {
   }
 
+  public String getDeckID () {
+    return this.deckID;
+  }
 
   public String getDeckName() {
     return this.deckName;

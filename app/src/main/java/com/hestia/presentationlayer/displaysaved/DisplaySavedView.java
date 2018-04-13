@@ -13,12 +13,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.hestia.R;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.DisplayDeckAdapter;
-import com.hestia.presentationlayer.displaydecks.DisplayDecksView;
 
 import java.util.List;
 
-public class DisplaySavedView extends Fragment implements Contract.View {
-  Contract.Presenter displaySavedPresenter;
+public class DisplaySavedView extends Fragment implements DisplaySavedContract.View {
+  DisplaySavedContract.Presenter displaySavedPresenter;
   RecyclerView mRecyclerView;
   RecyclerView.LayoutManager mLayoutManager;
   DisplayDeckAdapter mAdapter;
@@ -68,7 +67,7 @@ public class DisplaySavedView extends Fragment implements Contract.View {
 
     // resets the name of the title every time this activity is resumed
     getActivity().setTitle(R.string.app_name);
-    mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
+    //mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
   }
 
   @Override

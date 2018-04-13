@@ -74,7 +74,6 @@ public class UserRepositoryImpl implements UserRepository {
   }
 
 
-
   private void createUserAccount(FirebaseUser firebaseUser) {
     // create the map that will represent the user
     Map <String, Object> userMap = new HashMap<>();
@@ -92,8 +91,8 @@ public class UserRepositoryImpl implements UserRepository {
         });
 
     // add a document for saved, faved deckss for the user
-    userSavedDeckCollection.document(firebaseUser.getUid()).set(new HashMap<String, Object>());
-    userFavedDeckCollection.document(firebaseUser.getUid()).set(new HashMap<String, Object>());
+    DocumentReference userDecks = userSavedDeckCollection.document(firebaseUser.getUid());
+    userDecks.collection("savedDecks").document();
   }
 
   @Override
@@ -106,9 +105,13 @@ public class UserRepositoryImpl implements UserRepository {
 
   @Override
   public void saveDeck(Deck deck) {
+    // get the current id of the deck to create the field
+    deck.getDeckID();
     // generates the map rep of the deck to be used in firestore
     Map <String, Object> deckRep = deck.generateMap();
-    userSavedDeckCollection.document(currentUser.getUid()).set(deckRep);
+    // adds the deck (using its id) to the collection of saved decks for the specific user
+    userSavedDeckCollection.document(currentUser.getUid())
+        .collection("savedDecks").document(deck.getDeckID()).set(deckRep);
   }
 
 

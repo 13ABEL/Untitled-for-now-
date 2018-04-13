@@ -14,19 +14,14 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.hestia.domainlayer.Deck;
-import com.hestia.domainlayer.DeckImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 import com.hestia.presentationlayer.displaydecks.DisplayDecksPresenter;
-import com.hestia.presentationlayer.displaysaved.Contract;
+import com.hestia.presentationlayer.displaysaved.DisplaySavedContract;
 import com.hestia.presentationlayer.singledeck.SingleDeckContract;
-
-import org.w3c.dom.Document;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -55,9 +50,7 @@ public class DeckRepositoryImpl implements DeckRepository {
 
   private Query queryDeckBatch = null;
   private Query querySavedDeckBatch = null;
-
-  // testing purposes
-  DocumentReference savedDecks;
+  
 
   final int BATCH_SIZE = 15;
 
@@ -68,14 +61,16 @@ public class DeckRepositoryImpl implements DeckRepository {
     // initializes the instance of the Cloud Firestore db
     this.db = FirebaseFirestore.getInstance();
 
-
     if (currentUSer != null) {
-      String currentUSerUid = currentUSer.getUid();
-      savedDecks = db.collection( "savedDecks").document(currentUSerUid);
+      String currentUserUid = currentUSer.getUid();
+      savedCollection = db.collection( "savedDecks").document(currentUserUid)
+          .collection("savedDecks");
     }
 
-    deckCollection = db.collection( "decks");
+    // initializes the saved Collection for the user
+    querySavedDeckBatch = savedCollection.limit(BATCH_SIZE);
 
+    deckCollection = db.collection( "decks");
   }
 
   public DeckRepositoryImpl (DisplayDecksPresenter displayDeckPresenter) {
@@ -108,15 +103,20 @@ public class DeckRepositoryImpl implements DeckRepository {
 
           //creates a new array for the decks
           ArrayList<DeckDecorator> newDecks = new ArrayList<>();
+          String deckID;
 
           for (DocumentSnapshot document : documentSnapshots) {
+            deckID = document.getId();
             //test += document.getId() + " = " + document.getData();
             Log.d("-----------------pixel", document.getId() + " = " + document.getData());
             returnString = document.getId();// + " = " + document.getData();
 
-            // formats the data into a deck object and adds it into the array of decks
-            // DeckDecorator newDeck = parseFirebaseReturn(returnString);
-            DeckDecorator newDeck = parseFullDeck(document.getData());
+            // add the id to the card map before sending it to be parsed
+            Map<String, Object> cardMap = document.getData();
+            cardMap.put("id", deckID);
+
+            DeckDecorator newDeck = parseFullDeck(cardMap);
+
             Log.d("NEW DECK", "newDeck = " + newDeck.getDeckName());
             newDecks.add(newDeck);
           }
@@ -179,6 +179,7 @@ public class DeckRepositoryImpl implements DeckRepository {
     // parse the data from the firestore map (implementation dependent)
     //TODO currently using author id -> need to change to username
     //String authorID = deckMap.get("author_ID").toString();
+    String deckID = (String) deckMap.get("id");
     String username = (String) deckMap.get("username");
     String deckName = (String) deckMap.get("deckName");
     String summary = (String) deckMap.get("summary");
@@ -186,45 +187,58 @@ public class DeckRepositoryImpl implements DeckRepository {
     Date createdDate = (Date) deckMap.get("createdDate");
 
     Log.d("REPOSITORY MAP TESTING",
-        " deck_name = " + deckName
+        " deck_ID = " + deckID
+        + " deck_name = " + deckName
         +" username = " + username
         + " summary = " + summary
         + " deckList = " + deckList
         + " createdDate = " + createdDate.toString()
     );
 
-    return new DeckDecorator(deckName, username, deckList, summary, createdDate);
+    return new DeckDecorator(deckID, deckName, username, deckList, summary, createdDate);
   }
+
 
   public void saveDeck(DeckDecorator deck) {
-
   }
 
 
 
-  public void getSavedBatch(final Contract.Presenter presenter) {
+  public void getSavedBatch(final DisplaySavedContract.Presenter displayCardsPresenter) {
     // get the Document query object
-    Task <DocumentSnapshot> task = savedDecks.get();
-    task.addOnSuccessListener(new OnSuccessListener<DocumentSnapshot> () {
+    Task <QuerySnapshot> task = querySavedDeckBatch.get();
+    task.addOnSuccessListener(new OnSuccessListener<QuerySnapshot> () {
       @Override
-      public void onSuccess(DocumentSnapshot documentSnapshot) {
-        //gets the set of keys from the document map
-        Set<String> deckKeys = documentSnapshot.getData().keySet();
+      public void onSuccess(QuerySnapshot documentSnapshots) {
+        int currentBatchSize = documentSnapshots.size();
 
-        //creates a new array for the decks
-        ArrayList<DeckDecorator> newDecks = new ArrayList<>();
+        // only gets more decks if there are any left to get
+        if (currentBatchSize > 0) {
+          // gets the last document loaded (used to construct next query)
+          DocumentSnapshot lastVisible = documentSnapshots.getDocuments()
+              .get(currentBatchSize - 1);
 
-        for (String deckName : deckKeys) {
-          //test += document.getId() + " = " + document.getData();
-          Log.d(TAG, "getsavedbatch" + deckName + " = " + documentSnapshot.getData());
+          //creates a new array for the decks
+          ArrayList<DeckDecorator> newDecks = new ArrayList<>();
 
-          // returnString = document.getId();// + " = " + document.getData();
-          // formats the data into a deck object and adds it into the array of decks
-          DeckDecorator newDeck = parseFullDeck(documentSnapshot.getData());
+          // constructs a new query starting at the last document (for pagination)
+          querySavedDeckBatch = savedCollection.orderBy("createdDate").startAfter(lastVisible).limit(BATCH_SIZE);
+
+          for (DocumentSnapshot document : documentSnapshots) {
+            //test += document.getId() + " = " + document.getData();
+            Log.d(TAG, "getsavedbatch" + " = " + document.getData());
+
+            // returnString = document.getId();// + " = " + document.getData();
+            // formats the data into a deck object and adds it into the array of decks
+            Map <String, Object> deckData = document.getData();
+            deckData.put("id", document.getId());
+
+            DeckDecorator newDeck = parseFullDeck(deckData);
 //          Log.d("NEW DECK", "newDeck = " + newDeck.getDeckName());
-          newDecks.add(newDeck);
+            newDecks.add(newDeck);
+          }
+          displayCardsPresenter.receiveSavedBatch(newDecks);
         }
-        presenter.receiveSavedBatch(newDecks);
       }
     });
   }

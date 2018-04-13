@@ -8,6 +8,7 @@ import java.util.Map;
  */
 
 public interface Deck {
+  String getDeckID();
   String getDeckName();
   String getAuthor();
   Map <String, Object> generateMap();
