@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -68,7 +70,17 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     // resets the name of the title every time this activity is resumed
     getActivity().setTitle(R.string.app_name);
     //mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
+
+    // enables the menu for this activity
+    setHasOptionsMenu(true);
   }
+
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    // inflate the menu layout into the Menu object
+    inflater.inflate(R.menu.display_saved_menu, menu);
+    super.onCreateOptionsMenu(menu, inflater);
+  }
+
 
   @Override
   public void addDecks(List<DeckDecorator> decks) {

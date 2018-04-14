@@ -115,6 +115,8 @@ public class MainActivity extends AppCompatActivity {
           public boolean onNavigationItemSelected(@NonNull MenuItem item) {
             // Fragment that will be displayed
             Fragment displayFragment;
+            // enables the menu for this activity
+
             // switch to select the appropriate fragment to start based on item id
             int  displayID = item.getItemId();
 

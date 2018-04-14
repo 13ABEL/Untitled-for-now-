@@ -105,8 +105,6 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   }
 
 
-
-
   /**
    * implemented this method to allow the repository to access this context
    * Room needs the context to generate an instance

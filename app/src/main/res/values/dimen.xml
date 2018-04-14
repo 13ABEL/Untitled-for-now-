@@ -5,7 +5,15 @@
 
 
     <dimen name="activity_horizontal_margin">12dp</dimen>
+
+
     <dimen name="toolbar_height">60dp</dimen>
+
+
+    <dimen name="toolbar_padding">10dp</dimen>
+
+
+
     <dimen name="main_activity_padding_top">70dp</dimen>
 
 

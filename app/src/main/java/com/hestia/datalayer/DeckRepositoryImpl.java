@@ -56,20 +56,21 @@ public class DeckRepositoryImpl implements DeckRepository {
 
 
   public DeckRepositoryImpl () {
-    // gets the user instance
+    // gets the user instance and initializes the instance of the Cloud Firestore db
     FirebaseUser currentUSer = FirebaseAuth.getInstance().getCurrentUser();
-    // initializes the instance of the Cloud Firestore db
     this.db = FirebaseFirestore.getInstance();
 
     if (currentUSer != null) {
+      // initializes the reference to the saved collection for the user
       String currentUserUid = currentUSer.getUid();
       savedCollection = db.collection( "savedDecks").document(currentUserUid)
           .collection("savedDecks");
+
+      // initializes the savedDeck query specific to the user
+      querySavedDeckBatch = savedCollection.limit(BATCH_SIZE);
     }
 
-    // initializes the saved Collection for the user
-    querySavedDeckBatch = savedCollection.limit(BATCH_SIZE);
-
+    // does not require instance of user
     deckCollection = db.collection( "decks");
   }
 

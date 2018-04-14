@@ -1,7 +1,7 @@
 <resources>
 
     <!-- base app theme -->
-    <style name="Base.Apptheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="Base.AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -11,17 +11,9 @@
     </style>
 
     <!-- main app theme -->
-    <style name="AppTheme" parent="Base.Apptheme">
+    <style name="AppTheme" parent="Base.AppTheme">
         <item name="android:textColor">@color/deck_item_text</item>
-
         <item name="android:textSize">@dimen/summary_text</item>
-    </style>
-
-
-    <style name="ToolbarTheme" parent="Theme.AppCompat">
-        <item name="android:background">@color/colorPrimary</item>
-        <item name="android:itemBackground">@color/deck_item_text</item>
-
     </style>
 
 
@@ -30,5 +22,9 @@
     </style>
 
 
+    <!-- for popup and menus -->
+    <style name="MenuTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
+
+    </style>
 
 </resources>
