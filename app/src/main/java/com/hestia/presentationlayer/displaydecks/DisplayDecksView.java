@@ -66,9 +66,8 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
     // recall: popping off backstack returns a fragment without a view
     if (rootView == null) {
-      // inflate the layout for this view
+      // inflate the layout for this view nad enables the menu
       rootView = inflater.inflate(R.layout.display_decks, container, false);
-      // enables the menu for this activity
       setHasOptionsMenu(true);
 
       // initialize the instance of the recycler view

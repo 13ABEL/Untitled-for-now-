@@ -68,7 +68,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
     if (rootView == null) {
+      // inflates the view and enables the options menu
       rootView = inflater.inflate(R.layout.display_cards, container, false);
+      setHasOptionsMenu(true);
+
       // sets tag to allow manager to recognise this fragment
       rootView.setTag(FRAGMENT_TAG);
       setHasOptionsMenu(true);
@@ -104,6 +107,12 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     CardRepositoryImpl cardRepo = new CardRepositoryImpl(this.getContext());
   }
 
+  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+    // clear the previous menu
+    // inflate the menu layout into the Menu object
+    inflater.inflate(R.menu.display_cards_menu, menu);
+    super.onCreateOptionsMenu(menu, inflater);
+  }
 
   /**
    * implemented this method to allow the repository to access this context

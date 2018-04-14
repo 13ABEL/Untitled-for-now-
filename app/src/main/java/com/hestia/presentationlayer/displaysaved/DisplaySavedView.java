@@ -1,12 +1,15 @@
 package com.hestia.presentationlayer.displaysaved;
 
 import android.os.Bundle;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -33,7 +36,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     super.onCreate(savedInstanceState);
     // checks to see if the user is signed in
     if (FirebaseAuth.getInstance().getCurrentUser() == null) {
-      // TODO create a new screen to tell the user that they're not logged in
+      // TODO create a new screen to tell the user if they're not logged in
       Toast.makeText(this.getContext(), "Sorry, but you must sign in to save decks", Toast.LENGTH_SHORT);
     }
     else {
@@ -75,10 +78,37 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     setHasOptionsMenu(true);
   }
 
+  /**
+   * inflates the menu on the toolbar for this activity
+   * @param menu
+   * @param inflater
+   */
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     // inflate the menu layout into the Menu object
     inflater.inflate(R.menu.display_saved_menu, menu);
     super.onCreateOptionsMenu(menu, inflater);
+  }
+
+  public boolean onOptionsItemSelected(MenuItem item) {
+    // routes the selection to the presenter to handle logic
+    switch (item.getItemId()) {
+      case R.id.item_create_deck:
+        // creates a new fragment for deck creation
+        createNewDeck();
+      default:
+        return super.onOptionsItemSelected(item);
+    }
+  }
+
+  public void createNewDeck() {
+    Toast.makeText(getContext(), "Please enter your information", Toast.LENGTH_SHORT).show();
+
+    // gets the transaction to manage the dialog lifecycle
+    FragmentTransaction transaction = getFragmentManager().beginTransaction();
+
+    // creates and shows the new dialog fragment
+    DialogFragment newDeckFragment = new NewDeckDialog();
+    newDeckFragment.show(transaction, "Create New Deck");
   }
 
 

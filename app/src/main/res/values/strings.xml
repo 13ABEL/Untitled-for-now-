@@ -30,4 +30,17 @@
         no annoying consequences, or one who avoids a pain that produces no resultant pleasure?
     </string>
 
+
+    <string name="filter_date">Date</string>
+    <string name="filter_cost">Cost</string>
+    <string name="filter_class">Class</string>
+
+    <string name="filter_expansion">Expansion</string>
+
+    <string name="sort_cost">Expansion</string>
+
+
+
+
+
 </resources>
