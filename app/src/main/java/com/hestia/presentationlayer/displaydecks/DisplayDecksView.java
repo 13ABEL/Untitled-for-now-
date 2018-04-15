@@ -130,9 +130,9 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
       Toast.makeText(getContext(), position + " POSITION", Toast.LENGTH_SHORT).show();
 
-      // create a bundle to pass the new fragment the id of the deck
       SingleDeckView singleDeckFragment = new SingleDeckView();
 
+      // create a bundle to pass the new fragment the deck object
       Bundle args = new Bundle();
       args.putParcelable("deck", passedDeck);
       singleDeckFragment.setArguments(args);

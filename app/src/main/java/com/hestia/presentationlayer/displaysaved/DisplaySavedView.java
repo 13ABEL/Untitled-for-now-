@@ -37,7 +37,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     // checks to see if the user is signed in
     if (FirebaseAuth.getInstance().getCurrentUser() == null) {
       // TODO create a new screen to tell the user if they're not logged in
-      Toast.makeText(this.getContext(), "Sorry, but you must sign in to save decks", Toast.LENGTH_SHORT);
+      Toast.makeText(this.getContext(), "Sorry, but you must sign in to save decks", Toast.LENGTH_SHORT).show();
     }
     else {
       // create the instance of the presenter
@@ -62,6 +62,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     //DisplayDecksView.AdapterListener listener = new DisplayDecksView.AdapterListener();
     //mAdapter.addOnClickListener(listener);
     mRecyclerView.setAdapter(mAdapter);
+    getActivity().setTitle("Saved Decksc 1");
 
     return rootView;
   }
@@ -71,7 +72,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     super.onActivityCreated(savedInstanceState);
 
     // resets the name of the title every time this activity is resumed
-    getActivity().setTitle(R.string.app_name);
+    //getActivity().setTitle("Saved Decks");
     //mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
 
     // enables the menu for this activity
