@@ -6,6 +6,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -36,6 +37,9 @@ import java.util.List;
  */
 
 public class MainActivity extends AppCompatActivity {
+  // used to identify the tab fragments
+  private static final String BACK_STACK_ROOT = "root_fragment";
+
   private ActionBarDrawerToggle mDrawerToggle;
   private static final int RC_SIGN_IN = 123;
 
@@ -99,7 +103,19 @@ public class MainActivity extends AppCompatActivity {
 
     // syncs the current state of the toggle icon
     //mDrawerToggle.syncState();
+
+    // initialize each view
+    if (displayDecksView == null) {
+      displayDecksView = new DisplayDecksView();
+    }
+    if (displaySavedView == null) {
+      displaySavedView = new DisplaySavedView();
+    }
+    if (displayCardsView == null) {
+      displayCardsView = new DisplayCardsView();
+    }
   }
+
 
 
   /**
@@ -109,55 +125,42 @@ public class MainActivity extends AppCompatActivity {
     BottomNavigationView navigationView = findViewById(R.id.bottom_navigation);
     // sets up the listener for the page items
     navigationView.setOnNavigationItemSelectedListener(
-        new BottomNavigationView.OnNavigationItemSelectedListener() {
+        item -> {
+          // Fragment that will be displayed
+          Fragment displayFragment;
+          // switch to select the appropriate fragment to start based on item id
+          int  displayID = item.getItemId();
 
-          @Override
-          public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            // Fragment that will be displayed
-            Fragment displayFragment;
-            // enables the menu for this activity
-
-            // switch to select the appropriate fragment to start based on item id
-            int  displayID = item.getItemId();
-
-            if (displayID ==  R.id.bottom_navigation_1) {
-              //Toast.makeText(getBaseContext(), "NAV 1", Toast.LENGTH_SHORT).show();
-              // creates a new display decks view if one doesn't already exist
-              if (displayDecksView == null) {
-                displayDecksView = new DisplayDecksView();
-              }
-              displayFragment = displayDecksView;
-
-            }
-            else if (displayID == R.id.bottom_navigation_2) {
-              //Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
-              //displayFragment = new DisplayCardsView();
-              if (displaySavedView == null) {
-                displaySavedView = new DisplaySavedView();
-              }
-              displayFragment = displaySavedView;
-
-            }
-            else if (displayID == R.id.bottom_navigation_3) {
-              //Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
-              // creates a new display cards view if one doesn't already exist
-              if (displayCardsView == null) {
-                displayCardsView = new DisplayCardsView();
-              }
-              displayFragment = displayCardsView;
-            }
-            else {
-              //Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
-              displayFragment = new DisplayCardsView();
-            }
-
-            if (displayFragment != null) {
-              // replace the current screen with the appropriate fragment
-              getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, displayFragment).commit();
-
-            }
-            return true;
+          if (displayID ==  R.id.bottom_navigation_1) {
+            Toast.makeText(getBaseContext(), "NAV 1", Toast.LENGTH_SHORT).show();
+            // creates a new display decks view if one doesn't already exist
+            displayFragment = displayDecksView;
           }
+          else if (displayID == R.id.bottom_navigation_2) {
+            Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
+            //displayFragment = new DisplayCardsView();
+            displayFragment = displaySavedView;
+          }
+          else if (displayID == R.id.bottom_navigation_3) {
+            Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
+            // creates a new display cards view if one doesn't already exist
+            displayFragment = displayCardsView;
+          }
+          else {
+            Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
+            displayFragment = new DisplayCardsView();
+          }
+
+          FragmentManager fragManager = getSupportFragmentManager();
+          // pop everything off the current back stack (up to and including current tab fragment)
+          fragManager.popBackStack(BACK_STACK_ROOT, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+          // replace the current screen with the appropriate fragment
+          fragManager.beginTransaction().replace(R.id.content_frame, displayFragment)
+              .addToBackStack(BACK_STACK_ROOT)
+              .commit();
+
+          return true;
         });
     }
 

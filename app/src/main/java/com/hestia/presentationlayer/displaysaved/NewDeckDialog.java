@@ -81,11 +81,12 @@ public class NewDeckDialog extends DialogFragment {
         createDeckFragment.setArguments(args);
 
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        // replace contents of fragment container with this fragment
-        transaction.replace(R.id.content_frame, createDeckFragment);
-        // adds the replaced fragment to the backstack to allow user to navigate back to it
-        transaction.addToBackStack(null);
-        transaction.commit();
+
+        // add fragment on top of the root tab fragment in backstack
+        transaction.replace(R.id.content_frame, createDeckFragment)
+          // adds the replaced fragment to the backstack to allow user to navigate back to it
+          .addToBackStack(null)
+          .commit();
 
         // close the dialog
         dismiss();
