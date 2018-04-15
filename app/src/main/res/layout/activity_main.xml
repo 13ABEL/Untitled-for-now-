@@ -31,7 +31,6 @@
             android:paddingEnd="@dimen/toolbar_padding"
             app:popupTheme="@style/MenuTheme"/>
 
-
         <LinearLayout
             android:id="@+id/content_frame"
             android:layout_width="match_parent"
@@ -46,9 +45,8 @@
             android:layout_height="56dp"
             android:layout_gravity="bottom"
             android:background="?attr/colorPrimary"
-            app:menu="@menu/bottom_navigation_menu" />
+            app:menu="@menu/bottom_navigation_menu"/>
     </FrameLayout>
-
 
     <!-- The navigation drawer -->
     <android.support.design.widget.NavigationView

@@ -39,6 +39,19 @@
 
     <string name="sort_cost">Expansion</string>
 
+    <string name="druid">druid</string>
+    <string name="hunter">hunter</string>
+    <string name="mage">mage</string>
+    <string name="paladin">paladin</string>
+    <string name="priest">priest</string>
+    <string name="rogue">rogue</string>
+    <string name="shaman">shaman</string>
+    <string name="warlock">warlock</string>
+    <string name="warrior">warrior</string>
+
+    <string name="standard">standard</string>
+    <string name="wild">wild</string>
+
 
 
 
