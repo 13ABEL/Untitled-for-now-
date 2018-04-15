@@ -139,12 +139,11 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
       FragmentTransaction transaction = getFragmentManager().beginTransaction();
       // replace contents of fragment container with this fragment
-      transaction.replace(R.id.content_frame, singleDeckFragment);
-      // adds the replaced fragment to back stack to allow user to navigate back to it
-      transaction.addToBackStack(null);
-
-      // commit the transaction
-      transaction.commit();
+      transaction.replace(R.id.content_frame, singleDeckFragment)
+        // adds the replaced fragment to back stack to allow user to navigate back to it
+        .addToBackStack(null)
+        // commit the transaction
+        .commit();
     }
   }
 

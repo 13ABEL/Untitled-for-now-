@@ -63,6 +63,7 @@ public class MainActivity extends AppCompatActivity {
 //            .setAction("Action", null).show();
 //      }
 //    });
+
     // starts the signin if the current user is null
     if (FirebaseAuth.getInstance().getCurrentUser() == null) {
       startSignIn();
@@ -132,22 +133,22 @@ public class MainActivity extends AppCompatActivity {
           int  displayID = item.getItemId();
 
           if (displayID ==  R.id.bottom_navigation_1) {
-            Toast.makeText(getBaseContext(), "NAV 1", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "NAV 1", Toast.LENGTH_SHORT).show();
             // creates a new display decks view if one doesn't already exist
             displayFragment = displayDecksView;
           }
           else if (displayID == R.id.bottom_navigation_2) {
-            Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
             //displayFragment = new DisplayCardsView();
             displayFragment = displaySavedView;
           }
           else if (displayID == R.id.bottom_navigation_3) {
-            Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
             // creates a new display cards view if one doesn't already exist
             displayFragment = displayCardsView;
           }
           else {
-            Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
             displayFragment = new DisplayCardsView();
           }
 
