@@ -110,7 +110,6 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   }
 
 
-
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     // clear the previous menu
     // inflate the menu layout into the Menu object
@@ -126,24 +125,33 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   class searchListener implements SearchView.OnQueryTextListener {
     Fragment fragRef;
 
-    public searchListener(Fragment fragment) {
+    searchListener(Fragment fragment) {
       super();
       this.fragRef = fragment;
     }
     @Override
     public boolean onQueryTextChange(String newText) {
+      // returns the default list if the search text is empty
+      if (newText.length() == 0) {
+        viewModel.getCards(fragRef.getContext(), 4).observe(
+            fragRef, liveCardList -> mLayoutAdapter.submitList(liveCardList));
+      } else {
         // TODO return list if the newText is empty (length 0)
-//      mLayoutAdapter = new DisplayCardAdapter();
-//      mRecyclerView.setAdapter(mLayoutAdapter);
-
-      viewModel.getSearchResult(fragRef.getContext(), newText).observe(
-        fragRef, liveSearchList -> mLayoutAdapter.submitList(liveSearchList)
-      );
+        viewModel.getSearchResult(fragRef.getContext(), newText).observe(
+            fragRef, liveSearchList -> mLayoutAdapter.submitList(liveSearchList)
+        );
+      }
       return false;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+      // TODO create method for default fetch to be called
+      // TODO close the search box when it's empty
+      if (query == null) {
+        viewModel.getCards(fragRef.getContext(), 4).observe(
+            fragRef, liveCardList -> mLayoutAdapter.submitList(liveCardList));
+      }
       return false;
     }
   }
@@ -162,6 +170,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   // TODO initialize a new actionbar with custom menus (filtering, sorting)
   // TODO allow custom OnClicks to be applied to this view (it'll be reused in a variety of scenarios later on
 
+  public void onDestroy(){
+    super.onDestroy();
+
+  }
 
 
 }
