@@ -16,6 +16,7 @@ import com.hestia.datalayer.CardRepositoryImpl;
 
 public class DisplayCardsVM extends ViewModel {
   private LiveData<PagedList<CardDecorator>> cardList = null;
+  private CardRepository cardRepo;
 
   public DisplayCardsVM() {}
 
@@ -23,13 +24,21 @@ public class DisplayCardsVM extends ViewModel {
 
     // initializes the list if it is null
     if (cardList == null) {
-
       // creates an instance of the repository to interact with the database
-      CardRepository cardRepo = new CardRepositoryImpl(currentContext);
+      cardRepo = new CardRepositoryImpl(currentContext);
       // generate the livedata paged list and attach it to this viewmodel
       cardList = cardRepo.generateOrdered("name", true);
     }
     return cardList;
   }
+
+  public LiveData<PagedList<CardDecorator>> getSearchResult(Context cContext, String searchText) {
+      // generate the livedata paged list and attach it to this viewmodel
+      cardList = cardRepo.generateSearchResults(searchText, true);
+
+    return cardList;
+  }
+
+
 
 }

@@ -19,5 +19,7 @@ public interface CardRepository {
 
   LiveData<PagedList<CardDecorator>> generateOrdered(String column, boolean desc);
   LiveData<PagedList<CardDecorator>> generateFiltered(String column, String value);
+  LiveData<PagedList<CardDecorator>> generateSearchResults(String search, boolean desc);
+
 
 }

@@ -2,14 +2,17 @@ package com.hestia.presentationlayer.displaycards;
 
 import android.app.ActionBar;
 import android.arch.lifecycle.LiveData;
+import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.arch.paging.PagedList;
 import android.content.Context;
 import android.os.Bundle;
 import android.os.TestLooperManager;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -37,6 +40,7 @@ import java.util.List;
 
 public class DisplayCardsView extends Fragment implements DisplayCardsContract.View{
   private final String FRAGMENT_TAG = "DISPLAY_CARDS_FRAGMENT";
+  private final String TAG = "DISPLAY_CARDS_FRAGMENT";
 
   private View rootView;
   private RecyclerView mRecyclerView;
@@ -96,8 +100,6 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
             mLayoutAdapter.submitList(liveCardList));
       }
     }
-    
-
     return rootView;
   }
 
@@ -107,12 +109,46 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     CardRepositoryImpl cardRepo = new CardRepositoryImpl(this.getContext());
   }
 
+
+
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     // clear the previous menu
     // inflate the menu layout into the Menu object
     inflater.inflate(R.menu.display_cards_menu, menu);
     super.onCreateOptionsMenu(menu, inflater);
+
+    // set the query listener for the search bar
+    SearchView searchView = (SearchView) menu.findItem(R.id.display_cards_search).getActionView();
+    searchView.setOnQueryTextListener(new searchListener(this));
   }
+
+
+  class searchListener implements SearchView.OnQueryTextListener {
+    Fragment fragRef;
+
+    public searchListener(Fragment fragment) {
+      super();
+      this.fragRef = fragment;
+    }
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        // TODO return list if the newText is empty (length 0)
+//      mLayoutAdapter = new DisplayCardAdapter();
+//      mRecyclerView.setAdapter(mLayoutAdapter);
+
+      viewModel.getSearchResult(fragRef.getContext(), newText).observe(
+        fragRef, liveSearchList -> mLayoutAdapter.submitList(liveSearchList)
+      );
+      return false;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+      return false;
+    }
+  }
+
+
 
   /**
    * implemented this method to allow the repository to access this context

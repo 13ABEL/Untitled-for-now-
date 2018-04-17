@@ -156,5 +156,23 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
+  /**
+   * Generates a live paged list for search results
+   * @param search
+   * @param desc
+   * @return
+   */
+  public LiveData<PagedList<CardDecorator>> generateSearchResults(String search, boolean desc) {
+    cardModel = cardDatabase.cardModel();
+    DataSource.Factory <Integer, CardDecorator> cardFactory;
+
+    // add the appropriate characters to make use of the "like" selector
+    cardFactory = cardModel.getBySearch("%" + search + "%");
+
+    this.livePagedCards = new LivePagedListBuilder<Integer, CardDecorator>(cardFactory, pagedListConfig).build();
+    return livePagedCards;
+  }
+
+
 }
 
