@@ -95,20 +95,12 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       if (mLayoutAdapter == null) {
         mLayoutAdapter = new DisplayCardAdapter();
         mRecyclerView.setAdapter(mLayoutAdapter);
-
-        viewModel.getCards(this.getContext(), 4).observe(this, liveCardList ->
-            mLayoutAdapter.submitList(liveCardList));
+        // calls the method to set the default page
+        resetData();
       }
     }
     return rootView;
   }
-
-  public void onActivityCreated(Bundle savedInstanceState) {
-    super.onActivityCreated(savedInstanceState);
-    // Just doing some extra testing
-    CardRepositoryImpl cardRepo = new CardRepositoryImpl(this.getContext());
-  }
-
 
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     // clear the previous menu
@@ -119,6 +111,22 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     // set the query listener for the search bar
     SearchView searchView = (SearchView) menu.findItem(R.id.display_cards_search).getActionView();
     searchView.setOnQueryTextListener(new searchListener(this));
+    // resets the list when the search is closed
+    searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+      @Override
+      public boolean onClose() {
+        Toast.makeText(getActivity().getApplicationContext(), "closed search", Toast.LENGTH_SHORT).show();
+        resetData();
+        return false;
+      }
+    });
+  }
+
+
+  // resets the data that the adapter observes
+  public void resetData () {
+    viewModel.getCards(this.getContext(), 4).observe(this, liveCardList ->
+        mLayoutAdapter.submitList(liveCardList));
   }
 
 
@@ -133,29 +141,22 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     public boolean onQueryTextChange(String newText) {
       // returns the default list if the search text is empty
       if (newText.length() == 0) {
-        viewModel.getCards(fragRef.getContext(), 4).observe(
-            fragRef, liveCardList -> mLayoutAdapter.submitList(liveCardList));
-      } else {
-        // TODO return list if the newText is empty (length 0)
-        viewModel.getSearchResult(fragRef.getContext(), newText).observe(
-            fragRef, liveSearchList -> mLayoutAdapter.submitList(liveSearchList)
-        );
+        resetData();
       }
-      return false;
+      // true because the action is handled by the listener
+      return true;
     }
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-      // TODO create method for default fetch to be called
-      // TODO close the search box when it's empty
-      if (query == null) {
-        viewModel.getCards(fragRef.getContext(), 4).observe(
-            fragRef, liveCardList -> mLayoutAdapter.submitList(liveCardList));
-      }
-      return false;
+      // returns the default list if the search text is empty
+      viewModel.getSearchResult(fragRef.getContext(), query).observe(
+          fragRef, liveSearchList -> mLayoutAdapter.submitList(liveSearchList)
+      );
+      // true because the action is handled by the listener
+      return true;
     }
   }
-
 
 
   /**
@@ -170,10 +171,6 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   // TODO initialize a new actionbar with custom menus (filtering, sorting)
   // TODO allow custom OnClicks to be applied to this view (it'll be reused in a variety of scenarios later on
 
-  public void onDestroy(){
-    super.onDestroy();
-
-  }
 
 
 }
