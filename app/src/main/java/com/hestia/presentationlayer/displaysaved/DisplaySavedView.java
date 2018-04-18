@@ -102,8 +102,6 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
   }
 
   public void createNewDeck() {
-    Toast.makeText(getContext(), "Please enter your information", Toast.LENGTH_SHORT).show();
-
     // gets the transaction to manage the dialog lifecycle
     FragmentTransaction transaction = getFragmentManager().beginTransaction();
 

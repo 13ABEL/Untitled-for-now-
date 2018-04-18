@@ -8,6 +8,8 @@
         <item name="android:windowBackground">@color/colorBackground</item>
         <item name="android:colorAccent">@color/colorAccent</item>
         <item name="android:textColorPrimary">@color/deck_item_text</item>
+        <item name="searchViewStyle">@style/SearchTheme </item>
+        <item name="android:dialogTheme">@style/DialogTheme</item>
     </style>
 
     <!-- main app theme -->
@@ -21,10 +23,23 @@
         <item name="android:background">@color/colorPrimary</item>
     </style>
 
+    <!-- for the searchview theme-->
+    <style name="SearchTheme" parent="Widget.AppCompat.SearchView">
+        <item name="searchIcon">@drawable/ic_search_24dp</item>
+        <item name="goIcon">@drawable/ic_search_24dp</item>
+        <item name="android:smallIcon">@drawable/ic_search_24dp</item>
+    </style>
 
     <!-- for popup and menus -->
     <style name="MenuTheme" parent="Base.ThemeOverlay.AppCompat.ActionBar">
 
     </style>
+
+
+    <!-- for dialogs -->
+    <style name="DialogTheme" parent="Theme.AppCompat.Dialog">
+        <item name="android:background">@color/colorPrimary</item>
+    </style>
+
 
 </resources>

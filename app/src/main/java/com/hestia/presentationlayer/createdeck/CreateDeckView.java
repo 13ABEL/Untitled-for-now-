@@ -13,6 +13,8 @@ import com.hestia.R;
 
 public class CreateDeckView extends Fragment implements CreateDeckContract.View{
   private final String TAG = "CREATE_DECK";
+
+  private View rootView;
   CreateDeckContract.Presenter cPresenter;
 
   private Boolean isStandard = true;
@@ -33,22 +35,32 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
     if (!dialogInput.getBoolean("formatStandard")) {
       isStandard = false;
     }
-
     Toast.makeText(this.getContext(), "Class : " + deckClass + ", Standard : " + isStandard,
         Toast.LENGTH_SHORT).show();
-  }
 
-  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // initializes the reference the current floating action button and hide it
     showDeckFAB = getActivity().findViewById(R.id.fab);
     if (showDeckFAB != null) {
       showDeckFAB.setVisibility(View.INVISIBLE);
     }
+  }
+
+
+  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+    // inflate the same layout used for the display cards view
+    rootView = inflater.inflate(R.layout.display_cards, container, false);
+    //
+
+
 
     return null;
   }
 
 
+
+  /**
+   * Sets up the FAB if the deck has not been saved
+   */
   public void onDestroyView () {
     super.onDestroyView();
     // only shows the fab if the deck is not saved
@@ -67,5 +79,8 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
       }
     }
   }
+
+
+
 
 }

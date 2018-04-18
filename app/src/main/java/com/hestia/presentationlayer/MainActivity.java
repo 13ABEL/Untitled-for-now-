@@ -48,21 +48,11 @@ public class MainActivity extends AppCompatActivity {
   private Fragment displaySavedView;
   private Fragment displayCardsView;
 
+
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
     setContentView(R.layout.activity_main);
-
-
-//    // initializes the floating action button and its onclick
-//    FloatingActionButton fab = findViewById(R.id.fab);
-//    fab.setOnClickListener(new View.OnClickListener() {
-//      @Override
-//      public void onClick(View view) {
-//        Snackbar.make(view, "haha yeet", Snackbar.LENGTH_LONG)
-//            .setAction("Action", null).show();
-//      }
-//    });
 
     // starts the signin if the current user is null
     if (FirebaseAuth.getInstance().getCurrentUser() == null) {
@@ -90,14 +80,12 @@ public class MainActivity extends AppCompatActivity {
       // Add the fragment to the container (content frame) in this activity
       getSupportFragmentManager().beginTransaction().replace(R.id.content_frame, displayDecksFrag).commit();
     }
-
     // sets up the app navigation
     setupNavigation();
   }
 
   protected void onPostCreate(Bundle savedInstanceState) {
     super.onPostCreate(savedInstanceState);
-
     // displays the "opening" icon in the drawer
     //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     //getSupportActionBar().setHomeButtonEnabled(true);
@@ -130,26 +118,26 @@ public class MainActivity extends AppCompatActivity {
           // Fragment that will be displayed
           Fragment displayFragment;
           // switch to select the appropriate fragment to start based on item id
-          int  displayID = item.getItemId();
+          int displayID = item.getItemId();
 
-          if (displayID ==  R.id.bottom_navigation_1) {
-            //Toast.makeText(getBaseContext(), "NAV 1", Toast.LENGTH_SHORT).show();
+          if (displayID == R.id.bottom_navigation_1) {
+            //Toast.makeText(getBaseContext(), "1 item ID ", Toast.LENGTH_SHORT).show();
             // creates a new display decks view if one doesn't already exist
             displayFragment = displayDecksView;
           }
           else if (displayID == R.id.bottom_navigation_2) {
-            //Toast.makeText(getBaseContext(), "NAV 2", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "2 item ID ", Toast.LENGTH_SHORT).show();
             //displayFragment = new DisplayCardsView();
             displayFragment = displaySavedView;
           }
           else if (displayID == R.id.bottom_navigation_3) {
-            //Toast.makeText(getBaseContext(), "NAV 3", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getBaseContext(), "3 item ID ", Toast.LENGTH_SHORT).show();
             // creates a new display cards view if one doesn't already exist
             displayFragment = displayCardsView;
           }
           else {
             //Toast.makeText(getBaseContext(), "None selected", Toast.LENGTH_SHORT).show();
-            displayFragment = new DisplayCardsView();
+            displayFragment = displayDecksView;
           }
 
           FragmentManager fragManager = getSupportFragmentManager();
@@ -157,13 +145,14 @@ public class MainActivity extends AppCompatActivity {
           fragManager.popBackStack(BACK_STACK_ROOT, FragmentManager.POP_BACK_STACK_INCLUSIVE);
 
           // replace the current screen with the appropriate fragment
+          // do not add the current fragment to the stack - we dont want to pop it off
+          // because it's the root of each tab
           fragManager.beginTransaction().replace(R.id.content_frame, displayFragment)
-              .addToBackStack(BACK_STACK_ROOT)
               .commit();
 
           return true;
-        });
-    }
+    });
+  }
 
   /**
    * Currently a quick way to sign in - will implement custom fragment without the UI dependency later

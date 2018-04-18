@@ -59,16 +59,11 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    if (created != "NEW") {
-      Toast.makeText(this.getContext(), "RESTORED " + created, Toast.LENGTH_SHORT).show();
-    }
-    else {
-      Toast.makeText(this.getContext(), "NEW", Toast.LENGTH_SHORT).show();
-    }
-
+    getActivity().setTitle(R.string.app_name);
     // gets the ViewModel instance associated with the fragment
     viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
   }
+
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
     if (rootView == null) {
