@@ -23,12 +23,13 @@ import java.util.List;
 
 public class DisplaySavedView extends Fragment implements DisplaySavedContract.View {
   DisplaySavedContract.Presenter displaySavedPresenter;
+
   RecyclerView mRecyclerView;
   RecyclerView.LayoutManager mLayoutManager;
   DisplayDeckAdapter mAdapter;
 
   /**
-   * Overriede the DisplayDecksView to create a new saved presenter instead of a decks presenter
+   * Override the DisplayDecksView to create a new saved presenter instead of a decks presenter
    * @param savedInstanceState
    */
   @Override
@@ -39,7 +40,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
       // TODO create a new screen to tell the user if they're not logged in
       Toast.makeText(this.getContext(), "Sorry, but you must sign in to save decks", Toast.LENGTH_SHORT).show();
     }
-    else {
+    else if (displaySavedPresenter == null) {
       // create the instance of the presenter
       displaySavedPresenter = new DisplaySavedPresenter(this);
     }
@@ -56,17 +57,19 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     // initializes and sets the layout manager plus adapter
     mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
     mRecyclerView.setLayoutManager(mLayoutManager);
-    mAdapter = new DisplayDeckAdapter(rootView.getContext());
+
+    if (mAdapter == null) {
+      mAdapter = new DisplayDeckAdapter(rootView.getContext());
+    }
 
     // creates a new onclick and passes it to the adapter
     //DisplayDecksView.AdapterListener listener = new DisplayDecksView.AdapterListener();
     //mAdapter.addOnClickListener(listener);
     mRecyclerView.setAdapter(mAdapter);
-    getActivity().setTitle("Saved Decksc 1");
+    getActivity().setTitle("Saved Deck");
 
     return rootView;
   }
-
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);

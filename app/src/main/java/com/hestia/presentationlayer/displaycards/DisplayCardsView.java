@@ -60,6 +60,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     super.onCreate(savedInstanceState);
 
     getActivity().setTitle(R.string.app_name);
+
     // gets the ViewModel instance associated with the fragment
     viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
   }
@@ -73,27 +74,27 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
       // sets tag to allow manager to recognise this fragment
       rootView.setTag(FRAGMENT_TAG);
-      setHasOptionsMenu(true);
 
       created = "NOT NEW";
-      // initializes the instance of the recycler view using the newly inflated view
-      mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
-      mRecyclerView.setHasFixedSize(true);
-
-      // initialize and sets the layout manager for the recycler view
-      if (mLayoutManager == null) {
-        mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-        mRecyclerView.setLayoutManager(mLayoutManager);
-      }
-
-      // initializes and sets the adapter for the recycler view (not the root)
-      if (mLayoutAdapter == null) {
-        mLayoutAdapter = new DisplayCardAdapter();
-        mRecyclerView.setAdapter(mLayoutAdapter);
-        // calls the method to set the default page
-        resetData();
-      }
     }
+    // initializes the instance of the recycler view using the newly inflated view
+    mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
+    mRecyclerView.setHasFixedSize(true);
+
+    // initialize and sets the layout manager for the recycler view
+    if (mLayoutManager == null) {
+      mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+      mRecyclerView.setLayoutManager(mLayoutManager);
+    }
+
+    // initializes and sets the adapter for the recycler view (not the root)
+    if (mLayoutAdapter == null) {
+      mLayoutAdapter = new DisplayCardAdapter();
+      mRecyclerView.setAdapter(mLayoutAdapter);
+      // calls the method to set the default page
+      resetData();
+    }
+
     return rootView;
   }
 

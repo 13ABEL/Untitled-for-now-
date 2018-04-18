@@ -129,6 +129,8 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
 //    }
 
   }
+
+
   public DeckDecorator getDeck(int position) {
     // get the deck at the specified position
     return deckSet.get(position);
