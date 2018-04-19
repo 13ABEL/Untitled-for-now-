@@ -22,11 +22,12 @@ public class CreateDeckPresenter implements CreateDeckContract.Presenter {
     this.cView = newView;
     // initialize the arraylist to hold the cards
     currentDeckList = new ArrayList<>();
+    cardList = new ArrayList();
   }
 
 
   @Override
-  public void handleCards(CardDecorator currCard) {
+  public void addToNewDeck(CardDecorator currCard) {
     // checks if a card with the same ID already exists within the deck
     int numCard = Collections.frequency(cardList, currCard);
 
@@ -37,6 +38,7 @@ public class CreateDeckPresenter implements CreateDeckContract.Presenter {
     }
 
     // update the view to reflect the changes in the card
-    // 
+    //
+
   }
 }

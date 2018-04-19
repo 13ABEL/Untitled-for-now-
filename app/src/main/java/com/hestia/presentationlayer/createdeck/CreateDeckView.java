@@ -15,6 +15,8 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hestia.R;
+import com.hestia.datalayer.Card.CardDecorator;
+import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 import com.hestia.presentationlayer.displaycards.DisplayCardsVM;
 
@@ -71,6 +73,7 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
 
     // initializes the adapter for the recyclerview
     cardAdapter = new DisplayCardAdapter();
+    cardAdapter.addOnClickListener(new cardOnClick());
     mRecyclerView.setAdapter(cardAdapter);
 
     // display the default screen for the cards
@@ -125,11 +128,13 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
 
   // Onclick class for the adapter
   class cardOnClick implements View.OnClickListener {
-
     @Override
     public void onClick(View v) {
+      CardDecorator currCard =  cardAdapter.getCard(v);
+
       // onclick calls the presenter to handle the logic
-      
+      cPresenter.addToNewDeck(currCard);
+      Toast.makeText(rootView.getContext(), currCard.getName() + " added ", Toast.LENGTH_SHORT).show();
 
     }
   }

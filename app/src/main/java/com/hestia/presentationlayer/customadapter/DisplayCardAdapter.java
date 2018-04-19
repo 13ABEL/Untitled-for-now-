@@ -26,11 +26,13 @@ import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
  */
 
 public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayCardAdapter.ViewHolder> {
+  private View.OnClickListener cardListener;
+
   /**
    * Follows the viewholder pattern
    * Used to present items and allow item details to be changed easily
    */
-  public static class ViewHolder extends RecyclerView.ViewHolder {
+  class ViewHolder extends RecyclerView.ViewHolder {
       TextView cardName;
       TextView cardCost;
 
@@ -39,6 +41,13 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       // binds our variables to elements in the view
       cardName = view.findViewById(R.id.item_card_name);
       cardCost = view.findViewById(R.id.item_card_cost);
+
+      // sets the onClick listener
+      view.setOnClickListener(cardListener);
+    }
+
+    public void setPosition(int position) {
+      itemView.setTag(position);
     }
   }
 
@@ -54,6 +63,10 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
         return (oldCard.getCost() == newCard.getCost());
       }
     });
+  }
+
+  public void addOnClickListener (View.OnClickListener listener) {
+    this.cardListener = listener;
   }
 
   /**
@@ -86,6 +99,16 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       String currentCost = currentCard.getCost()+ "";
       holder.cardCost.setText(currentCost);
     }
+    // binds the position to the holders
+    holder.setPosition(position);
+  }
+
+
+
+  public CardDecorator getCard(View view) {
+    // gets the card from the item
+    int cardPosition = (int) view.getTag();
+    return getItem(cardPosition);
   }
 
 }

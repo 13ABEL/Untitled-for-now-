@@ -8,7 +8,7 @@ public interface CreateDeckContract {
 
   }
   interface Presenter extends Base.BasePresenter {
-    public void handleCards(CardDecorator card);
+    public void addToNewDeck(CardDecorator card);
   }
 
 
