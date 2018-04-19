@@ -68,5 +68,8 @@ public class CardImpl implements Card {
   public String getRarity() {
     return this.rarity;
   }
+  public String getCardClass() {
+    return this.cardClass;
+  }
 
 }

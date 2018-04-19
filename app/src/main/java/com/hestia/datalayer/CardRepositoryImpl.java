@@ -174,5 +174,15 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
+  public LiveData<PagedList<CardDecorator>> generateDeckCards(String className, boolean isStandard) {
+    cardModel = cardDatabase.cardModel();
+    DataSource.Factory <Integer, CardDecorator> cardFactory;
+
+    // add the appropriate characters to make use of the "like" selector
+    cardFactory = cardModel.getByClass(className);
+
+    this.livePagedCards = new LivePagedListBuilder<Integer, CardDecorator>(cardFactory, pagedListConfig).build();
+    return livePagedCards;
+  }
 }
 

@@ -143,7 +143,7 @@ public abstract class CardDatabase extends RoomDatabase {
           newCards.add( new CardDecorator(
                   (String) card.get("dbfId"),
                   (String) card.get("name"),
-                  (String) card.get("faction"),
+                  (String) card.get("playerClass"),
                   (String) card.get("type"),
                   (String) card.get("rarity"),
                   (String) card.get("text"),

@@ -27,6 +27,7 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
 
   DisplayCardAdapter cardAdapter;
 
+  String deckClass;
   private Boolean isStandard = true;
   private Boolean isSaved = false;
 
@@ -41,18 +42,15 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
     Bundle dialogInput = this.getArguments();
     getActivity().setTitle(dialogInput.getCharSequence("deckName"));
 
-    String deckClass = (String) dialogInput.getCharSequence("deckClass");
+    deckClass = (String) dialogInput.getCharSequence("deckClass");
     if (!dialogInput.getBoolean("formatStandard")) {
       isStandard = false;
     }
     Toast.makeText(this.getContext(), "Class : " + deckClass + ", Standard : " + isStandard,
         Toast.LENGTH_SHORT).show();
 
-    // initializes the reference the current floating action button and hide it
+    // initializes the reference the current floating action button
     showDeckFAB = getActivity().findViewById(R.id.fab);
-    if (showDeckFAB != null) {
-      showDeckFAB.setVisibility(View.INVISIBLE);
-    }
 
     // gets the ViewModel instance associated with the fragment
     viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
@@ -80,9 +78,17 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
     return rootView;
   }
 
+  public void onActivityCreated(Bundle savedInstanceState) {
+    super.onActivityCreated(savedInstanceState);
+    // hide the FAB
+    if (showDeckFAB != null) {
+      showDeckFAB.setVisibility(View.INVISIBLE);
+    }
+  }
+
 
   public void resetList() {
-    viewModel.getCards(4).observe(this, liveCardList ->
+    viewModel.getCreateCards(deckClass, isStandard).observe(this, liveCardList ->
         cardAdapter.submitList(liveCardList));
   }
 
@@ -108,6 +114,7 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
           // create a reference to this instance of the create deck view
           FragmentTransaction transaction = getFragmentManager().beginTransaction();
           transaction.replace(R.id.content_frame, currentFragRef);
+          transaction.commit();
         }
       });
 
