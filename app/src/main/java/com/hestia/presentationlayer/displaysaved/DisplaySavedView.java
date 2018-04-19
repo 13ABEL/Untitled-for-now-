@@ -29,7 +29,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
   DisplayDeckAdapter mAdapter;
 
   /**
-   * Override the DisplayDecksView to create a new saved presenter instead of a decks presenter
+   * Initialize components that need to be retained through the lifecycle
    * @param savedInstanceState
    */
   @Override

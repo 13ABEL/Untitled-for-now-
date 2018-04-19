@@ -63,6 +63,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
     // gets the ViewModel instance associated with the fragment
     viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
+    viewModel.initializeRepo(this.getContext());
   }
 
 
@@ -121,7 +122,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
   // resets the data that the adapter observes
   public void resetData () {
-    viewModel.getCards(this.getContext(), 4).observe(this, liveCardList ->
+    viewModel.getCards(4).observe(this, liveCardList ->
         mLayoutAdapter.submitList(liveCardList));
   }
 
@@ -133,6 +134,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       super();
       this.fragRef = fragment;
     }
+
     @Override
     public boolean onQueryTextChange(String newText) {
       // returns the default list if the search text is empty
@@ -146,7 +148,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     @Override
     public boolean onQueryTextSubmit(String query) {
       // returns the default list if the search text is empty
-      viewModel.getSearchResult(fragRef.getContext(), query).observe(
+      viewModel.getSearchResult(query).observe(
           fragRef, liveSearchList -> mLayoutAdapter.submitList(liveSearchList)
       );
       // true because the action is handled by the listener

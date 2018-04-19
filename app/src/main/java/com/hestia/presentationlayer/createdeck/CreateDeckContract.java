@@ -1,5 +1,6 @@
 package com.hestia.presentationlayer.createdeck;
 
+import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.presentationlayer.Base;
 
 public interface CreateDeckContract {
@@ -7,7 +8,7 @@ public interface CreateDeckContract {
 
   }
   interface Presenter extends Base.BasePresenter {
-
+    public void handleCards(CardDecorator card);
   }
 
 

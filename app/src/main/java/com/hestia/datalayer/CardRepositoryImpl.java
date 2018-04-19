@@ -130,7 +130,7 @@ public class CardRepositoryImpl implements CardRepository {
 
 
   /**
-   * Generates an ordered live paged lists based on column
+   * Generates an ordered live paged lists based on a column
    * @param column the general name of the column to be rerouted
    * @param desc orders the results descending if true
    * @return the live page data associated with the method call

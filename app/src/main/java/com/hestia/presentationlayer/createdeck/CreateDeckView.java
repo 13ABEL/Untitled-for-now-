@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -36,12 +37,11 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
     // initializes the presenter for this view
     cPresenter = new CreateDeckPresenter(this);
 
-    // get the argument bundle and retrieve its data
+    // get the argument bundle and retrieve the contained data
     Bundle dialogInput = this.getArguments();
     getActivity().setTitle(dialogInput.getCharSequence("deckName"));
 
     String deckClass = (String) dialogInput.getCharSequence("deckClass");
-
     if (!dialogInput.getBoolean("formatStandard")) {
       isStandard = false;
     }
@@ -56,6 +56,7 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
 
     // gets the ViewModel instance associated with the fragment
     viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
+    viewModel.initializeRepo(this.getContext());
   }
 
 
@@ -81,7 +82,7 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
 
 
   public void resetList() {
-    viewModel.getCards(this.getContext(), 4).observe(this, liveCardList ->
+    viewModel.getCards(4).observe(this, liveCardList ->
         cardAdapter.submitList(liveCardList));
   }
 
@@ -91,22 +92,42 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
    */
   public void onDestroyView () {
     super.onDestroyView();
+
+    // a reference to the current fragment used by the onclick
+    Fragment currentFragRef = this;
+
     // only shows the fab if the deck is not saved
     if (!isSaved) {
-      if (showDeckFAB != null) {
-        // adds the listener to the fab
-        showDeckFAB.setOnClickListener(new View.OnClickListener() {
-          @Override
-          public void onClick(View view) {
-            Snackbar.make(view, "haha yeet", Snackbar.LENGTH_LONG)
-                .setAction("Action", null).show();
-          }
-        });
-        // show the Floating Activit y Button
-        showDeckFAB.setVisibility(View.VISIBLE);
-      }
+      // adds the listener to the fab
+      showDeckFAB.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+          Snackbar.make(view, "reopening deck", Snackbar.LENGTH_LONG)
+              .setAction("Action", null).show();
+
+          // create a reference to this instance of the create deck view
+          FragmentTransaction transaction = getFragmentManager().beginTransaction();
+          transaction.replace(R.id.content_frame, currentFragRef);
+        }
+      });
+
+      // show the FAB
+      showDeckFAB.setVisibility(View.VISIBLE);
     }
   }
+
+  // Onclick class for the adapter
+  class cardOnClick implements View.OnClickListener {
+
+    @Override
+    public void onClick(View v) {
+      // onclick calls the presenter to handle the logic
+      
+
+    }
+  }
+
+
 
 
 

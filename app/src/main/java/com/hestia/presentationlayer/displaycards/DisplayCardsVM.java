@@ -18,31 +18,26 @@ public class DisplayCardsVM extends ViewModel {
   private LiveData<PagedList<CardDecorator>> cardList = null;
   private CardRepository cardRepo;
 
-  public DisplayCardsVM() {
-    // TODO initialize the repository here and have the fragment context passed here
+  public void initializeRepo (Context newContext) {
+    cardRepo = new CardRepositoryImpl(newContext);
   }
 
-  public LiveData<PagedList<CardDecorator>> getCards(Context currentContext, int cardCost) {
-    // initializes the list if it is null
-    if (cardList == null) {
-      // creates an instance of the repository to interact with the database
-      cardRepo = new CardRepositoryImpl(currentContext);
-      // generate the live paged list and attach it to this viewmodel
-      cardList = cardRepo.generateOrdered("name", true);
-    }
+  public LiveData<PagedList<CardDecorator>> getCards(int cardCost) {
+    // generate the live paged list and attach it to this viewmodel
+    cardList = cardRepo.generateOrdered("name", true);
+
     return cardList;
   }
 
-  public LiveData<PagedList<CardDecorator>> getSearchResult(Context cContext, String searchText) {
-    if (cardRepo == null) {
-      cardRepo = new CardRepositoryImpl(cContext);
-    }
+  public LiveData<PagedList<CardDecorator>> getSearchResult(String searchText) {
     // generate the live paged list and attach it to this viewmodel
     cardList = cardRepo.generateSearchResults(searchText, true);
 
     return cardList;
   }
 
-
+  public LiveData<PagedList<CardDecorator>> getCreateDecks(String className, boolean isStandard) {
+    return null;
+  }
 
 }

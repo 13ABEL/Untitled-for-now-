@@ -61,12 +61,16 @@ public interface CardDao {
   @Query("SELECT * FROM CardDecorator WHERE card_cost LIKE :cardCost")
   DataSource.Factory<Integer, CardDecorator> getByCost(String cardCost);
 
-  // selects all cards from the selected classs
+  // selects all cards from the selected class
   @Query("SELECT * FROM CardDecorator WHERE card_class LIKE :className")
   DataSource.Factory<Integer, CardDecorator> getByClass(String className);
 
-  // selects all cards from the selected classs
+  // selects all cards that match the search terms
   @Query("SELECT * FROM CardDecorator WHERE card_name LIKE :search")
   DataSource.Factory<Integer, CardDecorator> getBySearch(String search);
+
+
+  @Query("SELECT * FROM CardDecorator WHERE card_name LIKE :search AND card_class = :className")
+  DataSource.Factory<Integer, CardDecorator> getBySearchClass(String search, String className);
 
 }
