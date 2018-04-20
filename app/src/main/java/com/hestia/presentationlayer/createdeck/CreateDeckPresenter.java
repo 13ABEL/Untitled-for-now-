@@ -9,11 +9,14 @@ import java.util.Collections;
 import java.util.List;
 
 public class CreateDeckPresenter implements CreateDeckContract.Presenter {
+  final private String LEGENDARY = "Legendary";
+
+
   CreateDeckContract.View cView;
 
 
   //
-  private Collection cardList;
+  private Collection <CardDecorator> cardList;
 
   List <CardDecorator> currentDeckList;
 
@@ -22,23 +25,33 @@ public class CreateDeckPresenter implements CreateDeckContract.Presenter {
     this.cView = newView;
     // initialize the arraylist to hold the cards
     currentDeckList = new ArrayList<>();
-    cardList = new ArrayList();
+    cardList = new ArrayList<>();
   }
+
 
 
   @Override
   public void addToNewDeck(CardDecorator currCard) {
-    // checks if a card with the same ID already exists within the deck
+    // gets rarity of card and number of occurrences in the deck
+    String rarity = currCard.getRarity();
     int numCard = Collections.frequency(cardList, currCard);
 
-    // checks if the deck already contains the max number of the card
-    String rarity = currCard.getRarity();
-    if (rarity.equals("legendary") && numCard == 0 || rarity.equals("legendary") && numCard < 2){
-      // add the card to the array list and update the number of that card
+    // removes the card if the deck already has max copies of it
+    if (rarity.equals(LEGENDARY) && numCard == 1 || numCard == 2) {
+      cardList.remove(currCard);
+      // tells the view to display cards being removed
+      cView.showCardAdded(false);
     }
-
-    // update the view to reflect the changes in the card
-    //
-
+    // add the current card if it's not being removed and the deck still has room
+    else if (cardList.size() < 30) {
+      cardList.add(currCard);
+      // tells the view to show cards being added
+      cView.showCardAdded(true);
+    }
   }
+
+  public int getDeckSize() {
+    return cardList.size();
+  }
+
 }

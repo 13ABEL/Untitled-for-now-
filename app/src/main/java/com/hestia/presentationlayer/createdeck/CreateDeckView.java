@@ -83,65 +83,43 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    // hide the FAB
+
+    // hide the FAB and bottom navigation
     if (showDeckFAB != null) {
       showDeckFAB.setVisibility(View.INVISIBLE);
     }
   }
-
 
   public void resetList() {
     viewModel.getCreateCards(deckClass, isStandard).observe(this, liveCardList ->
         cardAdapter.submitList(liveCardList));
   }
 
+  public void showCardAdded(boolean cardAdded) {
+    // shows action based on whether the card has been added or not
+    if (cardAdded) {
+      // TODO add animations
+    }
+    else {
+    }
+    Toast.makeText(rootView.getContext(), " added : " + cardAdded, Toast.LENGTH_SHORT).show();
+  }
 
   /**
    * Sets up the FAB if the deck has not been saved
    */
   public void onDestroyView () {
     super.onDestroyView();
-
-    // a reference to the current fragment used by the onclick
-    Fragment currentFragRef = this;
-
-    // only shows the fab if the deck is not saved
-    if (!isSaved) {
-      // adds the listener to the fab
-      showDeckFAB.setOnClickListener(new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-          Snackbar.make(view, "reopening deck", Snackbar.LENGTH_LONG)
-              .setAction("Action", null).show();
-
-          // create a reference to this instance of the create deck view
-          FragmentTransaction transaction = getFragmentManager().beginTransaction();
-          transaction.replace(R.id.content_frame, currentFragRef);
-          transaction.commit();
-        }
-      });
-
-      // show the FAB
-      showDeckFAB.setVisibility(View.VISIBLE);
-    }
+    // automatically saves the deck - tells presenter to create and add it to firebase
+    cPresenter.saveChanges();
   }
 
   // Onclick class for the adapter
   class cardOnClick implements View.OnClickListener {
     @Override
     public void onClick(View v) {
-      CardDecorator currCard =  cardAdapter.getCard(v);
-
-      // onclick calls the presenter to handle the logic
-      cPresenter.addToNewDeck(currCard);
-      Toast.makeText(rootView.getContext(), currCard.getName() + " added ", Toast.LENGTH_SHORT).show();
-
+      // gets the card from the adapter and sends it to the presenter to handle it
+      cPresenter.addToNewDeck(cardAdapter.getCard(v));
     }
   }
-
-
-
-
-
-
 }

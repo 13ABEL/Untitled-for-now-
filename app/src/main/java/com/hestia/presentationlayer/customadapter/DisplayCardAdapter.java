@@ -104,7 +104,6 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
   }
 
 
-
   public CardDecorator getCard(View view) {
     // gets the card from the item
     int cardPosition = (int) view.getTag();

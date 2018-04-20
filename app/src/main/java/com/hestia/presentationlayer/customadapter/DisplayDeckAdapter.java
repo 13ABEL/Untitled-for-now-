@@ -126,8 +126,6 @@ public class DisplayDeckAdapter extends RecyclerView.Adapter<DisplayDeckAdapter.
 //      // passes te object to the new fragment
 //      args.putParcelable("deck", openingDeck);
 //      singleDeckFragment.setArguments(args);
-//    }
-
   }
 
 
