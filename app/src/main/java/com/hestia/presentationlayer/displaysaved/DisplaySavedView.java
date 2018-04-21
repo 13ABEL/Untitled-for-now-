@@ -35,6 +35,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
   @Override
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+
     // checks to see if the user is signed in
     if (FirebaseAuth.getInstance().getCurrentUser() == null) {
       // TODO create a new screen to tell the user if they're not logged in
@@ -118,6 +119,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
   public void addDecks(List<DeckDecorator> decks) {
     mAdapter.addDecks(decks);
   }
+
 
   /**
    * used to load more decks once the "bottom of the page" is loaded

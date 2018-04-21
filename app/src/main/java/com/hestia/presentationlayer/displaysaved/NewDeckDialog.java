@@ -13,13 +13,19 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.hestia.R;
-import com.hestia.presentationlayer.createdeck.CreateDeckView;
+import com.hestia.domainlayer.Deck;
+import com.hestia.presentationlayer.DeckDecorator;
+import com.hestia.presentationlayer.editdeck.EditDeckView;
 
 public class NewDeckDialog extends DialogFragment {
   private final String TAG = "CREATE_DECK_DIALOG";
 
   View rootView;
+
+  String currentUID;
 
   // used for checking
   EditText deckName;
@@ -28,6 +34,8 @@ public class NewDeckDialog extends DialogFragment {
 
   public void onCreate (Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    // gets the user id
+    currentUID = FirebaseAuth.getInstance().getCurrentUser().getUid();
   }
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -70,16 +78,25 @@ public class NewDeckDialog extends DialogFragment {
         Log.d(TAG, name + " " + selectedClass.getText());
 
         // open the new fragment for constructing the deck
-        CreateDeckView createDeckFragment = new CreateDeckView();
+        EditDeckView createDeckFragment = new EditDeckView();
 
         // create a bundle using the dialog input and insert it into the new fragment
         Bundle args = new Bundle();
-        args.putCharSequence("deckName", deckName.getText());
-        args.putCharSequence("deckClass", selectedClass.getText());
-        args.putBoolean("formatStandard", isStandard);
+//        args.putCharSequence("deckName", deckName.getText());
+//        args.putCharSequence("deckClass", selectedClass.getText());
+//        args.putBoolean("formatStandard", isStandard);
+
+        // Create a new deck with additional properties and passes it to the fragment to edit
+        DeckDecorator newDeck = new DeckDecorator("test_id",
+            currentUID, selectedClass.getText().toString());
+
+        // sets the name and format of the decks
+        newDeck.setDeckName(deckName.getText().toString());
+        newDeck.setFormat(isStandard);
+
+        args.putParcelable("deck", newDeck);
 
         createDeckFragment.setArguments(args);
-
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         // add fragment on top of the root tab fragment in backstack
@@ -92,6 +109,7 @@ public class NewDeckDialog extends DialogFragment {
         dismiss();
       }
     }
+
 
   }
 

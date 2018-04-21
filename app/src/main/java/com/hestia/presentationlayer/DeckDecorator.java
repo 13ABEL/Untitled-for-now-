@@ -5,6 +5,7 @@ import android.arch.persistence.room.PrimaryKey;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.hestia.domainlayer.Deck;
 import com.hestia.domainlayer.DeckImpl;
 
 import java.text.DateFormat;
@@ -21,10 +22,14 @@ import java.util.Map;
  */
 
 @Entity
-public class DeckDecorator extends DeckImpl implements Parcelable {
+public class DeckDecorator extends DeckImpl implements Parcelable{
 
   public DeckDecorator () {
     super();
+  }
+
+  public DeckDecorator (String deckID, String author, String deckClass) {
+    super(deckID, author, deckClass);
   }
 
   public DeckDecorator (String deckID, String name, String author, String list, String info, Date date) {
@@ -35,10 +40,12 @@ public class DeckDecorator extends DeckImpl implements Parcelable {
     // retrieve the map from the parcel in order
     this.deckName = parcelIn.readString();
     this.username = parcelIn.readString();
-    this.summary = parcelIn.readString();
+    String summary = parcelIn.readString();
     this.deckID =parcelIn.readString();
     this.authorID = parcelIn.readString();
     this.createdDateString = parcelIn.readString();
+
+    setSummary(summary);
   }
 
   public static final Parcelable.Creator<DeckDecorator> CREATOR =
@@ -63,10 +70,10 @@ public class DeckDecorator extends DeckImpl implements Parcelable {
   @Override
   public void writeToParcel(Parcel parcelOut, int flags) {
     // puts the object info into the map
-    parcelOut.writeString(this.deckName);
-    parcelOut.writeString(this.username);
-    parcelOut.writeString(this.summary);
-    parcelOut.writeString(this.deckID);
+    parcelOut.writeString(this.getDeckName());
+    parcelOut.writeString(this.getAuthor());
+    parcelOut.writeString(this.getSummary());
+    parcelOut.writeString(this.getDeckID());
     parcelOut.writeString(this.authorID);
     parcelOut.writeString(this.createdDateString);
   }

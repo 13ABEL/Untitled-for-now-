@@ -1,12 +1,9 @@
-package com.hestia.presentationlayer.createdeck;
+package com.hestia.presentationlayer.editdeck;
 
-import android.arch.lifecycle.ViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -15,16 +12,15 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hestia.R;
-import com.hestia.datalayer.Card.CardDecorator;
-import com.hestia.domainlayer.Card;
+import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 import com.hestia.presentationlayer.displaycards.DisplayCardsVM;
 
-public class CreateDeckView extends Fragment implements CreateDeckContract.View{
+public class EditDeckView extends Fragment implements EditDeckContract.View{
   private final String TAG = "CREATE_DECK";
 
   private View rootView;
-  CreateDeckContract.Presenter cPresenter;
+  EditDeckContract.Presenter cPresenter;
   private DisplayCardsVM viewModel;
 
   DisplayCardAdapter cardAdapter;
@@ -37,19 +33,24 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
 
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    // initializes the presenter for this view
-    cPresenter = new CreateDeckPresenter(this);
 
     // get the argument bundle and retrieve the contained data
-    Bundle dialogInput = this.getArguments();
-    getActivity().setTitle(dialogInput.getCharSequence("deckName"));
+    Bundle dialogNewDeck = this.getArguments();
+    // our presenter works with the deck interface as opposed to the deck itself
+    Deck newDeck = (Deck) dialogNewDeck.get("deck");
+    deckClass = newDeck.getDeckClass();
 
-    deckClass = (String) dialogInput.getCharSequence("deckClass");
-    if (!dialogInput.getBoolean("formatStandard")) {
-      isStandard = false;
-    }
-    Toast.makeText(this.getContext(), "Class : " + deckClass + ", Standard : " + isStandard,
-        Toast.LENGTH_SHORT).show();
+    // initializes the presenter for this view
+    cPresenter = new EditDeckPresenter(this, newDeck);
+
+    //getActivity().setTitle(dialogInput.getCharSequence("deckName"));
+
+//    deckClass = (String) dialogInput.getCharSequence("deckClass");
+//    if (!dialogInput.getBoolean("formatStandard")) {
+//      isStandard = false;
+//    }
+//    Toast.makeText(this.getContext(), "Class : " + deckClass + ", Standard : " + isStandard,
+//        Toast.LENGTH_SHORT).show();
 
     // initializes the reference the current floating action button
     showDeckFAB = getActivity().findViewById(R.id.fab);
@@ -71,7 +72,7 @@ public class CreateDeckView extends Fragment implements CreateDeckContract.View{
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
     mRecyclerView.setLayoutManager(mLayoutManager);
 
-    // initializes the adapter for the recyclerview
+    // initializes the adapter for the recyclerviews
     cardAdapter = new DisplayCardAdapter();
     cardAdapter.addOnClickListener(new cardOnClick());
     mRecyclerView.setAdapter(cardAdapter);

@@ -1,34 +1,32 @@
-package com.hestia.presentationlayer.createdeck;
+package com.hestia.presentationlayer.editdeck;
 
 import com.hestia.datalayer.Card.CardDecorator;
-import com.hestia.presentationlayer.DeckDecorator;
+import com.hestia.domainlayer.Deck;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-public class CreateDeckPresenter implements CreateDeckContract.Presenter {
+public class EditDeckPresenter implements EditDeckContract.Presenter {
   final private String LEGENDARY = "Legendary";
 
+  // reference to the view the presenter manages
+  EditDeckContract.View cView;
 
-  CreateDeckContract.View cView;
+  private Deck newDeck;
 
-
-  //
   private Collection <CardDecorator> cardList;
-
   List <CardDecorator> currentDeckList;
 
+  EditDeckPresenter(EditDeckContract.View ownerView, Deck newDeck) {
+    this.cView = ownerView;
+    this.newDeck = newDeck;
 
-  CreateDeckPresenter(CreateDeckContract.View newView) {
-    this.cView = newView;
     // initialize the arraylist to hold the cards
     currentDeckList = new ArrayList<>();
     cardList = new ArrayList<>();
   }
-
-
 
   @Override
   public void addToNewDeck(CardDecorator currCard) {
@@ -50,8 +48,15 @@ public class CreateDeckPresenter implements CreateDeckContract.Presenter {
     }
   }
 
-  public int getDeckSize() {
-    return cardList.size();
+
+
+  /**
+   * Saves the deck and uploads it to the firestore database
+   */
+  @Override
+  public void saveChanges() {
+    // save the changes to firebase firestore
   }
+
 
 }

@@ -1,9 +1,9 @@
-package com.hestia.presentationlayer.createdeck;
+package com.hestia.presentationlayer.editdeck;
 
 import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.presentationlayer.Base;
 
-public interface CreateDeckContract {
+public interface EditDeckContract {
   interface View extends Base.BaseView {
     void showCardAdded(boolean cardAdded);
   }
