@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.hestia.R;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.DisplayDeckAdapter;
+import com.hestia.presentationlayer.singledeck.SingleDeckView;
 
 import java.util.List;
 
@@ -61,6 +62,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
 
     if (mAdapter == null) {
       mAdapter = new DisplayDeckAdapter(rootView.getContext());
+      mAdapter.addOnClickListener(new AdapterListener());
     }
 
     // creates a new onclick and passes it to the adapter
@@ -118,6 +120,37 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
   @Override
   public void addDecks(List<DeckDecorator> decks) {
     mAdapter.addDecks(decks);
+  }
+
+
+  /**
+   * Custom adapter listener class to circumvent RecyclerView's lack of an OnItemClickListener
+   * Allows us to keep view code in this view class
+   */
+  class AdapterListener implements View.OnClickListener {
+    @Override
+    public void onClick(View view) {
+      // get the tag from the view and the deck from the adapter
+      int position = (int) view.getTag();
+      DeckDecorator passedDeck = mAdapter.getDeck(position);
+
+      Toast.makeText(getContext(), position + " POSITION", Toast.LENGTH_SHORT).show();
+
+      SingleDeckView singleDeckFragment = new SingleDeckView();
+
+      // create a bundle to pass the new fragment the deck object
+      Bundle args = new Bundle();
+      args.putParcelable("deck", passedDeck);
+      singleDeckFragment.setArguments(args);
+
+      FragmentTransaction transaction = getFragmentManager().beginTransaction();
+      // replace contents of fragment container with this fragment
+      transaction.replace(R.id.content_frame, singleDeckFragment)
+          // adds the replaced fragment to back stack to allow user to navigate back to it
+          .addToBackStack(null)
+          // commit the transaction
+          .commit();
+    }
   }
 
 

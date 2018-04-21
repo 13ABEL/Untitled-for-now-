@@ -5,6 +5,8 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.datalayer.UserRepository;
@@ -20,6 +22,7 @@ import java.util.List;
  */
 
 public class SingleDeckPresenter implements SingleDeckContract.Presenter{
+  private final String TAG = "SINGLE_DECK_PRESENTER";
   private final int INFO_TAB = 1;
   private final int DECK_TAB = 2;
   private final int EX_TAB = 3;
@@ -36,6 +39,15 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   public SingleDeckPresenter(SingleDeckContract.View view, DeckDecorator deck) {
     this.singleDeckView = view;
     this.currentDeck = deck;
+
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+    // adds the edit option if the author if the current user
+    if (currentUser != null && currentDeck.getAuthor().equals(currentUser.getUid())) {
+      Log.d(TAG, currentDeck.getAuthor() + " " + currentUser.getUid());
+      // display the edit option for this deck
+      singleDeckView.displayEditOption();
+    }
   }
 
   /**

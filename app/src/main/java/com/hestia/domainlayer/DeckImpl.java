@@ -15,7 +15,6 @@ import java.util.Map;
 /**
  * Created by Richard on 3/7/2018.
  */
-
 public class DeckImpl implements Deck {
   private final int DECK_LENGTH = 30;
 
@@ -74,12 +73,12 @@ public class DeckImpl implements Deck {
 
     // format the Date as a string
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss");
-   this.createdDateString = df.format(this.createdDate);
+    this.createdDateString = df.format(this.createdDate);
 
     // checks the deck for cards
     if (deckList != null) {
       // parse the deck list into an arraylist
-      for (int i = 0; i < DECK_LENGTH; i++) {
+      for (int i = 0; i < deckList.length()/4 ; i++) {
         // gets the card id from the string
         String cardID = deckList.substring(i * 3, i * 3 + 4);
         this.deckList.add(new CardImpl(cardID));
@@ -87,12 +86,12 @@ public class DeckImpl implements Deck {
     }
   }
 
-    /**
+  /**
    * Adds or removes a card to the decklist based on the number of copies of it already exist
    * in this deck
    *
    * @param currCard card that needs to be added/removed
-   * @return whether the card was added or remoed
+   * @return whether the card was added or removed
    */
   public int addToDeck(Card currCard){
     int cardsAdded = 0;
@@ -173,14 +172,19 @@ public class DeckImpl implements Deck {
   }
 
   public Map<String, Object> generateMap () {
+    // generates the deck string for easier uploading
+    StringBuilder deckString = new StringBuilder();
+    for (Card collectionCard : deckList) {
+      deckString.append(collectionCard.getID());
+    }
+
     Map<String, Object> deckRep = new HashMap<String, Object>();
     deckRep.put("deckName", this.deckName);
     deckRep.put("author_id", this.authorID);
     deckRep.put("username", this.username);
     deckRep.put("summary", this.summary);
     deckRep.put("createdDate", this.createdDate);
-    deckRep.put("deckString", this.deckString);
-
+    deckRep.put("deckString", deckString.toString());
 
     return deckRep;
   }

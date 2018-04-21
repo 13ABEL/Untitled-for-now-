@@ -14,6 +14,7 @@ public interface SingleDeckContract {
 
   interface View {
     void displayInfo(String title);
+    void displayEditOption();
   }
 
   interface Presenter {

@@ -1,7 +1,9 @@
 package com.hestia.presentationlayer.singledeck;
 
 
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -26,6 +28,8 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
   private SingleDeckTabAdapter mSingleDeckTabAdapter;
   private ViewPager mPager;
   private DeckDecorator currentDeck;
+
+  FloatingActionButton editButton;
 
   /**
    * Inflates the xml file into a view
@@ -53,6 +57,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     // sets the collection adapter with tabs as the pager adapter
     mPager = rootView.findViewById(R.id.single_deck_pager);
     mPager.setAdapter(mSingleDeckTabAdapter);
+
     TabLayout tabLayout = rootView.findViewById(R.id.sliding_tabs);
     tabLayout.setupWithViewPager(mPager);
 
@@ -61,7 +66,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-
     // gets the current Deck ID and uses it to get the deck from the repository
     //String deckName = this.getArguments().getString("deck_id");
 
@@ -78,7 +82,14 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
           }
         }
     );
+  }
 
+  public void onPause() {
+    super.onPause();
+    // hide the floating action button when exiting this view
+    if (editButton != null) {
+      editButton.setVisibility(View.INVISIBLE);
+    }
   }
 
   public void displayInfo(String title) {
@@ -86,5 +97,13 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
   }
 
   //TODO implement a pull downwards refresh listener
+
+  public void displayEditOption() {
+    // show the floating action button
+    editButton = getActivity().findViewById(R.id.fab);
+
+    editButton.setImageDrawable(getActivity().getDrawable(R.drawable.ic_edit_24dp));
+    editButton.setVisibility(View.VISIBLE);
+  }
 
 }
