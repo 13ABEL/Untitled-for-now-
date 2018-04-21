@@ -1,9 +1,12 @@
 package com.hestia.domainlayer;
 
+import android.util.Log;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,6 +23,7 @@ public class DeckImpl implements Deck {
   // properties set on object creation
   protected String deckID;
   protected String deckName;
+  protected String authorID;
   protected String username;
   protected String className;
   protected Date createdDate;
@@ -33,17 +37,17 @@ public class DeckImpl implements Deck {
   protected boolean isStandard;
 
 
-  // TBD
-  protected String authorID;
-
   /**
    * Constructor for a new deck (requires attributes that are not editable)
    */
   public DeckImpl (String deckID, String authorID, String className) {
+    this.deckID = deckID;
     this.authorID = authorID;
     this.className = className;
-    this.deckID = deckID;
     this.createdDate = new Date();
+
+    // temporarily use author id as the username
+    this.username = authorID;
 
     // initializes the empty array
     Collection <Card> deckList = new ArrayList<>();
@@ -53,32 +57,65 @@ public class DeckImpl implements Deck {
   /**
    * Constructor for a full deck
    * usually used when pulling from external sources
-   * @param ID
-   * @param name
-   * @param author
-   * @param list
+   * @param deckID
+   * @param deckName
+   * @param authorID
    * @param info
    * @param date
    */
-  public DeckImpl (String ID, String name, String author, String list, String info, Date date) {
-    this.deckID = ID;
-    this.deckName = name;
-    this.username = author;
+  public DeckImpl (String deckID, String deckName, String authorID, String deckList, String info, Date date) {
+    this.deckID = deckID;
+    this.deckName = deckName;
+    this.authorID = authorID;
+    this.username = authorID;
     this.summary = info;
     this.createdDate = date;
-    this.deckString = list;
+    this.deckString = deckList;
 
     // format the Date as a string
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss");
    this.createdDateString = df.format(this.createdDate);
 
-    // parse the deck list into an arraylist
-    for (int i = 0; i < DECK_LENGTH; i ++) {
-      // gets the card id from the string
-      String cardID = list.substring(i*3, i*3 + 4);
-      this.deckList.add(new CardImpl(cardID));
+    // checks the deck for cards
+    if (deckList != null) {
+      // parse the deck list into an arraylist
+      for (int i = 0; i < DECK_LENGTH; i++) {
+        // gets the card id from the string
+        String cardID = deckList.substring(i * 3, i * 3 + 4);
+        this.deckList.add(new CardImpl(cardID));
+      }
     }
   }
+
+    /**
+   * Adds or removes a card to the decklist based on the number of copies of it already exist
+   * in this deck
+   *
+   * @param currCard card that needs to be added/removed
+   * @return whether the card was added or remoed
+   */
+  public int addToDeck(Card currCard){
+    int cardsAdded = 0;
+    // gets rarity of card and number of occurrences in the deck
+    String rarity = currCard.getRarity();
+    int numCard = Collections.frequency(deckList, currCard);
+
+    // removes the card if the deck already has max copies of it
+    if (rarity.equals("Legendary") && numCard == 1 || numCard == 2) {
+      deckList.remove(currCard);
+      cardsAdded = -1;
+    }
+    // add the current card if it's not being removed and the deck still has room
+    else if (deckList.size() < 30) {
+      deckList.add(currCard);
+      // tells the view to show cards being added
+      cardsAdded = 1;
+    }
+    return cardsAdded;
+  }
+
+
+
 
   public DeckImpl () {
   }
@@ -117,7 +154,7 @@ public class DeckImpl implements Deck {
   }
 
   public String getAuthor() {
-    return this.username;
+    return this.authorID;
   }
 
   @Override
@@ -138,10 +175,12 @@ public class DeckImpl implements Deck {
   public Map<String, Object> generateMap () {
     Map<String, Object> deckRep = new HashMap<String, Object>();
     deckRep.put("deckName", this.deckName);
+    deckRep.put("author_id", this.authorID);
     deckRep.put("username", this.username);
     deckRep.put("summary", this.summary);
     deckRep.put("createdDate", this.createdDate);
     deckRep.put("deckString", this.deckString);
+
 
     return deckRep;
   }

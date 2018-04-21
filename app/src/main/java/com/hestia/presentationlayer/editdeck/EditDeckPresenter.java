@@ -1,12 +1,13 @@
 package com.hestia.presentationlayer.editdeck;
 
 import com.hestia.datalayer.Card.CardDecorator;
+import com.hestia.datalayer.UserRepository;
+import com.hestia.datalayer.UserRepositoryImpl;
+import com.hestia.domainlayer.Card;
 import com.hestia.domainlayer.Deck;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.List;
 
 public class EditDeckPresenter implements EditDeckContract.Presenter {
   final private String LEGENDARY = "Legendary";
@@ -14,48 +15,44 @@ public class EditDeckPresenter implements EditDeckContract.Presenter {
   // reference to the view the presenter manages
   EditDeckContract.View cView;
 
-  private Deck newDeck;
+  private Deck editDeck;
 
-  private Collection <CardDecorator> cardList;
-  List <CardDecorator> currentDeckList;
+  private Collection <Card> cardList;
+  //List <CardDecorator> currentDeckList;
 
   EditDeckPresenter(EditDeckContract.View ownerView, Deck newDeck) {
     this.cView = ownerView;
-    this.newDeck = newDeck;
+    this.editDeck = newDeck;
 
     // initialize the arraylist to hold the cards
-    currentDeckList = new ArrayList<>();
     cardList = new ArrayList<>();
+
+    // extraact the current cardlist from the deck
+
   }
 
   @Override
   public void addToNewDeck(CardDecorator currCard) {
-    // gets rarity of card and number of occurrences in the deck
-    String rarity = currCard.getRarity();
-    int numCard = Collections.frequency(cardList, currCard);
+    // attempts to add the card to the deck, storing result
+    int cardsAdded = editDeck.addToDeck(currCard);
 
-    // removes the card if the deck already has max copies of it
-    if (rarity.equals(LEGENDARY) && numCard == 1 || numCard == 2) {
-      cardList.remove(currCard);
-      // tells the view to display cards being removed
-      cView.showCardAdded(false);
-    }
-    // add the current card if it's not being removed and the deck still has room
-    else if (cardList.size() < 30) {
-      cardList.add(currCard);
-      // tells the view to show cards being added
+    // tells view to update based on the result
+    if (cardsAdded == 1) {
       cView.showCardAdded(true);
     }
+    else if (cardsAdded == -1 ) {
+      cView.showCardAdded(false);
+    }
   }
-
-
 
   /**
    * Saves the deck and uploads it to the firestore database
    */
   @Override
   public void saveChanges() {
-    // save the changes to firebase firestore
+    // create a reference to the repository (move instantiation to exterior class after)
+    UserRepository userRepository = new UserRepositoryImpl();
+    userRepository.saveDeck(editDeck);
   }
 
 

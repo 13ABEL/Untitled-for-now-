@@ -32,8 +32,8 @@ public class DeckDecorator extends DeckImpl implements Parcelable{
     super(deckID, author, deckClass);
   }
 
-  public DeckDecorator (String deckID, String name, String author, String list, String info, Date date) {
-    super(deckID, name, author, list, info, date);
+  public DeckDecorator (String deckID, String deckName, String authorID, String deckList, String summary, Date date) {
+    super(deckID, deckName, authorID, deckList, summary, date);
   }
 
   public DeckDecorator (Parcel parcelIn) {
@@ -41,7 +41,7 @@ public class DeckDecorator extends DeckImpl implements Parcelable{
     this.deckName = parcelIn.readString();
     this.username = parcelIn.readString();
     String summary = parcelIn.readString();
-    this.deckID =parcelIn.readString();
+    this.deckID = parcelIn.readString();
     this.authorID = parcelIn.readString();
     this.createdDateString = parcelIn.readString();
 

@@ -181,7 +181,8 @@ public class DeckRepositoryImpl implements DeckRepository {
     //TODO currently using author id -> need to change to username
     //String authorID = deckMap.get("author_ID").toString();
     String deckID = (String) deckMap.get("id");
-    String username = (String) deckMap.get("username");
+    // TODO change author_id back to username once you have time to create a firestore function
+    String userID = (String) deckMap.get("author_id");
     String deckName = (String) deckMap.get("deckName");
     String summary = (String) deckMap.get("summary");
     String deckList = (String) deckMap.get("deckString");
@@ -190,17 +191,23 @@ public class DeckRepositoryImpl implements DeckRepository {
     Log.d("REPOSITORY MAP TESTING",
         " deck_ID = " + deckID
         + " deck_name = " + deckName
-        +" username = " + username
+        +" userID = " + userID
         + " summary = " + summary
         + " deckList = " + deckList
         + " createdDate = " + createdDate.toString()
     );
 
-    return new DeckDecorator(deckID, deckName, username, deckList, summary, createdDate);
+    return new DeckDecorator(deckID, deckName, userID, deckList, summary, createdDate);
   }
 
 
+  /**
+   * Always stores a deck in the current user's account
+   * @param deck
+   */
   public void saveDeck(DeckDecorator deck) {
+
+
   }
 
 

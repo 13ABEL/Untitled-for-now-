@@ -29,6 +29,8 @@ public interface Deck {
   void setDeck(Collection <Card> cards);
   void setFormat(boolean isStandard);
 
+  int addToDeck(Card newCard);
+
   // TODO still not sure about this one because it requires implementation details
   // I don't might replace it in the future
   Map <String, Object> generateMap();

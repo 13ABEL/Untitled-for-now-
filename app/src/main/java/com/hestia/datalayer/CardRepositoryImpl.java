@@ -184,5 +184,6 @@ public class CardRepositoryImpl implements CardRepository {
     this.livePagedCards = new LivePagedListBuilder<Integer, CardDecorator>(cardFactory, pagedListConfig).build();
     return livePagedCards;
   }
+
 }
 
