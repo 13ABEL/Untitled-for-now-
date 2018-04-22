@@ -28,7 +28,7 @@ public class DeckDecorator extends DeckImpl implements Parcelable{
     super();
   }
 
-  public DeckDecorator (String deckID, String author, String deckClass) {
+  public DeckDecorator (String deckID, String author, int deckClass) {
     super(deckID, author, deckClass);
   }
 

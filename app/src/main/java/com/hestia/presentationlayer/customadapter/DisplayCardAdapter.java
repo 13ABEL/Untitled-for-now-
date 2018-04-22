@@ -108,20 +108,19 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       int colorID = 0;
       holder.cardCost.setTextColor(parent.getResources().getColor(R.color.druid_color));
       switch (currentCard.getCardClass()) {
-        case "Druid": colorID = R.color.druid_color; break;
-        case "Hunter": colorID = R.color.hunter_color; break;
-        case "Mage": colorID = R.color.mage_color; break;
-        case "Paladin": colorID = R.color.paladin_color; break;
-        case "Priest": colorID = R.color.priest_color; break;
-        case "Rogue": colorID = R.color.rogue_color; break;
-        case "Shaman": colorID = R.color.shaman_color; break;
-        case "Warlock": colorID = R.color.warlock_color; break;
-        case "Warrior": colorID = R.color.warrior_color; break;
+        case 1: colorID = R.color.druid_color; break;
+        case 2: colorID = R.color.hunter_color; break;
+        case 3: colorID = R.color.mage_color; break;
+        case 4: colorID = R.color.paladin_color; break;
+        case 5: colorID = R.color.priest_color; break;
+        case 6: colorID = R.color.rogue_color; break;
+        case 7: colorID = R.color.shaman_color; break;
+        case 8: colorID = R.color.warlock_color; break;
+        case 9: colorID = R.color.warrior_color; break;
+        default: colorID = R.color.colorPrimary;
       }
+      holder.classColor.setBackgroundResource(colorID);
 
-      if (colorID != 0) {
-        holder.classColor.setBackgroundResource(colorID);
-      }
     }
 
     // binds the position to the holders

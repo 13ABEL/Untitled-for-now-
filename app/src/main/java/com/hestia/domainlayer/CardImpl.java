@@ -22,7 +22,7 @@ public class CardImpl implements Card {
   public String name;
 
   @ColumnInfo(name = "card_class")
-  public String cardClass;
+  public int cardClass;
 
   @ColumnInfo(name = "card_text")
   public String text;
@@ -68,7 +68,7 @@ public class CardImpl implements Card {
   public String getRarity() {
     return this.rarity;
   }
-  public String getCardClass() {
+  public int getCardClass() {
     return this.cardClass;
   }
 

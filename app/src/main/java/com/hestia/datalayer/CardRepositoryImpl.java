@@ -116,9 +116,6 @@ public class CardRepositoryImpl implements CardRepository {
     else if (column.equals("cost")) {
       cardFactory = cardModel.getByCost(value);
     }
-    else if (column.equals("class")) {
-      cardFactory = cardModel.getByClass(value);
-    }
     else {
       cardFactory = cardModel.getByExpansion(value);
     }
@@ -174,12 +171,12 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
-  public LiveData<PagedList<CardDecorator>> generateDeckCards(String className, boolean isStandard) {
+  public LiveData<PagedList<CardDecorator>> generateDeckCards(int classID, boolean isStandard) {
     cardModel = cardDatabase.cardModel();
     DataSource.Factory <Integer, CardDecorator> cardFactory;
 
     // add the appropriate characters to make use of the "like" selector
-    cardFactory = cardModel.getByClass(className);
+    cardFactory = cardModel.getByClass(classID);
 
     this.livePagedCards = new LivePagedListBuilder<Integer, CardDecorator>(cardFactory, pagedListConfig).build();
     return livePagedCards;

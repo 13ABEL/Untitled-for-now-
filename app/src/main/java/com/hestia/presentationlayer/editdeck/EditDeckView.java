@@ -25,7 +25,7 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
 
   DisplayCardAdapter cardAdapter;
 
-  String deckClass;
+  int deckClassID;
   private Boolean isStandard = true;
   private Boolean isSaved = false;
 
@@ -38,12 +38,10 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
     Bundle dialogNewDeck = this.getArguments();
     // our presenter works with the deck interface as opposed to the deck itself
     Deck newDeck = (Deck) dialogNewDeck.get("deck");
-    deckClass = newDeck.getDeckClass();
+    deckClassID = newDeck.getDeckClass();
 
     // initializes the presenter for this view
     cPresenter = new EditDeckPresenter(this, newDeck);
-
-    //getActivity().setTitle(dialogInput.getCharSequence("deckName"));
 
     // initializes the reference the current floating action button
     showDeckFAB = getActivity().findViewById(R.id.fab);
@@ -85,7 +83,7 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
   }
 
   public void resetList() {
-    viewModel.getCreateCards(deckClass, isStandard).observe(this, liveCardList ->
+    viewModel.getCreateCards(deckClassID, isStandard).observe(this, liveCardList ->
         cardAdapter.submitList(liveCardList));
   }
 

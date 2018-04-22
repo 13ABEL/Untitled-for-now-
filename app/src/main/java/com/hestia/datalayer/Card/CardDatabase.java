@@ -32,6 +32,7 @@ import java.util.Map;
  * Created by Richard on 3/31/2018.
  */
 
+// TODO: noticed issue when opening app for first time without wifi: db will be initialized as empty and will not work after
 @Database(entities = {CardDecorator.class}, version = 2, exportSchema = false)
 public abstract class CardDatabase extends RoomDatabase {
   private static final String TAG = "CARD_DATABASE";
@@ -105,7 +106,7 @@ public abstract class CardDatabase extends RoomDatabase {
    * Used to parse the JSON response from the hearthstone API (non official)
    * @param jsonReturn the response from the GET query to the api endpoint
    */
-  private static void insertJSONReturn (String jsonReturn, Context mContext) {
+  private void insertJSONReturn (String jsonReturn, Context mContext) {
     // create the new instance of the parser to iteract with the data
     JSONParser parser = new JSONParser();
 
@@ -143,7 +144,7 @@ public abstract class CardDatabase extends RoomDatabase {
           newCards.add( new CardDecorator(
                   (String) card.get("dbfId"),
                   (String) card.get("name"),
-                  (String) card.get("playerClass"),
+                  convertClass((String) card.get("playerClass")),
                   (String) card.get("type"),
                   (String) card.get("rarity"),
                   (String) card.get("text"),
@@ -171,6 +172,23 @@ public abstract class CardDatabase extends RoomDatabase {
 
       return cards.length;
     }
+  }
+
+  private int convertClass (String className) {
+    // neutral class Id is represented by 0
+    int classID = 0;
+    switch (className) {
+      case "Druid": classID = 1; break;
+      case "Hunter": classID = 2; break;
+      case "Mage": classID = 3; break;
+      case "Paladin": classID = 4; break;
+      case "Priest": classID = 5; break;
+      case "Rogue": classID = 6; break;
+      case "Shaman": classID = 7; break;
+      case "Warlock": classID = 8; break;
+      case "Warrior": classID = 9; break;
+    }
+    return  classID;
   }
 
 

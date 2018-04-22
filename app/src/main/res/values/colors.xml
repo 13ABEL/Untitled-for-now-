@@ -18,6 +18,7 @@
 
 
     <!-- colours for each class -->
+    <color name="neutral_color">@color/colorPrimary</color>
     <color name="druid_color">#48a4f9</color>
     <color name="hunter_color">#48a4f9</color>
     <color name="mage_color">#48a4f9</color>

@@ -74,26 +74,19 @@ public class NewDeckDialog extends DialogFragment {
           isStandard = false;
         }
 
+        // get the index of the selected child and add 1 to get the class ID
         RadioButton selectedClass = rootView.findViewById(deckClass);
-        Log.d(TAG, name + " " + selectedClass.getText());
-
-        // open the new fragment for constructing the deck
-        EditDeckView createDeckFragment = new EditDeckView();
-
-        // create a bundle using the dialog input and insert it into the new fragment
-        Bundle args = new Bundle();
-//        args.putCharSequence("deckName", deckName.getText());
-//        args.putCharSequence("deckClass", selectedClass.getText());
-//        args.putBoolean("formatStandard", isStandard);
+        int classId = classSelect.indexOfChild(selectedClass) + 1;
 
         // Create a new deck with additional properties and passes it to the fragment to edit
         DeckDecorator newDeck = new DeckDecorator("test_id",
-            currentUID, selectedClass.getText().toString());
-
-        // sets the name and format of the decks
+            currentUID, classId);
         newDeck.setDeckName(deckName.getText().toString());
         newDeck.setFormat(isStandard);
-
+        
+        // create the new fragment for editing a deck and the bundle for the new deck
+        EditDeckView createDeckFragment = new EditDeckView();
+        Bundle args = new Bundle();
         args.putParcelable("deck", newDeck);
 
         createDeckFragment.setArguments(args);
