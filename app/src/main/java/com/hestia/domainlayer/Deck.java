@@ -17,7 +17,7 @@ public interface Deck {
   // getters for un-editable attributes
   String getDeckID();
   String getAuthor();
-  String getDeckClass();
+  int getDeckClass();
 
   // getters for editable attributes
   String getDeckName();

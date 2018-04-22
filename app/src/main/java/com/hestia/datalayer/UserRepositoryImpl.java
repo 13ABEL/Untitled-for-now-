@@ -111,7 +111,7 @@ public class UserRepositoryImpl implements UserRepository {
     Map <String, Object> deckRep = deck.generateMap();
     // adds the deck (using its id) to the collection of saved decks for the specific user
     userSavedDeckCollection.document(currentUser.getUid())
-        .collection("savedDecks").document().set(deckRep);
+        .collection("savedDecks").document(deck.getDeckID()).set(deckRep);
   }
 
 

@@ -83,6 +83,7 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
       }
 
       mRecyclerView.setLayoutManager(mLayoutManager);
+
       // creates a new onclick and passes it to the adapter
       AdapterListener listener = new AdapterListener();
       mAdapter.addOnClickListener(listener);

@@ -38,7 +38,7 @@ public class SingleDeckCardAdapter extends ArrayAdapter <Card> {
     this.mContext = context;
     this.deckList = (ArrayList) cardList;
 
-    Log.d("TESTING ADAPTER", "TEST " +deckList.get(0).getName() + " " + deckList.get(1).getName() );
+    //Log.d("TESTING ADAPTER", "TEST " +deckList.get(0).getName() + " " + deckList.get(1).getName() );
   }
 
   public View getView (int position, View convertView, ViewGroup parent) {

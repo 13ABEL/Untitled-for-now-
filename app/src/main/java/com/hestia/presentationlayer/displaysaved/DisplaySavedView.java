@@ -48,9 +48,14 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     }
   }
 
+
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // inflate the layout for this view
     View rootView = inflater.inflate(R.layout.display_decks, container, false);
+
+    // enables the menu for this activity and clears the previous menu items
+    setHasOptionsMenu(true);
+    getActivity().invalidateOptionsMenu();
 
     // initialize the instance of the recycler view
     mRecyclerView = rootView.findViewById(R.id.recycler_list);
@@ -74,15 +79,13 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     return rootView;
   }
 
+
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
 
     // resets the name of the title every time this activity is resumed
     //getActivity().setTitle("Saved Decks");
     //mRecyclerView.addOnScrollListener(new RecyclerScrollListener());
-
-    // enables the menu for this activity
-    setHasOptionsMenu(true);
   }
 
   /**
@@ -106,6 +109,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
         return super.onOptionsItemSelected(item);
     }
   }
+
 
   public void createNewDeck() {
     // gets the transaction to manage the dialog lifecycle

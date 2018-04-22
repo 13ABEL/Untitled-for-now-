@@ -45,13 +45,6 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
 
     //getActivity().setTitle(dialogInput.getCharSequence("deckName"));
 
-//    deckClass = (String) dialogInput.getCharSequence("deckClass");
-//    if (!dialogInput.getBoolean("formatStandard")) {
-//      isStandard = false;
-//    }
-//    Toast.makeText(this.getContext(), "Class : " + deckClass + ", Standard : " + isStandard,
-//        Toast.LENGTH_SHORT).show();
-
     // initializes the reference the current floating action button
     showDeckFAB = getActivity().findViewById(R.id.fab);
 

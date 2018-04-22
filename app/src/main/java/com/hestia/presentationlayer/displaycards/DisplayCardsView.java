@@ -71,7 +71,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     if (rootView == null) {
       // inflates the view and enables the options menu
       rootView = inflater.inflate(R.layout.display_cards, container, false);
+
+      // enables the menu for this activity and clears the previous menu items
       setHasOptionsMenu(true);
+      getActivity().invalidateOptionsMenu();
 
       // sets tag to allow manager to recognise this fragment
       rootView.setTag(FRAGMENT_TAG);

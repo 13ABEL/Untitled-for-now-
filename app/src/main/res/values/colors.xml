@@ -17,4 +17,17 @@
     <color name="colorPrimaryDark1">#3c3d40</color>
 
 
+    <!-- colours for each class -->
+    <color name="druid_color">#48a4f9</color>
+    <color name="hunter_color">#48a4f9</color>
+    <color name="mage_color">#48a4f9</color>
+    <color name="paladin_color">#48a4f9</color>
+    <color name="priest_color">#48a4f9</color>
+    <color name="rogue_color">#48a4f9</color>
+    <color name="shaman_color">#48a4f9</color>
+    <color name="warlock_color">#48a4f9</color>
+    <color name="warrior_color">#48a4f9</color>
+
+
+
 </resources>

@@ -9,6 +9,9 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -37,15 +40,19 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
    * @param inflater
    * @param container
    * @param savedInstanceState
-   * @return
+   * @return the single deck view
    */
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // inflate the layout for this view
     View rootView = inflater.inflate(R.layout.single_deck, container, false);
 
+    // enables the menu for this activity and clears the previous menu items
+    setHasOptionsMenu(true);
+    getActivity().invalidateOptionsMenu();
+
     // gets the deckDecorator object from the bundle
     currentDeck = this.getArguments().getParcelable("deck");
-    Toast.makeText(getContext(), "Single Deck Screen " + currentDeck.getDeckName(), Toast.LENGTH_SHORT).show();
+    //Toast.makeText(getContext(), "Single Deck Screen " + currentDeck.getDeckName(), Toast.LENGTH_SHORT).show();
 
     // create instance of the presenter
     singleDeckPresenter = new SingleDeckPresenter(this, currentDeck);
@@ -70,18 +77,11 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     //String deckName = this.getArguments().getString("deck_id");
 
     // sets the title of the navbar as the current deck name
-    getActivity().setTitle(currentDeck.getDeckName());
+    //getActivity().setTitle(currentDeck.getDeckName());
+    getActivity().setTitle(currentDeck.getDeckID());
 
-    // attach listeners to buttons (TODO swap out buttons for actionbar icons)
-    final Button addFav = getActivity().findViewById(R.id.single_deck_add_fav);
-    addFav.setOnClickListener(
-        new View.OnClickListener() {
-          @Override
-          public void onClick(View v) {
-            singleDeckPresenter.saveDeck();
-          }
-        }
-    );
+
+    // checks if the deck has already been fav-ed by the user
   }
 
   public void onPause() {
@@ -92,6 +92,23 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     }
   }
 
+  public void onCreateOptionsMenu(Menu mMenu, MenuInflater mInflater) {
+    // inflate the menu layout into the Menu object
+    mInflater.inflate(R.menu.display_single_menu, mMenu);
+    super.onCreateOptionsMenu(mMenu, mInflater);
+  }
+
+  public boolean onOptionsItemSelected (MenuItem selectedItem) {
+    switch (selectedItem.getItemId()) {
+      case R.id.item_fav_deck:
+        // tells the presenter to fav the deck
+        singleDeckPresenter.saveDeck();
+    }
+    return false;
+  }
+
+
+
   public void displayInfo(String title) {
     // TODO more lines when more info is used for this fragment
   }
@@ -99,7 +116,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
   //TODO implement a pull downwards refresh listener
 
   public void displayEditOption() {
-    // show the floating action button
+    // show the floating action button with the appropriate image
     editButton = getActivity().findViewById(R.id.fab);
 
     editButton.setImageDrawable(getActivity().getDrawable(R.drawable.ic_edit_24dp));

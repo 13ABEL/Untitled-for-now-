@@ -16,6 +16,16 @@ import java.util.Map;
  * Created by Richard on 3/7/2018.
  */
 public class DeckImpl implements Deck {
+  final int DRUID = 1;
+  final int HUNTER = 2;
+  final int MAGE = 3;
+  final int PALADIN = 4;
+  final int PRIEST = 5;
+  final int ROGUE = 6;
+  final int SHAMAN = 7;
+  final int WARLOCK = 8;
+  final int WARRIOR = 9;
+
   private final int DECK_LENGTH = 30;
 
   protected ArrayList <Card> deckList = new ArrayList<>();
@@ -24,7 +34,7 @@ public class DeckImpl implements Deck {
   protected String deckName;
   protected String authorID;
   protected String username;
-  protected String className;
+  protected int classID;
   protected Date createdDate;
   protected String createdDateString;
 
@@ -39,10 +49,10 @@ public class DeckImpl implements Deck {
   /**
    * Constructor for a new deck (requires attributes that are not editable)
    */
-  public DeckImpl (String deckID, String authorID, String className) {
+  public DeckImpl (String deckID, String authorID, int classID) {
     this.deckID = deckID;
     this.authorID = authorID;
-    this.className = className;
+    this.classID = classID;
     this.createdDate = new Date();
 
     // temporarily use author id as the username
@@ -157,8 +167,8 @@ public class DeckImpl implements Deck {
   }
 
   @Override
-  public String getDeckClass() {
-    return className;
+  public int getDeckClass() {
+    return classID;
   }
 
   public String toString() {
@@ -184,6 +194,8 @@ public class DeckImpl implements Deck {
     deckRep.put("username", this.username);
     deckRep.put("summary", this.summary);
     deckRep.put("createdDate", this.createdDate);
+
+    deckRep.put("classID", this.classID);
     deckRep.put("deckString", deckString.toString());
 
     return deckRep;

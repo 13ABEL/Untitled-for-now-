@@ -22,7 +22,6 @@ public class DisplaySavedPresenter implements DisplaySavedContract.Presenter {
     savedDeckRepository.getSavedBatch(this);
   }
 
-
   @Override
   public void getDeckBatch() {
     savedDeckRepository.getSavedBatch(this);

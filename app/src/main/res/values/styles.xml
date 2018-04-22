@@ -19,8 +19,11 @@
     </style>
 
 
-    <style name="CardTheme" parent="AppTheme">
+    <style name="DeckItemTheme" parent="AppTheme">
         <item name="android:background">@color/colorPrimary</item>
+    </style>
+
+    <style name="CardItemTheme" parent="AppTheme">
     </style>
 
     <!-- for the searchview theme-->
