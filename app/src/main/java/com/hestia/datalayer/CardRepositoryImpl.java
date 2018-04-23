@@ -176,7 +176,7 @@ public class CardRepositoryImpl implements CardRepository {
     DataSource.Factory <Integer, CardDecorator> cardFactory;
 
     // add the appropriate characters to make use of the "like" selector
-    cardFactory = cardModel.getByClass(classID);
+    cardFactory = cardModel.getEditable(classID);
 
     this.livePagedCards = new LivePagedListBuilder<Integer, CardDecorator>(cardFactory, pagedListConfig).build();
     return livePagedCards;

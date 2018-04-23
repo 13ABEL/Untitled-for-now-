@@ -72,4 +72,9 @@ public interface CardDao {
   @Query("SELECT * FROM CardDecorator WHERE card_name LIKE :search AND card_class = :className")
   DataSource.Factory<Integer, CardDecorator> getBySearchClass(String search, String className);
 
+  // selects all cards from the selected class
+  @Query("SELECT * FROM CardDecorator WHERE card_class IN (:className, 0) " +
+      "AND card_cost >= 0 " +
+      "ORDER BY card_class DESC, card_cost ASC")
+  DataSource.Factory<Integer, CardDecorator> getEditable(int className);
 }

@@ -19,15 +19,15 @@
 
     <!-- colours for each class -->
     <color name="neutral_color">@color/colorPrimary</color>
-    <color name="druid_color">#48a4f9</color>
-    <color name="hunter_color">#48a4f9</color>
-    <color name="mage_color">#48a4f9</color>
-    <color name="paladin_color">#48a4f9</color>
-    <color name="priest_color">#48a4f9</color>
-    <color name="rogue_color">#48a4f9</color>
-    <color name="shaman_color">#48a4f9</color>
-    <color name="warlock_color">#48a4f9</color>
-    <color name="warrior_color">#48a4f9</color>
+    <color name="druid_color">#704532</color>
+    <color name="hunter_color">#335F24</color>
+    <color name="mage_color">#747FAD</color>
+    <color name="paladin_color">#C6993B</color>
+    <color name="priest_color">#ACB6C0</color>
+    <color name="rogue_color">#3F3C43</color>
+    <color name="shaman_color">#4E527D</color>
+    <color name="warlock_color">#533859</color>
+    <color name="warrior_color">#A53C39</color>
 
 
 
