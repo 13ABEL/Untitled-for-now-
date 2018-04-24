@@ -1,5 +1,7 @@
 package com.hestia.presentationlayer.singledeck;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
 import android.icu.text.IDNA;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -7,6 +9,9 @@ import android.util.Log;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.hestia.datalayer.Card.CardDecorator;
+import com.hestia.datalayer.CardRepository;
+import com.hestia.datalayer.CardRepositoryImpl;
 import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.datalayer.UserRepository;
@@ -34,7 +39,7 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   private SingleDeckContract.View singleDeckView;
   private DeckRepository deckRepository;
   private DeckDecorator currentDeck;
-
+  private CardRepository cardRepo;
 
   public SingleDeckPresenter(SingleDeckContract.View view, DeckDecorator deck) {
     this.singleDeckView = view;
@@ -48,6 +53,22 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
       // display the edit option for this deck
       singleDeckView.displayEditOption();
     }
+  }
+
+  @Override
+  public void injectDependencies(CardRepository cardRepo) {
+    this.cardRepo = cardRepo;
+  }
+
+  @Override
+  public LiveData<PagedList<CardDecorator>> getAddableCards() {
+    LiveData<PagedList<CardDecorator>> buildCards = null;
+    // checks if the repo has been initialized
+    if (cardRepo != null) {
+      // use the current deck info to generate available cards
+      buildCards = cardRepo.generateDeckCards(currentDeck.getDeckClass(), true);
+    }
+    return  buildCards;
   }
 
   /**

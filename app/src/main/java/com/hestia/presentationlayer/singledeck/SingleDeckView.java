@@ -18,6 +18,8 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.hestia.R;
+import com.hestia.datalayer.CardRepository;
+import com.hestia.datalayer.CardRepositoryImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.SingleDeckTabAdapter;
 
@@ -54,8 +56,12 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     currentDeck = this.getArguments().getParcelable("deck");
     //Toast.makeText(getContext(), "Single Deck Screen " + currentDeck.getDeckName(), Toast.LENGTH_SHORT).show();
 
-    // create instance of the presenter
+
     singleDeckPresenter = new SingleDeckPresenter(this, currentDeck);
+
+    // creates a new instance of the repo to inject into the presenter
+    CardRepository cardRepo = new CardRepositoryImpl(this.getContext());
+    singleDeckPresenter.injectDependencies(cardRepo);
 
     // gets supportFragmentManager bc ViewPage uses support library fragments
     FragmentManager fragManager = getActivity().getSupportFragmentManager();

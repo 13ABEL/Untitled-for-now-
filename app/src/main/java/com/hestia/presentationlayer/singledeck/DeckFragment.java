@@ -1,7 +1,9 @@
 package com.hestia.presentationlayer.singledeck;
 
+import android.arch.lifecycle.ViewModel;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.Layout;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +17,7 @@ import com.hestia.R;
 import com.hestia.domainlayer.Card;
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
+import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 import com.hestia.presentationlayer.customadapter.SingleDeckCardAdapter;
 
 import java.util.ArrayList;
@@ -27,7 +30,8 @@ import java.util.ListIterator;
  */
 
 public class DeckFragment extends TabFragment {
-  private SingleDeckCardAdapter deckListAdapter = null;
+  private DisplayCardAdapter deckListAdapter = null;
+  private View rootView;
   public int test = 0;
 
   // new instance constructor
@@ -42,8 +46,8 @@ public class DeckFragment extends TabFragment {
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // inflates the layout into a view
-    View view = inflater.inflate(R.layout.single_deck_listtab, container, false);
-    return view;
+    this.rootView = inflater.inflate(R.layout.single_deck_listtab, container, false);
+    return rootView;
   }
 
   public void onActivityCreated(Bundle savedInstanceState) {
@@ -52,28 +56,30 @@ public class DeckFragment extends TabFragment {
     parentPresenter.addDeckTabFragment(this);
   }
 
+
   public void updateUI(List <Card> deckList) {
     //TextView textThing = getActivity().findViewById(R.id.listtab_test);
 
     String test = "";
-    for (int i = 0; i < deckList.size(); i ++) {
+    for (int i = 0; i < deckList.size(); i++) {
       test += deckList.get(i).getID() + " \n";
     }
 
-    //Toast.makeText(getContext(), test, Toast.LENGTH_SHORT).show();
-    // checks if the adapter instance already exists
-    //if (deckListAdapter != null) {
+    // creates the new adapter instance and sets it as the adapter for the listview
+    //deckListAdapter = new SingleDeckCardAdapter(getContext(), deckList);
+    deckListAdapter = new DisplayCardAdapter();
+    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
 
-      // creates the new adapter instance and sets it as the adapter for the listview
-      deckListAdapter = new SingleDeckCardAdapter(getContext(), deckList);
-      ListView deckListview = getActivity().findViewById(R.id.deck_card_list);
-      deckListview.setAdapter(deckListAdapter);
+    RecyclerView decklistView = rootView.findViewById(R.id.deck_card_list);
+    decklistView.setLayoutManager(mLayoutManager);
+    decklistView.setAdapter(deckListAdapter);
 
-
-    //}
-
-    //textThing.setText(test);
+    parentPresenter.getAddableCards().observe(
+        this, liveSearchList -> deckListAdapter.submitList(liveSearchList)
+    );
   }
+
+
 
 
 

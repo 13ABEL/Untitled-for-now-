@@ -65,7 +65,6 @@ public class CardRepositoryImpl implements CardRepository {
         .setPageSize(30).build();
   }
 
-
   @Override
   public Card getCardByID(String ID) {
     return null;

@@ -1,5 +1,7 @@
 package com.hestia.presentationlayer.displaycards;
 
+import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
 import android.content.Context;
 
 import com.hestia.datalayer.Card.CardDecorator;
@@ -22,7 +24,7 @@ public interface DisplayCardsContract {
 
   interface Presenter extends Base.BasePresenter {
     View getView();
-    void fetchCardBatch();
+    LiveData<PagedList<CardDecorator>> fetchCards(int classID);
     void receiveCardBatch(List <CardDecorator> cardBatch);
     List<Card> getCardSet();
   }

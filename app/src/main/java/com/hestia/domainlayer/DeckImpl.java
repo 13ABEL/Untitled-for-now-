@@ -25,9 +25,7 @@ public class DeckImpl implements Deck {
   final int SHAMAN = 7;
   final int WARLOCK = 8;
   final int WARRIOR = 9;
-
-  private final int DECK_LENGTH = 30;
-
+  
   protected ArrayList <Card> deckList = new ArrayList<>();
   // properties set on object creation
   protected String deckID;

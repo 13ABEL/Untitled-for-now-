@@ -25,6 +25,7 @@ public class CardDecorator extends CardImpl {
 
   public CardDecorator(String cardID, String name, int cardClass, String type, String rarity,
                        String text, String tribe, int cost ) {
+
     //this.cardID = cardID;
     this.name = name;
     this.cardClass = cardClass;

@@ -1,6 +1,8 @@
 package com.hestia.presentationlayer.displaycards;
 
 
+import android.arch.lifecycle.LiveData;
+import android.arch.paging.PagedList;
 import android.widget.Toast;
 
 import com.hestia.datalayer.Card.CardDecorator;
@@ -37,9 +39,8 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
   }
 
 
-  public void fetchCardBatch() {
-    cardRepo.getCardBatch(BATCH_SIZE);
-    //TODO update the currentBatchEnd value
+  public LiveData<PagedList<CardDecorator>> fetchCards(int classID) {
+    return cardRepo.generateDeckCards(classID, true);
   }
 
   public void receiveCardBatch (List <CardDecorator> cardBatch) {

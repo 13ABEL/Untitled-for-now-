@@ -139,6 +139,8 @@ public abstract class CardDatabase extends RoomDatabase {
             cardCost = longCost.intValue();
           }
 
+          // checks if the card is collectible
+
           Log.i(TAG, (String) card.get("name"));
           // inserts the card into the database
           newCards.add( new CardDecorator(
@@ -152,11 +154,13 @@ public abstract class CardDatabase extends RoomDatabase {
                   cardCost
               )
           );
+
         }
 
         InsertTask insertCardsTask = new InsertTask();
         insertCardsTask.execute(newCards);
         Toast.makeText(mContext, "Finished import cards from the " + expansionKey + " set", Toast.LENGTH_SHORT).show();
+
       }
     } catch (ParseException e) {
       Log.e (TAG, "There was an issue parsing the JSON return: " + e.getMessage());
@@ -173,6 +177,8 @@ public abstract class CardDatabase extends RoomDatabase {
       return cards.length;
     }
   }
+
+
 
   private int convertClass (String className) {
     // neutral class Id is represented by 0
