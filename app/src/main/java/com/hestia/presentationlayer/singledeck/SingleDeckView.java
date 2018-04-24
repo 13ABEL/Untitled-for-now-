@@ -20,6 +20,8 @@ import android.widget.Toast;
 import com.hestia.R;
 import com.hestia.datalayer.CardRepository;
 import com.hestia.datalayer.CardRepositoryImpl;
+import com.hestia.datalayer.UserRepository;
+import com.hestia.datalayer.UserRepositoryImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.SingleDeckTabAdapter;
 
@@ -86,8 +88,9 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     //getActivity().setTitle(currentDeck.getDeckName());
     getActivity().setTitle(currentDeck.getDeckID());
 
-
     // checks if the deck has already been fav-ed by the user
+    UserRepository userRepo = new UserRepositoryImpl();
+    
   }
 
   public void onPause() {

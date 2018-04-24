@@ -15,6 +15,7 @@ import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
+import com.hestia.presentationlayer.singledeck.SingleDeckContract;
 
 
 import java.util.ArrayList;
@@ -179,6 +180,32 @@ public class CardRepositoryImpl implements CardRepository {
 
     this.livePagedCards = new LivePagedListBuilder<Integer, CardDecorator>(cardFactory, pagedListConfig).build();
     return livePagedCards;
+  }
+
+
+  @Override
+  public void getCardsFromString(SingleDeckContract.Presenter presenter, String deckString) {
+    // checks the deck for cards
+    if (deckString != null) {
+//      new AsyncTask <String, Integer, Long> () {
+//
+//        @Override
+//        protected Long doInBackground(String... strings) {
+//          ArrayList deckList = new ArrayList();
+//          // checks the deck for cards
+//          // parse the deck list into an arraylist
+//          for (int i = 0; i < deckString.length()/4 ; i++) {
+//            // gets the card id from the string
+//            String cardID = deckString.substring(i * 3, i * 3 + 4);
+//
+//
+//          }
+//        sends the new list to the presenter
+//        presenter.receiveDeckList(deckList);
+//          return null;
+//        }
+//      }.execute(deckString);
+    }
   }
 
 }

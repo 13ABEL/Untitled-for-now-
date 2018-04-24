@@ -1,5 +1,6 @@
 package com.hestia.datalayer;
 
+import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;
 
@@ -40,6 +41,9 @@ public class DeckRepositoryImpl implements DeckRepository {
   private DisplayDecksContract.Presenter displayDecksPresenter;
   private SingleDeckContract.Presenter singleDeckPresenter;
 
+
+  private Context context;
+
   private FirebaseFirestore db;
   private String returnString = "";
 
@@ -55,20 +59,22 @@ public class DeckRepositoryImpl implements DeckRepository {
   final int BATCH_SIZE = 15;
 
 
-  public DeckRepositoryImpl () {
+  public DeckRepositoryImpl (Context context) {
     // gets the user instance and initializes the instance of the Cloud Firestore db
-    FirebaseUser currentUSer = FirebaseAuth.getInstance().getCurrentUser();
+    FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
     this.db = FirebaseFirestore.getInstance();
 
-    if (currentUSer != null) {
+    if (currentUser != null) {
       // initializes the reference to the saved collection for the user
-      String currentUserUid = currentUSer.getUid();
+      String currentUserUid = currentUser.getUid();
       savedCollection = db.collection( "savedDecks").document(currentUserUid)
           .collection("savedDecks");
 
       // initializes the savedDeck query specific to the user
       querySavedDeckBatch = savedCollection.limit(BATCH_SIZE);
     }
+
+    this.context = context;
 
     // does not require instance of user
     deckCollection = db.collection( "decks");
@@ -185,7 +191,7 @@ public class DeckRepositoryImpl implements DeckRepository {
     String userID = (String) deckMap.get("author_id");
     String deckName = (String) deckMap.get("deckName");
     String summary = (String) deckMap.get("summary");
-    String deckList = (String) deckMap.get("deckString");
+    String deckListString = (String) deckMap.get("deckString");
     Date createdDate = (Date) deckMap.get("createdDate");
 
     Log.d("REPOSITORY MAP TESTING",
@@ -193,11 +199,11 @@ public class DeckRepositoryImpl implements DeckRepository {
         + " deck_name = " + deckName
         +" userID = " + userID
         + " summary = " + summary
-        + " deckList = " + deckList
+        + " deckList = " + deckListString
         + " createdDate = " + createdDate.toString()
     );
 
-    return new DeckDecorator(deckID, deckName, userID, deckList, summary, createdDate);
+    return new DeckDecorator(deckID, deckName, userID, deckListString, summary, createdDate);
   }
 
 

@@ -1,7 +1,6 @@
 package com.hestia.presentationlayer.displaydecks;
 
 import com.hestia.datalayer.DeckRepository;
-import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
 
@@ -19,7 +18,7 @@ import java.util.List;
 
 public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
   private DisplayDecksContract.View displayDeckView;
-  private DeckRepository deckRepository;
+  private DeckRepository deckRepo;
 
   private List<Deck> deckList;
 
@@ -28,24 +27,26 @@ public class DisplayDecksPresenter implements DisplayDecksContract.Presenter{
    * Associates the instance of the presenter to the view
    * @param view
    */
-  public DisplayDecksPresenter (DisplayDecksContract.View view) {
+  public DisplayDecksPresenter (DisplayDecksContract.View view, DeckRepository deckRepo) {
     this.displayDeckView = view;
 
     // initialize the instance of the deck repository and retrieve the first deck batch
-    deckRepository = new DeckRepositoryImpl();
-    deckRepository.getDeckBatch(this, 100);
+    this.deckRepo = deckRepo;
+    this.deckRepo.getDeckBatch(this, 100);
   }
 
   public void getDeckBatch() {
-    deckRepository.getDeckBatch(this, 10);
+    deckRepo.getDeckBatch(this, 10);
   }
+
+
   // TODO
   private void getUser() {
   }
 
   /**
    * Receives method call after async task resolves to update the UI
-   * @param decks
+   * @param decks list of decks to displays
    */
   public void receiveDeckBatch(List<DeckDecorator> decks) {
     // adds to the list of decks

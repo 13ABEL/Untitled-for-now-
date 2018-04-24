@@ -30,7 +30,7 @@ import java.util.ListIterator;
  */
 
 public class DeckFragment extends TabFragment {
-  private DisplayCardAdapter deckListAdapter = null;
+  private SingleDeckCardAdapter deckListAdapter = null;
   private View rootView;
   public int test = 0;
 
@@ -60,6 +60,7 @@ public class DeckFragment extends TabFragment {
   public void updateUI(List <Card> deckList) {
     //TextView textThing = getActivity().findViewById(R.id.listtab_test);
 
+    Toast.makeText(getContext(), deckList.get(0).getName(), Toast.LENGTH_SHORT).show();
     String test = "";
     for (int i = 0; i < deckList.size(); i++) {
       test += deckList.get(i).getID() + " \n";
@@ -67,17 +68,14 @@ public class DeckFragment extends TabFragment {
 
     // creates the new adapter instance and sets it as the adapter for the listview
     //deckListAdapter = new SingleDeckCardAdapter(getContext(), deckList);
-    deckListAdapter = new DisplayCardAdapter();
+    deckListAdapter = new SingleDeckCardAdapter(this.getContext(), deckList);
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
 
     RecyclerView decklistView = rootView.findViewById(R.id.deck_card_list);
     decklistView.setLayoutManager(mLayoutManager);
     decklistView.setAdapter(deckListAdapter);
-
-    parentPresenter.getAddableCards().observe(
-        this, liveSearchList -> deckListAdapter.submitList(liveSearchList)
-    );
   }
+
 
 
 

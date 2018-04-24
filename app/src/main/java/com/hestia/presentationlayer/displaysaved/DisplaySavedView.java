@@ -16,6 +16,8 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hestia.R;
+import com.hestia.datalayer.DeckRepository;
+import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.DisplayDeckAdapter;
 import com.hestia.presentationlayer.singledeck.SingleDeckView;
@@ -43,8 +45,10 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
       Toast.makeText(this.getContext(), "Sorry, but you must sign in to save decks", Toast.LENGTH_SHORT).show();
     }
     else if (displaySavedPresenter == null) {
-      // create the instance of the presenter
+      // create instance of repository to inject into the presenter
+      DeckRepository deckRepo = new DeckRepositoryImpl(this.getContext());
       displaySavedPresenter = new DisplaySavedPresenter(this);
+      displaySavedPresenter.injectDependencies(deckRepo);
     }
   }
 
@@ -98,6 +102,7 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     inflater.inflate(R.menu.display_saved_menu, menu);
     super.onCreateOptionsMenu(menu, inflater);
   }
+
 
   public boolean onOptionsItemSelected(MenuItem item) {
     // routes the selection to the presenter to handle logic
@@ -172,4 +177,5 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
       }
     }
   }
+
 }

@@ -1,8 +1,10 @@
 package com.hestia.domainlayer;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -26,8 +28,9 @@ public interface Deck {
   void setDeckName(String newName);
   void setEditedDate(Date editedDate);
   void setSummary(String summary);
-  void setDeck(Collection <Card> cards);
+  void setDeck(List <Card> cards);
   void setFormat(boolean isStandard);
+  void initializeDeck(List <Card> deckList);
 
   int addToDeck(Card newCard);
 

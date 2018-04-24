@@ -10,21 +10,22 @@ import java.util.List;
 public class DisplaySavedPresenter implements DisplaySavedContract.Presenter {
   DisplaySavedContract.View displaySavedView;
 
-  private DeckRepository savedDeckRepository;
+  private DeckRepository deckRepo;
 
   private List<Deck> savedDeckList;
 
   public DisplaySavedPresenter(DisplaySavedContract.View view){
     this.displaySavedView = view;
+  }
 
-    // initialize the instance of the deck repository and retrieve the first deck batch
-    savedDeckRepository = new DeckRepositoryImpl();
-    savedDeckRepository.getSavedBatch(this);
+  @Override
+  public void injectDependencies(DeckRepository deckRepo) {
+    this.deckRepo = deckRepo;
   }
 
   @Override
   public void getDeckBatch() {
-    savedDeckRepository.getSavedBatch(this);
+    deckRepo.getSavedBatch(this);
   }
 
   /**

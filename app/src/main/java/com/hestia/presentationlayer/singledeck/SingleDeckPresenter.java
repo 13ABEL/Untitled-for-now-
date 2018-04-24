@@ -16,6 +16,7 @@ import com.hestia.datalayer.DeckRepository;
 import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.datalayer.UserRepository;
 import com.hestia.datalayer.UserRepositoryImpl;
+import com.hestia.domainlayer.Card;
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
 
@@ -53,6 +54,8 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
       // display the edit option for this deck
       singleDeckView.displayEditOption();
     }
+    // gets the list of cards from the repository
+    getDeckList();
   }
 
   @Override
@@ -60,16 +63,23 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
     this.cardRepo = cardRepo;
   }
 
+
   @Override
-  public LiveData<PagedList<CardDecorator>> getAddableCards() {
-    LiveData<PagedList<CardDecorator>> buildCards = null;
-    // checks if the repo has been initialized
-    if (cardRepo != null) {
-      // use the current deck info to generate available cards
-      buildCards = cardRepo.generateDeckCards(currentDeck.getDeckClass(), true);
-    }
-    return  buildCards;
+  public void getDeckList() {
+    // gets the list of cards in the deck for viewing
+    cardRepo.getCardsFromString(this, currentDeck.getDeckString());
   }
+
+
+  /**
+   * Callback method for displaying cards from the card repository
+   * @param deckList the list of cards to be displayed
+   */
+  public void receiveDeckList(List <Card> deckList) {
+    // tells the view what to display
+    deckFragment.updateUI(deckList);
+  }
+
 
   /**
    * Callback method to receive the deck object from repository after async call
@@ -98,6 +108,7 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
       specificFrag.updateUI(currentDeck.getDeckList());
     }
   }
+
 
   public void addInfoTabFragment(InfoFragment newInfoFrag) {
     this.infoFragment = newInfoFrag;

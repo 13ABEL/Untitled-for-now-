@@ -2,6 +2,8 @@ package com.hestia.domainlayer;
 
 import android.util.Log;
 
+import com.hestia.datalayer.CardRepository;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +28,7 @@ public class DeckImpl implements Deck {
   final int WARLOCK = 8;
   final int WARRIOR = 9;
   
-  protected ArrayList <Card> deckList = new ArrayList<>();
+  protected List <Card> deckList;
   // properties set on object creation
   protected String deckID;
   protected String deckName;
@@ -82,17 +84,8 @@ public class DeckImpl implements Deck {
     // format the Date as a string
     DateFormat df = new SimpleDateFormat("dd/MM/yyyy:HH:mm:ss");
     this.createdDateString = df.format(this.createdDate);
-
-    // checks the deck for cards
-    if (deckList != null) {
-      // parse the deck list into an arraylist
-      for (int i = 0; i < deckList.length()/4 ; i++) {
-        // gets the card id from the string
-        String cardID = deckList.substring(i * 3, i * 3 + 4);
-        this.deckList.add(new CardImpl(cardID));
-      }
-    }
   }
+
 
   /**
    * Adds or removes a card to the decklist based on the number of copies of it already exist
@@ -151,13 +144,18 @@ public class DeckImpl implements Deck {
   }
 
   @Override
-  public void setDeck(Collection<Card> cards) {
+  public void setDeck(List<Card> cards) {
 
   }
 
   @Override
   public void setFormat(boolean isStandard) {
 
+  }
+
+  @Override
+  public void initializeDeck(List<Card> newList) {
+    this.deckList = newList;
   }
 
   public String getAuthor() {
@@ -175,7 +173,9 @@ public class DeckImpl implements Deck {
 
   public String getSummary() { return this.summary;}
 
-  public ArrayList<Card> getDeckList () {
+  public String getDeckString() {return  this.deckString;}
+
+  public List<Card> getDeckList () {
     return this.deckList;
   }
 

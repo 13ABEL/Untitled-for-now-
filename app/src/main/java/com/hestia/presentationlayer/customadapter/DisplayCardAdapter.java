@@ -55,6 +55,7 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     }
   }
 
+
   public DisplayCardAdapter() {
     super(new DiffUtil.ItemCallback<CardDecorator>() {
       @Override
@@ -69,6 +70,7 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     });
   }
 
+
   public void addOnClickListener (View.OnClickListener listener) {
     this.cardListener = listener;
   }
@@ -82,7 +84,6 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     // inflates the view for each object using a layout inflater
     View view = LayoutInflater.from(parent.getContext())
         .inflate(R.layout.item_card, parent, false);
-
 
     this.parent = parent;
     // creates a new viewholder for the inflated item

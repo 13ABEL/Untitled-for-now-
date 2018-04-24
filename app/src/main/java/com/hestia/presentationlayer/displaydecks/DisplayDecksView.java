@@ -21,6 +21,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.hestia.R;
+import com.hestia.datalayer.DeckRepository;
+import com.hestia.datalayer.DeckRepositoryImpl;
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.customadapter.DisplayDeckAdapter;
@@ -58,7 +60,9 @@ public class DisplayDecksView extends Fragment implements DisplayDecksContract.V
 
     // create an instance of the presenter if it doesn't already exist
     if (displayDeckPresenter == null) {
-      displayDeckPresenter = new DisplayDecksPresenter(this);
+      // new deck repository to be injected into the presenter
+      DeckRepository deckRepo = new DeckRepositoryImpl(this.getContext());
+      displayDeckPresenter = new DisplayDecksPresenter(this, deckRepo);
     }
   }
 
