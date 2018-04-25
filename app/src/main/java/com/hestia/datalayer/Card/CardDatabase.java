@@ -33,7 +33,7 @@ import java.util.Map;
  */
 
 // TODO: noticed issue when opening app for first time without wifi: db will be initialized as empty and will not work after
-@Database(entities = {CardDecorator.class}, version = 2, exportSchema = false)
+@Database(entities = {CardDecorator.class}, version = 3, exportSchema = false)
 public abstract class CardDatabase extends RoomDatabase {
   private static final String TAG = "CARD_DATABASE";
   private static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1";

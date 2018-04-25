@@ -90,7 +90,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     // checks if the deck has already been fav-ed by the user
     UserRepository userRepo = new UserRepositoryImpl();
-    
   }
 
   public void onPause() {

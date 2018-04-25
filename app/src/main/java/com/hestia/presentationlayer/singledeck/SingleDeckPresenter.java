@@ -66,8 +66,10 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
 
   @Override
   public void getDeckList() {
-    // gets the list of cards in the deck for viewing
-    cardRepo.getCardsFromString(this, currentDeck.getDeckString());
+    if (cardRepo != null) {
+      // gets the list of cards in the deck for viewing
+      cardRepo.getCardsFromString(this, currentDeck.getDeckString());
+    }
   }
 
 
@@ -104,8 +106,7 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
       specificFrag.updateUI(currentDeck);
     }
     else if (tabPosition == DECK_TAB) {
-      DeckFragment specificFrag = (DeckFragment) tabFragment;
-      specificFrag.updateUI(currentDeck.getDeckList());
+      deckFragment = (DeckFragment) tabFragment;
     }
   }
 

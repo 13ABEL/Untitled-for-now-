@@ -6,6 +6,8 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
 
 
+import com.hestia.domainlayer.Card;
+
 import java.util.List;
 
 /**
@@ -77,4 +79,8 @@ public interface CardDao {
       "AND card_cost >= 0 " +
       "ORDER BY card_class DESC, card_cost ASC")
   DataSource.Factory<Integer, CardDecorator> getEditable(int className);
+
+
+  @Query("SELECT * FROM CardDecorator WHERE card_class IN (:queryList)")
+  List <CardDecorator> getCardList (String queryList);
 }

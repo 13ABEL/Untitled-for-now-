@@ -13,9 +13,11 @@ import com.hestia.datalayer.Card.CardDao;
 import com.hestia.datalayer.Card.CardDatabase;
 import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
+import com.hestia.domainlayer.CardImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
 import com.hestia.presentationlayer.singledeck.SingleDeckContract;
+import com.hestia.presentationlayer.singledeck.SingleDeckPresenter;
 
 
 import java.util.ArrayList;
@@ -29,7 +31,7 @@ import java.util.List;
 
 public class CardRepositoryImpl implements CardRepository {
   private final String TAG = "CARD_REPOSITORY";
-  private CardDatabase cardDatabase;
+  private static CardDatabase cardDatabase;
 
   private DisplayCardsContract.Presenter presenter;
   private Context viewContext;
@@ -71,31 +73,15 @@ public class CardRepositoryImpl implements CardRepository {
     return null;
   }
 
+
+
   public void getCardBatch (int numCards) {
     NewTask fetchBatchTask = new NewTask();
     fetchBatchTask.execute(presenter, numCards);
   }
 
 
-  class NewTask extends AsyncTask <Object, Integer, List<CardDecorator>>{
-    private  DisplayCardsContract.Presenter presenter;
 
-    @Override
-    protected List<CardDecorator> doInBackground(Object... objects) {
-      this.presenter = (DisplayCardsContract.Presenter) objects[0];
-      int numCards = (int) objects[1];
-
-      List<CardDecorator> cardList = cardDatabase.cardModel().getBatch(numCards);
-
-      // gets the batch of cards
-      return cardList;
-    }
-
-    protected void onPostExecute(List<CardDecorator> returnedCards) {
-      // routes the information back to the presenter
-      presenter.receiveCardBatch(returnedCards);
-    }
-  }
 
 
 
@@ -183,30 +169,61 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
-  @Override
-  public void getCardsFromString(SingleDeckContract.Presenter presenter, String deckString) {
-    // checks the deck for cards
-    if (deckString != null) {
-//      new AsyncTask <String, Integer, Long> () {
-//
-//        @Override
-//        protected Long doInBackground(String... strings) {
-//          ArrayList deckList = new ArrayList();
-//          // checks the deck for cards
-//          // parse the deck list into an arraylist
-//          for (int i = 0; i < deckString.length()/4 ; i++) {
-//            // gets the card id from the string
-//            String cardID = deckString.substring(i * 3, i * 3 + 4);
-//
-//
-//          }
-//        sends the new list to the presenter
-//        presenter.receiveDeckList(deckList);
-//          return null;
-//        }
-//      }.execute(deckString);
+
+  class NewTask extends AsyncTask <Object, Integer, List<CardDecorator>>{
+    private  DisplayCardsContract.Presenter presenter;
+
+    @Override
+    protected List<CardDecorator> doInBackground(Object... objects) {
+      this.presenter = (DisplayCardsContract.Presenter) objects[0];
+      int numCards = (int) objects[1];
+
+      List<CardDecorator> cardList = cardDatabase.cardModel().getBatch(numCards);
+      // gets the batch of cards
+      return cardList;
+    }
+
+    protected void onPostExecute(List<CardDecorator> returnedCards) {
+      // routes the information back to the presenter
+      presenter.receiveCardBatch(returnedCards);
     }
   }
+
+
+
+
+  @Override
+  public void getCardsFromString(SingleDeckContract.Presenter presenter, String deckString) {
+    new ParseCardString().execute(presenter);
+  }
+
+  static class ParseCardString extends AsyncTask <Object, Integer, List<CardDecorator>> {
+    @Override
+    protected List<CardDecorator> doInBackground(Object... objects) {
+      SingleDeckPresenter presenter = (SingleDeckPresenter) objects[0];
+      String deckString = (String) objects[1];
+
+      StringBuilder listQuery = new StringBuilder();
+
+      // checks the deck for cards
+      if (deckString != null) {
+        // parse the deck to generate a query string
+        for (int i = 0; i < deckString.length() / 4; i++) {
+          if (i != 0) {
+            listQuery.append(",");
+          }
+          listQuery.append(deckString.substring(i * 3, i * 3 + 4));
+        }
+      }
+
+      List<Card> newDeckList = new ArrayList<>(cardDatabase.cardModel().getCardList(listQuery.toString()));
+      // sends the new deck of cards to the presenter
+      presenter.receiveDeckList(newDeckList);
+      return null;
+    }
+  }
+
+
 
 }
 

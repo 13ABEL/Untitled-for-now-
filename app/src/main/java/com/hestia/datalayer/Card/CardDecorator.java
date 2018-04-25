@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
+import com.hestia.domainlayer.Card;
 import com.hestia.domainlayer.CardImpl;
 
 /**
@@ -17,7 +18,7 @@ import com.hestia.domainlayer.CardImpl;
  */
 
 @Entity
-public class CardDecorator extends CardImpl {
+public class CardDecorator extends CardImpl implements Card {
   // Room uses this to access the class
   public CardDecorator() {
     super();
