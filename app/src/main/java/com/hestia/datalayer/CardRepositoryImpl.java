@@ -211,11 +211,14 @@ public class CardRepositoryImpl implements CardRepository {
         // parse the deck to generate a query string
         for (int i = 0; i < deckString.length() / 4; i++) {
           deckArray[i] = deckString.substring(i * 3, i * 3 + 4);
+          Log.d(TAG, "CARD ID " + deckArray[i]);
         }
       }
+
       return new ArrayList<>(cardDatabase.cardModel().getCardList(deckArray));
     }
     protected void onPostExecute(List<Card> newDeckList) {
+      Log.d(TAG, newDeckList.toString());
       // sends the new deck of cards to the presenter
       singleDeckPresenter.receiveDeckList(newDeckList);
     }

@@ -80,6 +80,8 @@ public class DisplaySavedView extends Fragment implements DisplaySavedContract.V
     mRecyclerView.setAdapter(mAdapter);
     getActivity().setTitle("Saved Deck");
 
+    displaySavedPresenter.getDeckBatch();
+
     return rootView;
   }
 

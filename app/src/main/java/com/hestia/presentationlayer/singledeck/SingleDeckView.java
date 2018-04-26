@@ -159,6 +159,8 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
    * It's better for a small and fixed number of screens
    */
   class TabsAdapter extends FragmentStatePagerAdapter {
+    private String [] tabNames = {"info", "deck"};
+
     TabsAdapter(FragmentManager manager) {
       super(manager);
     }
@@ -183,6 +185,10 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     @Override
     public int getCount() {
       return 2;
+    }
+
+    public CharSequence getPageTitle(int position) {
+      return tabNames[position];
     }
   }
 
