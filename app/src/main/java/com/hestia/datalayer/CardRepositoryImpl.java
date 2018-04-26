@@ -30,7 +30,7 @@ import java.util.List;
  */
 
 public class CardRepositoryImpl implements CardRepository {
-  private final String TAG = "CARD_REPOSITORY";
+  private static final String TAG = "CARD_REPOSITORY";
   private static CardDatabase cardDatabase;
 
   private DisplayCardsContract.Presenter presenter;
@@ -194,32 +194,30 @@ public class CardRepositoryImpl implements CardRepository {
 
   @Override
   public void getCardsFromString(SingleDeckContract.Presenter presenter, String deckString) {
-    new ParseCardString().execute(presenter);
+    new ParseCardString().execute(presenter, deckString);
   }
 
-  static class ParseCardString extends AsyncTask <Object, Integer, List<CardDecorator>> {
+  static class ParseCardString extends AsyncTask <Object, Integer, List<Card>> {
+    private SingleDeckPresenter singleDeckPresenter;
     @Override
-    protected List<CardDecorator> doInBackground(Object... objects) {
-      SingleDeckPresenter presenter = (SingleDeckPresenter) objects[0];
+    protected List<Card> doInBackground(Object... objects) {
+      this.singleDeckPresenter = (SingleDeckPresenter) objects[0];
       String deckString = (String) objects[1];
 
-      StringBuilder listQuery = new StringBuilder();
+      String[] deckArray = new String[30];
 
       // checks the deck for cards
       if (deckString != null) {
         // parse the deck to generate a query string
         for (int i = 0; i < deckString.length() / 4; i++) {
-          if (i != 0) {
-            listQuery.append(",");
-          }
-          listQuery.append(deckString.substring(i * 3, i * 3 + 4));
+          deckArray[i] = deckString.substring(i * 3, i * 3 + 4);
         }
       }
-
-      List<Card> newDeckList = new ArrayList<>(cardDatabase.cardModel().getCardList(listQuery.toString()));
+      return new ArrayList<>(cardDatabase.cardModel().getCardList(deckArray));
+    }
+    protected void onPostExecute(List<Card> newDeckList) {
       // sends the new deck of cards to the presenter
-      presenter.receiveDeckList(newDeckList);
-      return null;
+      singleDeckPresenter.receiveDeckList(newDeckList);
     }
   }
 

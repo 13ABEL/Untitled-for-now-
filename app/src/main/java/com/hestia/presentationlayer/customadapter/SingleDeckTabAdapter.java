@@ -22,21 +22,22 @@ public class SingleDeckTabAdapter extends FragmentStatePagerAdapter {
   private String [] tabNames = {"INFO", "LIST"};
   private int numTabs = tabNames.length;
 
-  public SingleDeckTabAdapter(FragmentManager fragManager, SingleDeckContract.Presenter presenter) {
+  public SingleDeckTabAdapter(FragmentManager fragManager, TabFragment infoFrag, TabFragment deckFrag) {
     super(fragManager);
-    this.cPresenter = presenter;
   }
+
 
   @Override
   public Fragment getItem(int position) {
     TabFragment newTabFragment;
     // return the right fragment depending on the position
     if (position == 0) {
-      newTabFragment = InfoFragment.newInstance(0, "INFO", cPresenter);
+      newTabFragment = new InfoFragment();
+          //InfoFragment.newInstance(0, "INFO", cPresenter);
     } else {
-      newTabFragment = DeckFragment.newInstance(1, "LIST", cPresenter);
+      newTabFragment = new DeckFragment();
+      //DeckFragment.newInstance(1, "LIST", cPresenter);
     }
-
     return newTabFragment;
   }
 

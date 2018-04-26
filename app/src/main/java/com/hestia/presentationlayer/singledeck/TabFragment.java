@@ -14,20 +14,13 @@ import com.hestia.presentationlayer.DeckDecorator;
  */
 
 public abstract class TabFragment extends Fragment {
-  SingleDeckContract.Presenter parentPresenter;
   int position;
 
   // public abstract void updateUI(DeckDecorator deck);
 
-  public void setPresenter(SingleDeckContract.Presenter presenter) {
-    // uses the parent presenter to update information
-    parentPresenter = presenter;
-  }
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    // adds the current fragment to the parent presenter once everything is loaded
-    parentPresenter.addTabFragment(this, this.position);
   }
 
   public void setPosition(int tab) {

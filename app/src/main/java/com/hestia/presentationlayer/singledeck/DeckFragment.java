@@ -38,7 +38,6 @@ public class DeckFragment extends TabFragment {
   public static DeckFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter){
     // creates a new instance of the fragment and passes it the parent presenter
     DeckFragment newFragment = new DeckFragment();
-    newFragment.setPresenter(presenter);
 
     Log.e("TEST TAG", newFragment.test + "");
     return newFragment;
@@ -50,30 +49,26 @@ public class DeckFragment extends TabFragment {
     return rootView;
   }
 
+
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    // adds the current fragment to the parent presenter once everything is loaded
-    parentPresenter.addDeckTabFragment(this);
   }
 
 
-  public void updateUI(List <Card> deckList) {
-    //TextView textThing = getActivity().findViewById(R.id.listtab_test);
+  public void displayDecklist(List <Card> deckList) {
+    Toast.makeText(getContext(), "NOT NULL", Toast.LENGTH_SHORT);
+    if (deckList != null) {
+      Toast.makeText(getContext(), "SIZE " + deckList.size(), Toast.LENGTH_SHORT).show();
 
-    Toast.makeText(getContext(), deckList.get(0).getName(), Toast.LENGTH_SHORT).show();
-    String test = "";
-    for (int i = 0; i < deckList.size(); i++) {
-      test += deckList.get(i).getID() + " \n";
+      RecyclerView decklistView = rootView.findViewById(R.id.deck_card_list);
+
+      RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+      decklistView.setLayoutManager(mLayoutManager);
+
+      // creates the new adapter instance and sets it as the adapter for the listview
+      deckListAdapter = new SingleDeckCardAdapter(this.getContext(), deckList);
+      decklistView.setAdapter(deckListAdapter);
     }
-
-    // creates the new adapter instance and sets it as the adapter for the listview
-    //deckListAdapter = new SingleDeckCardAdapter(getContext(), deckList);
-    deckListAdapter = new SingleDeckCardAdapter(this.getContext(), deckList);
-    RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-
-    RecyclerView decklistView = rootView.findViewById(R.id.deck_card_list);
-    decklistView.setLayoutManager(mLayoutManager);
-    decklistView.setAdapter(deckListAdapter);
   }
 
 

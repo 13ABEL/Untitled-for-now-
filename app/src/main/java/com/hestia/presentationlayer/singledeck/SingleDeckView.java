@@ -7,7 +7,10 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -22,24 +25,46 @@ import com.hestia.datalayer.CardRepository;
 import com.hestia.datalayer.CardRepositoryImpl;
 import com.hestia.datalayer.UserRepository;
 import com.hestia.datalayer.UserRepositoryImpl;
+import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.DeckDecorator;
-import com.hestia.presentationlayer.customadapter.SingleDeckTabAdapter;
+
+import java.util.List;
 
 /**
  * Created by Richard on 3/14/2018.
  */
 
 public class SingleDeckView extends Fragment implements SingleDeckContract.View {
+  private final String TAG = "SINGLE_DECK_VIEW";
   private SingleDeckContract.Presenter singleDeckPresenter;
-  private String [] tabNames = {"INFO", "LIST", "COMMENTS"};
-  private SingleDeckTabAdapter mSingleDeckTabAdapter;
-  private ViewPager mPager;
+
+  //
+  private DeckFragment deckFrag;
+  private InfoFragment infoFrag;
+
+  private ViewPager viewPager;
   private DeckDecorator currentDeck;
 
   FloatingActionButton editButton;
 
+
+  public void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    // gets the deckDecorator object from the bundle
+    if (this.getArguments() != null) {
+      currentDeck = this.getArguments().getParcelable("deck");
+      singleDeckPresenter = new SingleDeckPresenter(this, currentDeck);
+
+      // creates a new instance of the repo to inject into the presenter
+      CardRepository cardRepo = new CardRepositoryImpl(this.getContext());
+      singleDeckPresenter.injectDependencies(cardRepo);
+    }
+  }
+
+
   /**
-   * Inflates the xml file into a view
+   * Inflates the xml layouts into a view
    *
    * @param inflater
    * @param container
@@ -54,41 +79,28 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     setHasOptionsMenu(true);
     getActivity().invalidateOptionsMenu();
 
-    // gets the deckDecorator object from the bundle
-    currentDeck = this.getArguments().getParcelable("deck");
-    //Toast.makeText(getContext(), "Single Deck Screen " + currentDeck.getDeckName(), Toast.LENGTH_SHORT).show();
-
-
-    singleDeckPresenter = new SingleDeckPresenter(this, currentDeck);
-
-    // creates a new instance of the repo to inject into the presenter
-    CardRepository cardRepo = new CardRepositoryImpl(this.getContext());
-    singleDeckPresenter.injectDependencies(cardRepo);
-
-    // gets supportFragmentManager bc ViewPage uses support library fragments
+    // retrieve the frag manager and create a new adapter for the tabs
     FragmentManager fragManager = getActivity().getSupportFragmentManager();
-    mSingleDeckTabAdapter = new SingleDeckTabAdapter(fragManager, singleDeckPresenter);
+    FragmentStatePagerAdapter tabsAdapter = new TabsAdapter(fragManager);
 
-    // sets the collection adapter with tabs as the pager adapter
-    mPager = rootView.findViewById(R.id.single_deck_pager);
-    mPager.setAdapter(mSingleDeckTabAdapter);
+    // attaches the tabs adapter to the view pager
+    viewPager = rootView.findViewById(R.id.single_deck_pager);
+    viewPager.setAdapter(tabsAdapter);
 
+    // attaches the view pager to the sliding tabs layout
     TabLayout tabLayout = rootView.findViewById(R.id.sliding_tabs);
-    tabLayout.setupWithViewPager(mPager);
+    tabLayout.setupWithViewPager(viewPager);
 
     return rootView;
   }
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    // gets the current Deck ID and uses it to get the deck from the repository
-    //String deckName = this.getArguments().getString("deck_id");
 
     // sets the title of the navbar as the current deck name
-    //getActivity().setTitle(currentDeck.getDeckName());
-    getActivity().setTitle(currentDeck.getDeckID());
+    getActivity().setTitle(currentDeck.getDeckName());
 
-    // checks if the deck has already been fav-ed by the user
+    // TODO check if the deck has already been fav-ed by the user
     UserRepository userRepo = new UserRepositoryImpl();
   }
 
@@ -129,6 +141,49 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     editButton.setImageDrawable(getActivity().getDrawable(R.drawable.ic_edit_24dp));
     editButton.setVisibility(View.VISIBLE);
+  }
+
+  @Override
+  public void displaySummary(String summary) {
+
+  }
+
+  @Override
+  public void displayDecklist(List<Card> cardList) {
+    deckFrag.displayDecklist(cardList);
+  }
+
+
+  /**
+   * Note that we use a FragmentPagerAdapter instead of a FragmentStatePagerAdapter
+   * It's better for a small and fixed number of screens
+   */
+  class TabsAdapter extends FragmentStatePagerAdapter {
+    TabsAdapter(FragmentManager manager) {
+      super(manager);
+    }
+
+    @Override
+    public Fragment getItem(int position) {
+      Fragment newFragment;
+
+      if (position == 1) {
+        deckFrag = new DeckFragment();
+        newFragment = deckFrag;
+        // tells the presenter to retrieve the decklist for this deck
+        singleDeckPresenter.getDeckList();
+      }
+      else {
+        infoFrag = new InfoFragment();
+        newFragment = infoFrag;
+      }
+      return newFragment;
+    }
+
+    @Override
+    public int getCount() {
+      return 2;
+    }
   }
 
 }

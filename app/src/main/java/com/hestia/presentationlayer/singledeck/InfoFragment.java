@@ -20,13 +20,11 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
  */
 
 public class InfoFragment extends TabFragment {
-  //
+  View rootView;
 
-  // new instance constructor
   public static InfoFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter) {
     // creates a new instance of the fragment and passes it to the parent presenter
     InfoFragment newFragment = new InfoFragment();
-    newFragment.setPresenter(presenter);
     newFragment.setPosition(page);
 
     //Log.e("TEST TAG", newFragment.test + "");
@@ -35,22 +33,16 @@ public class InfoFragment extends TabFragment {
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // inflates the layout into a view
-    View view = inflater.inflate(R.layout.single_deck_infotab, container, false);
-    return view;
+    this.rootView = inflater.inflate(R.layout.single_deck_infotab, container, false);
+    return rootView;
   }
-
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
-    // adds the current fragment to the parent presenter once everything is loaded
-    parentPresenter.addInfoTabFragment(this);
   }
 
-
-  public void updateUI(DeckDecorator deck) {
-    TextView textThing = getActivity().findViewById(R.id.infotab_deck_summary);
-    textThing.setText(deck.getSummary());
+  public void setTitle(String deckSummary) {
+    TextView textThing = rootView.findViewById(R.id.infotab_deck_summary);
+    textThing.setText(deckSummary);
   }
-
-
 }

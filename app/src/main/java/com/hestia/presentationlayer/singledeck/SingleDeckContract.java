@@ -23,6 +23,8 @@ public interface SingleDeckContract {
   interface View {
     void displayInfo(String title);
     void displayEditOption();
+    void displaySummary(String summary);
+    void displayDecklist(List <Card> cardList);
   }
 
   interface Presenter {
@@ -35,12 +37,8 @@ public interface SingleDeckContract {
     void getDeckList();
     void receiveDeckList(List <Card> deckList);
 
-
-
     void receiveFullDeck(DeckDecorator deck);
-    void addTabFragment(TabFragment tabFragment, int position);
-    void addInfoTabFragment(InfoFragment newInfoFrag);
-    void addDeckTabFragment(DeckFragment newInfoFrag);
+
     void saveDeck();
   }
 
