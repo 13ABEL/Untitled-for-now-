@@ -81,6 +81,6 @@ public interface CardDao {
   DataSource.Factory<Integer, CardDecorator> getEditable(int className);
 
 
-  @Query("SELECT * FROM CardDecorator WHERE cardID IN(:queryArray)")
+  @Query("SELECT * FROM CardDecorator WHERE cardID IN(:queryArray) ORDER BY card_cost ASC")
   List <CardDecorator> getCardList (String [] queryArray);
 }

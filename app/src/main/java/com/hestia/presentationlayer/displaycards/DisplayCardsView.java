@@ -10,6 +10,8 @@ import android.os.Bundle;
 import android.os.TestLooperManager;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -47,6 +49,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   private RecyclerView.LayoutManager mLayoutManager;
 
   private DisplayCardAdapter mLayoutAdapter;
+  private FragmentStatePagerAdapter filterTabAdapter;
 
   DisplayCardsVM viewModel;
   String created = "NEW";
@@ -102,6 +105,12 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     return rootView;
   }
 
+
+  /**
+   * Inflates the menu and add listeners for each of its items
+   * @param menu
+   * @param inflater
+   */
   public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
     // clear the previous menu
     // inflate the menu layout into the Menu object
@@ -172,6 +181,20 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   // TODO initialize a new actionbar with custom menus (filtering, sorting)
   // TODO allow custom OnClicks to be applied to this view (it'll be reused in a variety of scenarios later on
 
+  class FilterTabAdapter extends FragmentStatePagerAdapter {
+    FilterTabAdapter (FragmentManager fragmentManager) {
+      super(fragmentManager);
+    }
 
+    @Override
+    public Fragment getItem(int position) {
+      return null;
+    }
+
+    @Override
+    public int getCount() {
+      return 0;
+    }
+  }
 
 }
