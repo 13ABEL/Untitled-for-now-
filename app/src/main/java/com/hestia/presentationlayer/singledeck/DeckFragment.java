@@ -34,14 +34,17 @@ public class DeckFragment extends TabFragment {
   private View rootView;
   public int test = 0;
 
-  // new instance constructor
-  public static DeckFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter){
-    // creates a new instance of the fragment and passes it the parent presenter
-    DeckFragment newFragment = new DeckFragment();
+  private static DeckFragment INSTANCE;
 
-    Log.e("TEST TAG", newFragment.test + "");
-    return newFragment;
+  // new instance constructor
+  public static DeckFragment newInstance() {
+    // create a new instance of the fragment if it doesn't already exist
+    if (INSTANCE == null) {
+      INSTANCE = new DeckFragment();
+    }
+    return INSTANCE;
   }
+
 
   public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // inflates the layout into a view
@@ -55,6 +58,10 @@ public class DeckFragment extends TabFragment {
   }
 
 
+  /**
+   * Displays the list of cards in a recyclerview using the adapter
+   * @param deckList list of cards
+   */
   public void displayDecklist(List <Card> deckList) {
     Toast.makeText(getContext(), "NOT NULL", Toast.LENGTH_SHORT);
     if (deckList != null) {
@@ -70,12 +77,6 @@ public class DeckFragment extends TabFragment {
       decklistView.setAdapter(deckListAdapter);
     }
   }
-
-
-
-
-
-
 }
 
 

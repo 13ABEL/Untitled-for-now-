@@ -22,13 +22,15 @@ import com.hestia.presentationlayer.displaydecks.DisplayDecksContract;
 public class InfoFragment extends TabFragment {
   View rootView;
 
-  public static InfoFragment newInstance(int page, String title, SingleDeckContract.Presenter presenter) {
-    // creates a new instance of the fragment and passes it to the parent presenter
-    InfoFragment newFragment = new InfoFragment();
-    newFragment.setPosition(page);
+  private static InfoFragment INSTANCE;
 
+  public static InfoFragment newInstance() {
+    // creates a new instance the fragment if it doesn't already exist
+    if (INSTANCE == null) {
+      InfoFragment newFragment = new InfoFragment();
+    }
     //Log.e("TEST TAG", newFragment.test + "");
-    return newFragment;
+    return INSTANCE;
   }
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

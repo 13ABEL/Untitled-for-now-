@@ -81,10 +81,6 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
-
-
-
-
   /**
    * Generates a filtered live paged-list based on filter value
    * @param column column to filter

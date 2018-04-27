@@ -103,17 +103,39 @@ public class UserRepositoryImpl implements UserRepository {
         .collection("savedDecks").document(deck.getDeckID());
   }
 
+  /**
+   * Adds deck with ID to a user's saved deck collection
+   * @param deck
+   */
   @Override
   public void saveDeck(Deck deck) {
     // get the current id of the deck to create the field
     deck.getDeckID();
     // generates the map rep of the deck to be used in firestore
     Map <String, Object> deckRep = deck.generateMap();
+
     // adds the deck (using its id) to the collection of saved decks for the specific user
     userSavedDeckCollection.document(currentUser.getUid())
         .collection("savedDecks").document(deck.getDeckID()).set(deckRep);
   }
 
+  /**
+   * Saves a newly created deck to a user's deck collection
+   * @param deck
+   */
+  @Override
+  public void saveNewDeck(Deck deck) {
+    // generates the map rep of the deck to be used in firestore
+    Map <String, Object> deckRep = deck.generateMap();
 
+    // create a new document and retrieve its id
+    DocumentReference newRef = userCollection.document();
+    String newDeckID = newRef.getId();
+
+    // adds the deck (using its id) to the collection of saved decks for the specific user
+    userSavedDeckCollection.document(currentUser.getUid())
+        .collection("savedDecks").document(newDeckID).set(deckRep);
+
+  }
 
 }

@@ -59,7 +59,7 @@ public class DeckImpl implements Deck {
     this.username = authorID;
 
     // initializes the empty array
-    Collection <Card> deckList = new ArrayList<>();
+    this.deckList = new ArrayList<>();
   }
 
 

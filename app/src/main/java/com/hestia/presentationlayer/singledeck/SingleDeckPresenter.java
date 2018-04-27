@@ -29,14 +29,7 @@ import java.util.List;
 
 public class SingleDeckPresenter implements SingleDeckContract.Presenter{
   private final String TAG = "SINGLE_DECK_PRESENTER";
-  private final int INFO_TAB = 1;
-  private final int DECK_TAB = 2;
-  //private final int EX_TAB = 3;
 
-  private InfoFragment infoFragment;
-  private DeckFragment deckFragment;
-
-  private ArrayList <TabFragment> tabFragments = new ArrayList<>();
   private SingleDeckContract.View singleDeckView;
   private DeckRepository deckRepository;
   private DeckDecorator currentDeck;
@@ -56,10 +49,15 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
     }
   }
 
+  /**
+   * inject the card repo for to be used for retrieving cards
+   * @param cardRepo implementation of card repo
+   */
   @Override
   public void injectDependencies(CardRepository cardRepo) {
     this.cardRepo = cardRepo;
   }
+
 
   @Override
   public void getDeckList() {
@@ -81,8 +79,9 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
 
 
   /**
-   * Callback method to receive the deck object from repository after async call
-   * @param deck
+   * Callback method to receive the deck object from repository after async call and to
+   * tell the view what to display
+   * @param deck received deck
    */
   @Override
   public void receiveFullDeck(DeckDecorator deck) {
@@ -91,6 +90,9 @@ public class SingleDeckPresenter implements SingleDeckContract.Presenter{
     singleDeckView.displayInfo(deck.getDeckName());
   }
 
+  /**
+   * Saves the deck to the list of decks saved by the user
+   */
   @Override
   public void saveDeck() {
     UserRepository userRepository = new UserRepositoryImpl();

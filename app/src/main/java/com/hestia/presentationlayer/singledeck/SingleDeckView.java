@@ -155,7 +155,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
 
   /**
-   * Note that we use a FragmentPagerAdapter instead of a FragmentStatePagerAdapter
+   * Note that we use a FragmentStatePagerAdapter instead of a FragmentStatePagerAdapter
    * It's better for a small and fixed number of screens
    */
   class TabsAdapter extends FragmentStatePagerAdapter {
@@ -168,7 +168,6 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
     @Override
     public Fragment getItem(int position) {
       Fragment newFragment;
-
       if (position == 1) {
         deckFrag = new DeckFragment();
         newFragment = deckFrag;
@@ -184,7 +183,7 @@ public class SingleDeckView extends Fragment implements SingleDeckContract.View 
 
     @Override
     public int getCount() {
-      return 2;
+      return tabNames.length;
     }
 
     public CharSequence getPageTitle(int position) {

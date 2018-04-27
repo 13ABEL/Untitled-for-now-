@@ -11,9 +11,8 @@ public interface UserRepository {
   // gets the user based on the current Firebase User
   void getCurrentUser(String userID);
 
-  void saveDeck(Deck deck);
   void favDeck(Deck deck);
 
-
-
+  void saveDeck(Deck deck);
+  void saveNewDeck(Deck deck);
 }

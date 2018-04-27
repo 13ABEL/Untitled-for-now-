@@ -27,7 +27,7 @@ public class EditDeckPresenter implements EditDeckContract.Presenter {
     // initialize the arraylist to hold the cards
     cardList = new ArrayList<>();
 
-    // extraact the current cardlist from the deck
+    // extract the current cardlist from the deck
 
   }
 
@@ -52,7 +52,7 @@ public class EditDeckPresenter implements EditDeckContract.Presenter {
   public void saveChanges() {
     // create a reference to the repository (move instantiation to exterior class after)
     UserRepository userRepository = new UserRepositoryImpl();
-    userRepository.saveDeck(editDeck);
+    userRepository.saveNewDeck(editDeck);
   }
 
 

@@ -38,6 +38,7 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
     Bundle dialogNewDeck = this.getArguments();
     // our presenter works with the deck interface as opposed to the deck itself
     Deck newDeck = (Deck) dialogNewDeck.get("deck");
+    Toast.makeText(getContext(), newDeck.getDeckName(), Toast.LENGTH_SHORT).show();
     deckClassID = newDeck.getDeckClass();
 
     // initializes the presenter for this view
