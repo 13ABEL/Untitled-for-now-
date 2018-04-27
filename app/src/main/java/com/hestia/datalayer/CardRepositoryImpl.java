@@ -200,16 +200,14 @@ public class CardRepositoryImpl implements CardRepository {
       this.singleDeckPresenter = (SingleDeckPresenter) objects[0];
       String deckString = (String) objects[1];
 
-      String[] deckArray = new String[30];
+      String[] deckArray = deckString.split(",");
+      Log.d(TAG, deckString);
 
-      // checks the deck for cards
-      if (deckString != null) {
-        // parse the deck to generate a query string
-        for (int i = 0; i < deckString.length() / 4; i++) {
-          deckArray[i] = deckString.substring(i * 3, i * 3 + 4);
-          Log.d(TAG, "CARD ID " + deckArray[i]);
-        }
+      List <Card> cardList = new ArrayList<>(cardDatabase.cardModel().getCardList(deckArray));
+      for (Card card: cardList) {
+        Log.d(TAG, "CARD name: " + card.getName());
       }
+
 
       return new ArrayList<>(cardDatabase.cardModel().getCardList(deckArray));
     }

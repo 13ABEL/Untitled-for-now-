@@ -135,7 +135,6 @@ public class UserRepositoryImpl implements UserRepository {
     // adds the deck (using its id) to the collection of saved decks for the specific user
     userSavedDeckCollection.document(currentUser.getUid())
         .collection("savedDecks").document(newDeckID).set(deckRep);
-
   }
 
 }

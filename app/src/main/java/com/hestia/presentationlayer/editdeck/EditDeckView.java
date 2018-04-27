@@ -110,9 +110,9 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
   // Onclick class for the adapter
   class cardOnClick implements View.OnClickListener {
     @Override
-    public void onClick(View v) {
+    public void onClick(View view) {
       // gets the card from the adapter and sends it to the presenter to handle it
-      cPresenter.addToNewDeck(cardAdapter.getCard(v));
+      cPresenter.addToNewDeck(cardAdapter.getCard(view));
     }
   }
 }

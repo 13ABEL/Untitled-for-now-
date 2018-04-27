@@ -52,7 +52,9 @@ public class EditDeckPresenter implements EditDeckContract.Presenter {
   public void saveChanges() {
     // create a reference to the repository (move instantiation to exterior class after)
     UserRepository userRepository = new UserRepositoryImpl();
-    userRepository.saveNewDeck(editDeck);
+    // userRepository.saveNewDeck(editDeck);
+    // TODO replace this method on release
+    userRepository.saveDeck(editDeck);
   }
 
 
