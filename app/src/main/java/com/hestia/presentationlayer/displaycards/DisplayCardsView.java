@@ -9,9 +9,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.TestLooperManager;
 import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -32,9 +34,7 @@ import com.hestia.datalayer.CardRepositoryImpl;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 
-import org.w3c.dom.Text;
 
-import java.util.List;
 
 /**
  * Created by Richard on 3/30/2018.
@@ -95,12 +95,25 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     }
 
     // initializes and sets the adapter for the recycler view (not the root)
-    if (mLayoutAdapter == null) {
-      mLayoutAdapter = new DisplayCardAdapter();
-      mRecyclerView.setAdapter(mLayoutAdapter);
-      // calls the method to set the default page
-      resetData();
+      if (mLayoutAdapter == null) {
+        mLayoutAdapter = new DisplayCardAdapter();
+        mRecyclerView.setAdapter(mLayoutAdapter);
+        // calls the method to set the default page
+        resetData();
     }
+
+
+    // Retrieve the fragment manager to create a new adapter for the tabs
+    FragmentManager fragManager = getFragmentManager();
+    FragmentStatePagerAdapter fragmentAdapter = new FilterTabAdapter(fragManager);
+
+    // inflates the pager view and attaches the tab adapter to it
+    ViewPager viewPager = rootView.findViewById(R.id.display_cards_viewpager);
+    viewPager.setAdapter(fragmentAdapter);
+
+    // inflates the tab layout and attaches the viewpager to it
+    TabLayout tabLayout = rootView.findViewById(R.id.display_cards_tablayout);
+    tabLayout.setupWithViewPager(viewPager);
 
     return rootView;
   }
@@ -181,6 +194,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   // TODO initialize a new actionbar with custom menus (filtering, sorting)
   // TODO allow custom OnClicks to be applied to this view (it'll be reused in a variety of scenarios later on
 
+
   class FilterTabAdapter extends FragmentStatePagerAdapter {
     FilterTabAdapter (FragmentManager fragmentManager) {
       super(fragmentManager);
@@ -188,12 +202,22 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
     @Override
     public Fragment getItem(int position) {
-      return null;
+      DisplayCardsTab cardTab = null;
+
+      cardTab = new DisplayCardsTab();
+
+      // gets the cards associated with this tab and attach them to it
+      cardTab.attachCards(viewModel.getCards(position));
+      return cardTab;
     }
 
     @Override
     public int getCount() {
-      return 0;
+      return 10;
+    }
+
+    public CharSequence getPageTitle(int position) {
+      return position + "";
     }
   }
 

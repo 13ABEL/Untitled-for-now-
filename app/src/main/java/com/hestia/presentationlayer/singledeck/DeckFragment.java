@@ -63,10 +63,8 @@ public class DeckFragment extends TabFragment {
    * @param deckList list of cards
    */
   public void displayDecklist(List <Card> deckList) {
-    Toast.makeText(getContext(), "NOT NULL", Toast.LENGTH_SHORT);
     if (deckList != null) {
-      Toast.makeText(getContext(), "SIZE " + deckList.size(), Toast.LENGTH_SHORT).show();
-
+      //Toast.makeText(getContext(), "SIZE " + deckList.size(), Toast.LENGTH_SHORT).show();
       RecyclerView decklistView = rootView.findViewById(R.id.deck_card_list);
 
       RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
