@@ -8,13 +8,18 @@
     <android.support.design.widget.TabLayout
         android:id="@+id/display_cards_tablayout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="@dimen/tab_height"
+        android:theme="@style/AppTheme"
+        android:background="?attr/colorPrimary"
+        android:elevation="@dimen/tab_elevation"
+
         app:tabMode="scrollable"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/display_cards_viewpager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:layout_marginEnd="@dimen/deck_item_margin"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/display_cards_recyclerview"

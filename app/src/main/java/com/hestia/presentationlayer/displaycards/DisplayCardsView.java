@@ -120,8 +120,17 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     return rootView;
   }
 
+
+  public void onResume () {
+    super.onResume();
+    // Necessary for re-attaching the adapter to to the viewpager
+    FragmentManager childFragManager = getChildFragmentManager();
+    viewPager.setAdapter(new FilterTabAdapter(childFragManager));
+  }
+
   public void onPause() {
     super.onPause();
+    // reset the pager's adapter to prevent it being
     viewPager.setAdapter(null);
   }
 
@@ -217,7 +226,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
     @Override
     public int getCount() {
-      return 10;
+      return 11;
     }
 
     public CharSequence getPageTitle(int position) {

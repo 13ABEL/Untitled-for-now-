@@ -60,7 +60,7 @@ public interface CardDao {
   DataSource.Factory<Integer, CardDecorator> getByExpansion(String expansion);
 
   // selects all cards with the selected cost
-  @Query("SELECT * FROM CardDecorator WHERE card_cost LIKE :cardCost")
+  @Query("SELECT * FROM CardDecorator WHERE card_cost = :cardCost")
   DataSource.Factory<Integer, CardDecorator> getByCost(String cardCost);
 
   // selects all cards from the selected class

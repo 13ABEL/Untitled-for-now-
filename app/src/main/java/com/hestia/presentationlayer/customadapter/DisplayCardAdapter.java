@@ -35,9 +35,12 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
    * Used to present items and allow item details to be changed easily
    */
   class ViewHolder extends RecyclerView.ViewHolder {
-      TextView cardName;
-      TextView cardCost;
-      View classColor;
+    TextView cardName;
+    TextView cardCost;
+
+    TextView cardAttack;
+    TextView cardHealth;
+    View classColor;
 
     ViewHolder (View view) {
       super(view);
@@ -45,6 +48,9 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       cardName = view.findViewById(R.id.item_card_name);
       cardCost = view.findViewById(R.id.item_card_cost);
       classColor = view.findViewById(R.id.item_card_back);
+
+      cardAttack = view.findViewById(R.id.item_card_attack);
+      cardHealth = view.findViewById(R.id.item_card_health);
 
       // sets the onClick listener
       view.setOnClickListener(cardListener);
@@ -105,6 +111,7 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       holder.cardName.setText(currentCard.getName());
       String currentCost = currentCard.getCost()+ "";
       holder.cardCost.setText(currentCost);
+
 
       int colorID = 0;
       holder.cardCost.setTextColor(parent.getResources().getColor(R.color.druid_color));

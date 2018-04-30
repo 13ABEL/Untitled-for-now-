@@ -9,13 +9,41 @@
           app:showAsAction="ifRoom"
           app:actionViewClass="android.support.v7.widget.SearchView"/>
 
-    <item android:title="@string/sort_cost"
+    <item android:title="Class"
           android:icon="@drawable/ic_sort_24dp"
           app:showAsAction="ifRoom">
         <menu>
+            <item android:title="@string/druid"></item>
+            <item android:title="@string/hunter"></item>
+            <item android:title="@string/mage"></item>
+            <item android:title="@string/paladin"></item>
+            <item android:title="@string/priest"></item>
+            <item android:title="@string/rogue"></item>
+            <item android:title="@string/shaman"></item>
+            <item android:title="@string/warlock"></item>
+            <item android:title="@string/warrior"></item>
+
             <item android:title="@string/sort_cost"></item>
         </menu>
     </item>
+
+    <item android:title="Class"
+          android:icon="@drawable/ic_filter_list_24dp"
+          app:showAsAction="ifRoom">
+        <menu>
+            <item android:title="@string/druid"></item>
+            <item android:title="@string/hunter"></item>
+            <item android:title="@string/mage"></item>
+            <item android:title="@string/paladin"></item>
+            <item android:title="@string/priest"></item>
+            <item android:title="@string/rogue"></item>
+            <item android:title="@string/shaman"></item>
+            <item android:title="@string/warlock"></item>
+            <item android:title="@string/warrior"></item>
+            <item android:title="@string/sort_cost"></item>
+        </menu>
+    </item>
+
 
 
 </menu>

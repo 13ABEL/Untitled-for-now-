@@ -8,10 +8,25 @@
     android:layout_marginStart="@dimen/deck_item_margin"
     android:layout_marginTop="@dimen/deck_item_margin">
 
+    <TextView
+        android:text="12"
+        android:id="@+id/item_card_attack"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/item_card_padding"/>
+
+    <TextView
+        android:text="2"
+        android:id="@+id/item_card_health"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/item_card_padding"/>
+
     <RelativeLayout
         android:id="@+id/item_card_back"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="@dimen/item_card_bar_height"
+        android:layout_marginTop="@dimen/item_card_bar_height"
         android:gravity="center_vertical">
 
         <TextView
@@ -26,8 +41,6 @@
             android:layout_height="wrap_content"
             android:layout_toEndOf="@id/item_card_cost"
             android:layout_marginStart="14dp"/>
-
-
 
     </RelativeLayout>
 

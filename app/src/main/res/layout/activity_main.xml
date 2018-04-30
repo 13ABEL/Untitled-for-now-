@@ -25,7 +25,7 @@
             android:layout_marginBottom="10dp"
 
             android:background="?attr/colorPrimary"
-            android:elevation="2dp"
+            android:elevation="@dimen/toolbar_elevation"
 
             android:paddingStart="@dimen/toolbar_padding"
             android:paddingEnd="@dimen/toolbar_padding"
