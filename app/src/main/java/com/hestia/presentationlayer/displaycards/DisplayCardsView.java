@@ -51,6 +51,8 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   private DisplayCardAdapter mLayoutAdapter;
   private FragmentStatePagerAdapter filterTabAdapter;
 
+  ViewPager viewPager;
+
   DisplayCardsVM viewModel;
   String created = "NEW";
 
@@ -84,31 +86,31 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
       created = "NOT NEW";
     }
-    // initializes the instance of the recycler view using the newly inflated view
-    mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
-    mRecyclerView.setHasFixedSize(true);
-
-    // initialize and sets the layout manager for the recycler view
-    if (mLayoutManager == null) {
-      mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
-      mRecyclerView.setLayoutManager(mLayoutManager);
-    }
-
-    // initializes and sets the adapter for the recycler view (not the root)
-      if (mLayoutAdapter == null) {
-        mLayoutAdapter = new DisplayCardAdapter();
-        mRecyclerView.setAdapter(mLayoutAdapter);
-        // calls the method to set the default page
-        resetData();
-    }
-
+//    // initializes the instance of the recycler view using the newly inflated view
+//    mRecyclerView = rootView.findViewById(R.id.display_cards_recyclerview);
+//    mRecyclerView.setHasFixedSize(true);
+//
+//    // initialize and sets the layout manager for the recycler view
+//    if (mLayoutManager == null) {
+//      mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
+//      mRecyclerView.setLayoutManager(mLayoutManager);
+//    }
+//
+//    // initializes and sets the adapter for the recycler view (not the root)
+//      if (mLayoutAdapter == null) {
+//        mLayoutAdapter = new DisplayCardAdapter();
+//        mRecyclerView.setAdapter(mLayoutAdapter);
+//        // calls the method to set the default page
+//        resetData();
+//    }
 
     // Retrieve the fragment manager to create a new adapter for the tabs
-    FragmentManager fragManager = getFragmentManager();
-    FragmentStatePagerAdapter fragmentAdapter = new FilterTabAdapter(fragManager);
+    // (note) we use fragment child manager we have nested fragments
+    FragmentManager childFragManager = getChildFragmentManager();
+    FragmentStatePagerAdapter fragmentAdapter = new FilterTabAdapter(childFragManager);
 
     // inflates the pager view and attaches the tab adapter to it
-    ViewPager viewPager = rootView.findViewById(R.id.display_cards_viewpager);
+    viewPager = rootView.findViewById(R.id.display_cards_viewpager);
     viewPager.setAdapter(fragmentAdapter);
 
     // inflates the tab layout and attaches the viewpager to it
@@ -118,6 +120,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     return rootView;
   }
 
+  public void onPause() {
+    super.onPause();
+    viewPager.setAdapter(null);
+  }
 
   /**
    * Inflates the menu and add listeners for each of its items
@@ -202,9 +208,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
     @Override
     public Fragment getItem(int position) {
-      DisplayCardsTab cardTab = null;
-
-      cardTab = new DisplayCardsTab();
+      DisplayCardsTab cardTab = new DisplayCardsTab();
 
       // gets the cards associated with this tab and attach them to it
       cardTab.attachCards(viewModel.getCards(position));

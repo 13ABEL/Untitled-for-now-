@@ -9,7 +9,7 @@
         android:id="@+id/display_cards_tablayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:tabGravity="fill"/>
+        app:tabMode="scrollable"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/display_cards_viewpager"
