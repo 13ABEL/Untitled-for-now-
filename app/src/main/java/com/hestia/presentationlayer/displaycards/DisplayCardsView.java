@@ -52,7 +52,11 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   private DisplayCardAdapter mLayoutAdapter;
   private FragmentStatePagerAdapter filterTabAdapter;
 
+
+  private int currentClassID;
+
   ViewPager viewPager;
+  TabLayout tabLayout;
 
   DisplayCardsVM viewModel;
   String created = "NEW";
@@ -108,14 +112,14 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     // Retrieve the fragment manager to create a new adapter for the tabs
     // (note) we use fragment child manager we have nested fragments
     FragmentManager childFragManager = getChildFragmentManager();
-    FragmentStatePagerAdapter fragmentAdapter = new FilterTabAdapter(childFragManager);
+    filterTabAdapter = new FilterTabAdapter(childFragManager);
 
     // inflates the pager view and attaches the tab adapter to it
     viewPager = rootView.findViewById(R.id.display_cards_viewpager);
-    viewPager.setAdapter(fragmentAdapter);
+    viewPager.setAdapter(filterTabAdapter);
 
     // inflates the tab layout and attaches the viewpager to it
-    TabLayout tabLayout = rootView.findViewById(R.id.display_cards_tablayout);
+    tabLayout = rootView.findViewById(R.id.display_cards_tablayout);
     tabLayout.setupWithViewPager(viewPager);
 
     return rootView;
@@ -162,7 +166,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
 
   public boolean onOptionsItemSelected(MenuItem item) {
-    int currentClassID = 0;
+    int newClassID = currentClassID;
     // routes the selection to the presenter to handle logic
     switch (item.getTitle().toString()) {
       case "druid": currentClassID = 1; break;
@@ -175,11 +179,20 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       case "warlock": currentClassID = 8; break;
       case "warrior": currentClassID = 9; break;
     }
-    Toast.makeText(getContext(), currentClassID + " ", Toast.LENGTH_SHORT).show();
-    // updates the class id used by viewmodel to generate list
-    viewModel.changeClass(currentClassID);
 
+    // reset the view only if a new class is selected
+    if (currentClassID != newClassID) {
+      // updates the class id used by viewmodel to generate list
+      viewModel.changeClass(currentClassID);
+      int position = tabLayout.getSelectedTabPosition();
 
+      // get the child fragment manger to create a new tab layout adapter to allow us to reset
+      FragmentManager childFragManager = getChildFragmentManager();
+      viewPager.setAdapter(new FilterTabAdapter(childFragManager));
+
+      viewPager.setCurrentItem(position);
+    }
+    
     return super.onOptionsItemSelected(item);
   }
 

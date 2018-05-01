@@ -44,7 +44,10 @@ public class DisplayCardsVM extends ViewModel {
   }
 
   public void changeClass(int newID) {
-    this.classID = newID;
+    // only resets the list if the id is different
+    if (newID != classID) {
+      this.classID = newID;
+    }
   }
 
 
