@@ -15,6 +15,7 @@ import com.hestia.datalayer.CardRepositoryImpl;
 
 
 public class DisplayCardsVM extends ViewModel {
+  private int classID = 0;
   private LiveData<PagedList<CardDecorator>> cardList = null;
   private CardRepository cardRepo;
 
@@ -24,7 +25,7 @@ public class DisplayCardsVM extends ViewModel {
 
   public LiveData<PagedList<CardDecorator>> getCards(int cardCost) {
     // generate the live paged list and attach it to this viewmodel
-    cardList = cardRepo.generateFiltered("cost", cardCost + "");
+    cardList = cardRepo.generateFiltered(classID, cardCost);
 
     return cardList;
   }
@@ -41,5 +42,10 @@ public class DisplayCardsVM extends ViewModel {
     cardList = cardRepo.generateDeckCards(classID, isStandard);
     return cardList;
   }
+
+  public void changeClass(int newID) {
+    this.classID = newID;
+  }
+
 
 }

@@ -4,6 +4,7 @@ import android.arch.paging.DataSource;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.Transaction;
 
 
 import com.hestia.domainlayer.Card;
@@ -83,4 +84,9 @@ public interface CardDao {
 
   @Query("SELECT * FROM CardDecorator WHERE cardID IN(:queryArray) ORDER BY card_cost ASC")
   List <CardDecorator> getCardList (String [] queryArray);
+
+
+  @Query("SELECT * FROM CardDecorator WHERE card_cost = :cost AND card_class = :classID " +
+      "ORDER BY card_cost ASC")
+  DataSource.Factory<Integer, CardDecorator> getClassCardsByCost(int classID, int cost);
 }

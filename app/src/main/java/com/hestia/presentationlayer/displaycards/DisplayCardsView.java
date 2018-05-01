@@ -22,6 +22,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -157,6 +158,29 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
         return false;
       }
     });
+  }
+
+
+  public boolean onOptionsItemSelected(MenuItem item) {
+    int currentClassID = 0;
+    // routes the selection to the presenter to handle logic
+    switch (item.getTitle().toString()) {
+      case "druid": currentClassID = 1; break;
+      case "hunter": currentClassID = 2; break;
+      case "mage": currentClassID = 3; break;
+      case "paladin": currentClassID = 4; break;
+      case "priest": currentClassID = 5; break;
+      case "rogue": currentClassID = 6; break;
+      case "shaman": currentClassID = 7; break;
+      case "warlock": currentClassID = 8; break;
+      case "warrior": currentClassID = 9; break;
+    }
+    Toast.makeText(getContext(), currentClassID + " ", Toast.LENGTH_SHORT).show();
+    // updates the class id used by viewmodel to generate list
+    viewModel.changeClass(currentClassID);
+
+
+    return super.onOptionsItemSelected(item);
   }
 
 

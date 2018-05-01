@@ -83,24 +83,14 @@ public class CardRepositoryImpl implements CardRepository {
 
   /**
    * Generates a filtered live paged-list based on filter value
-   * @param column column to filter
-   * @param value value of column to display
+   * @param cost value of column to display
    * @return the live page data associated with the filter applied
    */
-  public LiveData<PagedList<CardDecorator>> generateFiltered(String column, String value) {
+  public LiveData<PagedList<CardDecorator>> generateFiltered(int classID, int cost) {
     cardModel = cardDatabase.cardModel();
     DataSource.Factory <Integer, CardDecorator> cardFactory;
 
-    // redirects the query based on the column name
-    if (column.equals("expansion")) {
-      cardFactory = cardModel.getByExpansion(value);
-    }
-    else if (column.equals("cost")) {
-      cardFactory = cardModel.getByCost(value);
-    }
-    else {
-      cardFactory = cardModel.getByExpansion(value);
-    }
+    cardFactory = cardModel.getClassCardsByCost(classID, cost);
 
     // build the new Live paged list based on the factory produced
     this.livePagedCards = new LivePagedListBuilder<>(cardFactory, this.pagedListConfig).build();

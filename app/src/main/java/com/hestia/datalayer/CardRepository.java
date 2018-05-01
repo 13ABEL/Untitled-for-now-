@@ -21,7 +21,7 @@ public interface CardRepository {
   void getCardBatch(int batchSize);
 
   LiveData<PagedList<CardDecorator>> generateOrdered(String column, boolean desc);
-  LiveData<PagedList<CardDecorator>> generateFiltered(String column, String value);
+  LiveData<PagedList<CardDecorator>> generateFiltered(int cost, int classID);
   LiveData<PagedList<CardDecorator>> generateSearchResults(String search, boolean desc);
   LiveData<PagedList<CardDecorator>> generateDeckCards(int classID, boolean isStandard);
 

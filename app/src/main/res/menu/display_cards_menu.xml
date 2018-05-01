@@ -9,41 +9,19 @@
           app:showAsAction="ifRoom"
           app:actionViewClass="android.support.v7.widget.SearchView"/>
 
-    <item android:title="Class"
+    <item android:title="class"
           android:icon="@drawable/ic_sort_24dp"
           app:showAsAction="ifRoom">
         <menu>
-            <item android:title="@string/druid"></item>
-            <item android:title="@string/hunter"></item>
-            <item android:title="@string/mage"></item>
-            <item android:title="@string/paladin"></item>
-            <item android:title="@string/priest"></item>
-            <item android:title="@string/rogue"></item>
-            <item android:title="@string/shaman"></item>
-            <item android:title="@string/warlock"></item>
-            <item android:title="@string/warrior"></item>
-
-            <item android:title="@string/sort_cost"></item>
+            <item android:title="@string/druid"/>
+            <item android:title="@string/hunter"/>
+            <item android:title="@string/mage"/>
+            <item android:title="@string/paladin"/>
+            <item android:title="@string/priest"/>
+            <item android:title="@string/rogue"/>
+            <item android:title="@string/shaman"/>
+            <item android:title="@string/warlock"/>
+            <item android:title="@string/warrior"/>
         </menu>
     </item>
-
-    <item android:title="Class"
-          android:icon="@drawable/ic_filter_list_24dp"
-          app:showAsAction="ifRoom">
-        <menu>
-            <item android:title="@string/druid"></item>
-            <item android:title="@string/hunter"></item>
-            <item android:title="@string/mage"></item>
-            <item android:title="@string/paladin"></item>
-            <item android:title="@string/priest"></item>
-            <item android:title="@string/rogue"></item>
-            <item android:title="@string/shaman"></item>
-            <item android:title="@string/warlock"></item>
-            <item android:title="@string/warrior"></item>
-            <item android:title="@string/sort_cost"></item>
-        </menu>
-    </item>
-
-
-
 </menu>
