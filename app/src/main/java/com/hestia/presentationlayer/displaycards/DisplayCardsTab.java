@@ -4,6 +4,7 @@ import android.arch.lifecycle.LiveData;
 import android.arch.paging.PagedList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -55,10 +56,8 @@ public class DisplayCardsTab extends Fragment {
   class CardListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
-      CardImageDialog imageDialog = new CardImageDialog();
-      ImageView image = imageDialog.getView().findViewById(R.id.card_image_dialog_image);
-
-      Picasso.get().load("https://imgur.com/gallery/vyPHojT").into(image);
+      FragmentManager fragmentManager = getChildFragmentManager();
+      new CardImageDialog().show(fragmentManager, "test");
     }
   }
 
