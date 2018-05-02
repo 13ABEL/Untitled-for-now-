@@ -4,36 +4,40 @@
     android:theme="@style/CardItemTheme"
     android:id="@+id/item_card"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/item_card_height"
+    android:layout_height="@dimen/card_item_height"
     android:layout_marginStart="@dimen/deck_item_margin"
     android:layout_marginTop="@dimen/deck_item_margin">
+    <android.support.v7.widget.AppCompatImageView
+        android:id="@+id/card_item_image"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_item_image_height"/>
 
     <TextView
         android:text="12"
         android:id="@+id/item_card_attack"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/item_card_padding"/>
+        android:layout_marginStart="@dimen/card_item_padding"/>
 
     <TextView
         android:text="2"
         android:id="@+id/item_card_health"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/item_card_padding"/>
+        android:layout_marginEnd="@dimen/card_item_padding"/>
 
     <RelativeLayout
         android:id="@+id/item_card_back"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/item_card_bar_height"
-        android:layout_marginTop="@dimen/item_card_bar_height"
+        android:layout_height="@dimen/card_item_bar_height"
+        android:layout_marginTop="@dimen/card_item_bar_height"
         android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/item_card_cost"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/item_card_padding"/>
+            android:layout_marginStart="@dimen/card_item_padding"/>
 
         <TextView
             android:id="@+id/item_card_name"

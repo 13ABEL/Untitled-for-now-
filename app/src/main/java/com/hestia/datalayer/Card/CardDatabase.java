@@ -33,7 +33,7 @@ import java.util.Map;
  */
 
 // TODO: noticed issue when opening app for first time without wifi: db will be initialized as empty and will not work after
-@Database(entities = {CardDecorator.class}, version = 3, exportSchema = false)
+@Database(entities = {CardDecorator.class, CardLink.class}, version = 4, exportSchema = false)
 public abstract class CardDatabase extends RoomDatabase {
   private static final String TAG = "CARD_DATABASE";
   private static final String ENDPOINT = "https://omgvamp-hearthstone-v1.p.mashape.com/cards?collectible=1";
@@ -133,15 +133,25 @@ public abstract class CardDatabase extends RoomDatabase {
           card = (JSONObject) expansionCardIterator.next();
 
           int cardCost = -1;
+          // checks if the card is collectible
           testNull = card.get("cost");
           if (testNull != null) {
             Long longCost = (Long) testNull;
             cardCost = longCost.intValue();
           }
 
-          // checks if the card is collectible
+          int health = -1;
+          int attack = -1;
+          try {
+            health = ((Long) card.get("health")).intValue();
+            attack = ((Long) card.get("attack")).intValue();
+          }
+          catch (NullPointerException e) {
+            Log.e(TAG, "There was an error with parsing the JSON return " + e.getMessage());
+          }
 
           Log.i(TAG, (String) card.get("name"));
+
           // inserts the card into the database
           newCards.add( new CardDecorator(
                   (String) card.get("dbfId"),
@@ -151,7 +161,10 @@ public abstract class CardDatabase extends RoomDatabase {
                   (String) card.get("rarity"),
                   (String) card.get("text"),
                   "",
-                  cardCost
+                  cardCost,
+                  health,
+                  attack,
+                  (String) card.get("img")
               )
           );
 
@@ -160,7 +173,6 @@ public abstract class CardDatabase extends RoomDatabase {
         InsertTask insertCardsTask = new InsertTask();
         insertCardsTask.execute(newCards);
         Toast.makeText(mContext, "Finished import cards from the " + expansionKey + " set", Toast.LENGTH_SHORT).show();
-
       }
     } catch (ParseException e) {
       Log.e (TAG, "There was an issue parsing the JSON return: " + e.getMessage());

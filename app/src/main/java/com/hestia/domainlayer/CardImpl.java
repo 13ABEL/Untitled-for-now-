@@ -39,8 +39,14 @@ public class CardImpl implements Card {
   @ColumnInfo(name = "card_cost")
   public int cost;
 
+  @ColumnInfo(name = "health")
+  public int health;
 
+  @ColumnInfo(name = "attack")
+  public int attack;
 
+  @ColumnInfo(name = "link")
+  public String link;
 
   public CardImpl() {
 
@@ -48,7 +54,6 @@ public class CardImpl implements Card {
 
   public CardImpl (String id) {
     this.cardID = parseInt(id);
-    // temporary
     this.name = id;
     this.cost = 0;
   }
@@ -56,20 +61,16 @@ public class CardImpl implements Card {
   public int getID () {
     return this.cardID;
   }
-
-
   public String getName () {
     return this.name;
   }
   public int getCost () {
     return this.cost;
   }
-
   public String getRarity() {
     return this.rarity;
   }
   public int getCardClass() {
     return this.cardClass;
   }
-
 }

@@ -2,6 +2,7 @@ package com.hestia.datalayer;
 
 import android.arch.lifecycle.LiveData;
 import android.arch.paging.PagedList;
+import android.graphics.Bitmap;
 
 import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
@@ -26,5 +27,4 @@ public interface CardRepository {
   LiveData<PagedList<CardDecorator>> generateDeckCards(int classID, boolean isStandard);
 
   void getCardsFromString(SingleDeckContract.Presenter cPresenter, String deckString);
-
 }

@@ -198,16 +198,15 @@ public class CardRepositoryImpl implements CardRepository {
         Log.d(TAG, "CARD name: " + card.getName());
       }
 
-
       return new ArrayList<>(cardDatabase.cardModel().getCardList(deckArray));
     }
+
     protected void onPostExecute(List<Card> newDeckList) {
       Log.d(TAG, newDeckList.toString());
       // sends the new deck of cards to the presenter
       singleDeckPresenter.receiveDeckList(newDeckList);
     }
   }
-
 
 
 }

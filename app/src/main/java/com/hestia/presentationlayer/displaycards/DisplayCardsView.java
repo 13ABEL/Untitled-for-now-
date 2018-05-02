@@ -1,6 +1,7 @@
 package com.hestia.presentationlayer.displaycards;
 
 import android.app.ActionBar;
+import android.app.Dialog;
 import android.arch.lifecycle.LiveData;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
@@ -10,6 +11,7 @@ import android.os.Bundle;
 import android.os.TestLooperManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
@@ -25,6 +27,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,8 +36,9 @@ import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.datalayer.CardRepository;
 import com.hestia.datalayer.CardRepositoryImpl;
 import com.hestia.domainlayer.Card;
+import com.hestia.presentationlayer.CardImageDialog;
 import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
-
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -167,17 +171,19 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
   public boolean onOptionsItemSelected(MenuItem item) {
     int newClassID = currentClassID;
-    // routes the selection to the presenter to handle logic
-    switch (item.getTitle().toString()) {
-      case "druid": currentClassID = 1; break;
-      case "hunter": currentClassID = 2; break;
-      case "mage": currentClassID = 3; break;
-      case "paladin": currentClassID = 4; break;
-      case "priest": currentClassID = 5; break;
-      case "rogue": currentClassID = 6; break;
-      case "shaman": currentClassID = 7; break;
-      case "warlock": currentClassID = 8; break;
-      case "warrior": currentClassID = 9; break;
+    if (item.getTitle() != "class") {
+      // routes the selection to the presenter to handle logic
+      switch (item.getTitle().toString()) {
+        case "druid": currentClassID = 1; break;
+        case "hunter": currentClassID = 2; break;
+        case "mage": currentClassID = 3; break;
+        case "paladin": currentClassID = 4; break;
+        case "priest": currentClassID = 5; break;
+        case "rogue": currentClassID = 6; break;
+        case "shaman": currentClassID = 7; break;
+        case "warlock": currentClassID = 8; break;
+        case "warrior": currentClassID = 9; break;
+      }
     }
 
     // reset the view only if a new class is selected
@@ -192,7 +198,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
 
       viewPager.setCurrentItem(position);
     }
-    
+
     return super.onOptionsItemSelected(item);
   }
 
@@ -242,6 +248,9 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   public Context getViewContext () {
     return this.getContext();
   }
+
+
+
 
   // TODO initialize a new actionbar with custom menus (filtering, sorting)
   // TODO allow custom OnClicks to be applied to this view (it'll be reused in a variety of scenarios later on

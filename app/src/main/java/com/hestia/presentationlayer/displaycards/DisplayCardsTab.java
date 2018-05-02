@@ -10,13 +10,16 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.hestia.R;
 import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
+import com.hestia.presentationlayer.CardImageDialog;
 import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 import com.hestia.presentationlayer.singledeck.TabFragment;
+import com.squareup.picasso.Picasso;
 
 public class DisplayCardsTab extends Fragment {
   private DisplayCardAdapter cardListAdapter;
@@ -35,8 +38,9 @@ public class DisplayCardsTab extends Fragment {
     recyclerView.setLayoutManager(mLayoutManager);
 
 
-    // create the new adapter
+    // create the new adapter and add the listener to it
     cardListAdapter = new DisplayCardAdapter();
+    cardListAdapter.addOnClickListener(new CardListener());
     recyclerView.setAdapter(cardListAdapter);
 
     return this.rootView;
@@ -46,7 +50,20 @@ public class DisplayCardsTab extends Fragment {
     Log.d("SINGLE_CARDS_TAB", cardlist.toString());
     cardlist.observe(this, liveCardlist -> cardListAdapter.submitList(liveCardlist));
   }
+
+
+  class CardListener implements View.OnClickListener {
+    @Override
+    public void onClick(View v) {
+      CardImageDialog imageDialog = new CardImageDialog();
+      ImageView image = imageDialog.getView().findViewById(R.id.card_image_dialog_image);
+
+      Picasso.get().load("https://imgur.com/gallery/vyPHojT").into(image);
+    }
+  }
+
 }
+
 
 
 
