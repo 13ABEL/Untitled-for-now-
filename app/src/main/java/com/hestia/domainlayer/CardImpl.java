@@ -73,4 +73,5 @@ public class CardImpl implements Card {
   public int getCardClass() {
     return this.cardClass;
   }
+  public String getURL() {return this.link;}
 }

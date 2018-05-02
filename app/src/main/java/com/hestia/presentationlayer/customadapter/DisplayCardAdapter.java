@@ -133,6 +133,9 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
 
     // binds the position to the holders
     holder.setPosition(position);
+
+    holder.itemView.setTag(R.id.TAG_CARD_ID, currentCard.getURL());
+    Log.d("singledeckcardadapter", currentCard.getURL() + " URL");
   }
 
 

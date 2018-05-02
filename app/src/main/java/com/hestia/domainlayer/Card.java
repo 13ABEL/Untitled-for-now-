@@ -16,4 +16,6 @@ public interface Card {
   
   String getRarity();
 
+  String getURL();
+
 }

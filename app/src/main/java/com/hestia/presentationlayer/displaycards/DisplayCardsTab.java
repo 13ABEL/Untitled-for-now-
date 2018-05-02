@@ -52,12 +52,17 @@ public class DisplayCardsTab extends Fragment {
     cardlist.observe(this, liveCardlist -> cardListAdapter.submitList(liveCardlist));
   }
 
-
   class CardListener implements View.OnClickListener {
     @Override
     public void onClick(View v) {
+      Bundle newBundle = new Bundle();
+      newBundle.putString("url", (String) v.getTag(R.id.TAG_CARD_ID));
+
       FragmentManager fragmentManager = getChildFragmentManager();
-      new CardImageDialog().show(fragmentManager, "test");
+      CardImageDialog cardImageDialog = new CardImageDialog();
+
+      cardImageDialog.setArguments(newBundle);
+      cardImageDialog.show(fragmentManager, "test");
     }
   }
 
