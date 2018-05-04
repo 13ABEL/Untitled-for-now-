@@ -29,6 +29,6 @@
     <color name="warlock_color">#533859</color>
     <color name="warrior_color">#A53C39</color>
 
-
+    <color name="transparent">#00FFFFFF</color>
 
 </resources>

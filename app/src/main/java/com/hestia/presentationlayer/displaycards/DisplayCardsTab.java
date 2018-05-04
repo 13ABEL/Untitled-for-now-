@@ -39,7 +39,7 @@ public class DisplayCardsTab extends Fragment {
     recyclerView.setLayoutManager(mLayoutManager);
 
 
-    // create the new adapter and add the listener to it
+    // create the new adapter and attach the listener to it
     cardListAdapter = new DisplayCardAdapter();
     cardListAdapter.addOnClickListener(new CardListener());
     recyclerView.setAdapter(cardListAdapter);
@@ -62,6 +62,7 @@ public class DisplayCardsTab extends Fragment {
       CardImageDialog cardImageDialog = new CardImageDialog();
 
       cardImageDialog.setArguments(newBundle);
+
       cardImageDialog.show(fragmentManager, "test");
     }
   }

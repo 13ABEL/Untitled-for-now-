@@ -107,7 +107,7 @@ public abstract class CardDatabase extends RoomDatabase {
    * @param jsonReturn the response from the GET query to the api endpoint
    */
   private void insertJSONReturn (String jsonReturn, Context mContext) {
-    // create the new instance of the parser to iteract with the data
+    // create the new instance of the parser to interact with the data
     JSONParser parser = new JSONParser();
 
     try {

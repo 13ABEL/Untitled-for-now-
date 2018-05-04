@@ -4,12 +4,10 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.hestia.R;
 import com.squareup.picasso.Picasso;
@@ -24,22 +22,15 @@ public class CardImageDialog extends DialogFragment {
 
     ImageView image = rootview.findViewById(R.id.card_image_dialog_image);
 
-    // Retreives the
+    // Retrieves the url for the card image from the bundle
     Bundle args = getArguments();
     if (args != null) {
-
       String cardURL = args.getString("url");
-      Toast.makeText(getContext(), cardURL, Toast.LENGTH_SHORT).show();
+      // TODO add display for flavour text and artist name (create DAO for card metadata)
+      // Toast.makeText(getContext(), cardURL, Toast.LENGTH_SHORT).show();
 
-      Picasso.get().load(cardURL).resize(200, 500).centerInside().into(image);
+      Picasso.get().load(cardURL).resize(1000, 10000).centerInside().into(image);
     }
-    else {
-      Toast.makeText(getContext(), "EMPTY AARGS", Toast.LENGTH_SHORT).show();
-      // display the dummy image
-    }
-
-
-
 
     return rootview;
   }
