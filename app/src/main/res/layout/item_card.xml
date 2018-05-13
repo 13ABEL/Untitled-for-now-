@@ -7,45 +7,66 @@
     android:layout_height="@dimen/card_item_height"
     android:layout_marginStart="@dimen/deck_item_margin"
     android:layout_marginTop="@dimen/deck_item_margin">
+
     <android.support.v7.widget.AppCompatImageView
         android:id="@+id/card_item_image"
         android:layout_width="match_parent"
         android:layout_height="@dimen/card_item_image_height"/>
 
-    <TextView
-        android:text="12"
-        android:id="@+id/item_card_attack"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/card_item_padding"/>
-
-    <TextView
-        android:text="2"
-        android:id="@+id/item_card_health"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/card_item_padding"/>
-
+    <!-- Image for the cards -->
     <RelativeLayout
-        android:id="@+id/item_card_back"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/card_item_bar_height"
-        android:layout_marginTop="@dimen/card_item_bar_height"
-        android:gravity="center_vertical">
+        android:layout_height="@dimen/card_item_image_height">
+
+        <ImageView
+            android:id="@+id/item_card_image_preview"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/card_item_image_height"
+
+            android:adjustViewBounds="true"/>
 
         <TextView
-            android:id="@+id/item_card_cost"
+            android:text="12"
+            android:id="@+id/item_card_attack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/card_item_padding"/>
 
         <TextView
+            android:text="2"
+            android:id="@+id/item_card_health"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/card_item_padding"/>
+
+    </RelativeLayout>
+
+    <!-- Info bar for card cost, title -->
+    <RelativeLayout
+        android:id="@+id/item_card_back"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/card_item_infobar_height"
+        android:layout_marginTop="@dimen/card_item_image_height"
+
+        android:paddingStart="@dimen/card_item_padding"
+        android:paddingEnd="@dimen/card_item_padding">
+
+        <TextView
+            android:id="@+id/item_card_cost"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/card_item_cost_margin"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
             android:id="@+id/item_card_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+
             android:layout_toEndOf="@id/item_card_cost"
             android:layout_marginStart="14dp"/>
-
     </RelativeLayout>
 
 </android.support.v7.widget.CardView>

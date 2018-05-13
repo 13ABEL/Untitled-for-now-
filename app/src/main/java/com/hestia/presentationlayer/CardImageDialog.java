@@ -28,8 +28,7 @@ public class CardImageDialog extends DialogFragment {
       String cardURL = args.getString("url");
       // TODO add display for flavour text and artist name (create DAO for card metadata)
       // Toast.makeText(getContext(), cardURL, Toast.LENGTH_SHORT).show();
-
-      Picasso.get().load(cardURL).resize(1000, 10000).centerInside().into(image);
+      Picasso.get().load(cardURL).resize(1000, 10000).centerCrop().into(image);
     }
 
     return rootview;

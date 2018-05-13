@@ -16,8 +16,6 @@
 
     <dimen name="toolbar_padding">10dp</dimen>
 
-
-
     <dimen name="main_activity_padding_top">70dp</dimen>
 
 
@@ -36,10 +34,11 @@
     <dimen name="deck_item_icon_margin">10dp</dimen>
 
     <!-- display card items -->
-    <dimen name="card_item_height">80dp</dimen>
+    <dimen name="card_item_height">86dp</dimen>
     <dimen name="card_item_image_height">40dp</dimen>
-    <dimen name="card_item_bar_height">40dp</dimen>
+    <dimen name="card_item_infobar_height">46dp</dimen>
     <dimen name="card_item_padding">6dp</dimen>
+    <dimen name="card_item_cost_margin">10dp</dimen>
 
 
     <!-- for the left nav -->

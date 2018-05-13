@@ -12,6 +12,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +22,7 @@ import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
+import com.squareup.picasso.Picasso;
 
 
 /**
@@ -40,6 +43,9 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
 
     TextView cardAttack;
     TextView cardHealth;
+    ImageView cardPreview;
+
+
     View classColor;
 
     ViewHolder (View view) {
@@ -52,6 +58,7 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       cardAttack = view.findViewById(R.id.item_card_attack);
       cardHealth = view.findViewById(R.id.item_card_health);
 
+      cardPreview = view.findViewById(R.id.item_card_image_preview);
       // sets the onClick listener
       view.setOnClickListener(cardListener);
     }
@@ -112,9 +119,8 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
       String currentCost = currentCard.getCost()+ "";
       holder.cardCost.setText(currentCost);
 
-
+      // set the color for the card background
       int colorID = 0;
-      holder.cardCost.setTextColor(parent.getResources().getColor(R.color.druid_color));
       switch (currentCard.getCardClass()) {
         case 1: colorID = R.color.druid_color; break;
         case 2: colorID = R.color.hunter_color; break;
@@ -128,11 +134,15 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
         default: colorID = R.color.colorPrimary;
       }
       holder.classColor.setBackgroundResource(colorID);
-
     }
 
     // binds the position to the holders
     holder.setPosition(position);
+
+    // loads the preview image
+    Picasso.get().load(currentCard.getURL()).fit().centerCrop()
+        .into(holder.cardPreview);
+
 
     holder.itemView.setTag(R.id.TAG_CARD_ID, currentCard.getURL());
     Log.d("singledeckcardadapter", currentCard.getURL() + " URL");
