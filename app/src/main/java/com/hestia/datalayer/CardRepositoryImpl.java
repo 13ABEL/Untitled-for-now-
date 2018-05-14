@@ -16,6 +16,8 @@ import com.hestia.domainlayer.Card;
 import com.hestia.domainlayer.CardImpl;
 import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
+import com.hestia.presentationlayer.editdeck.EditDeckContract;
+import com.hestia.presentationlayer.editdeck.EditDeckPresenter;
 import com.hestia.presentationlayer.singledeck.SingleDeckContract;
 import com.hestia.presentationlayer.singledeck.SingleDeckPresenter;
 
@@ -143,19 +145,6 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
-  public LiveData<PagedList<CardDecorator>> generateDeckCards(int classID, boolean isStandard) {
-    cardModel = cardDatabase.cardModel();
-    DataSource.Factory <Integer, CardDecorator> cardFactory;
-
-    // add the appropriate characters to make use of the "like" selector
-    cardFactory = cardModel.getEditable(classID);
-
-    this.livePagedCards = new LivePagedListBuilder<Integer, CardDecorator>(cardFactory, pagedListConfig).build();
-    return livePagedCards;
-  }
-
-
-
   class NewTask extends AsyncTask <Object, Integer, List<CardDecorator>>{
     private  DisplayCardsContract.Presenter presenter;
 
@@ -172,6 +161,31 @@ public class CardRepositoryImpl implements CardRepository {
     protected void onPostExecute(List<CardDecorator> returnedCards) {
       // routes the information back to the presenter
       presenter.receiveCardBatch(returnedCards);
+    }
+  }
+
+
+  public void getEditableCards(EditDeckContract.Presenter presenter, int classID) {
+    cardModel = cardDatabase.cardModel();
+
+    new GetEditableCardsTask().execute(AsyncTask.THREAD_POOL_EXECUTOR, presenter, classID);
+  }
+
+  static class GetEditableCardsTask extends  AsyncTask<Object, Integer, List<Card>> {
+    private EditDeckPresenter editDeckPresenter;
+    @Override
+    protected List<Card> doInBackground(Object... objects) {
+      this.editDeckPresenter = (EditDeckPresenter) objects[1];
+      int classID = (int) objects[2];
+
+      List <Card> cardList = new ArrayList<>(cardDatabase.cardModel().getEditable(classID));
+      return new ArrayList<>(cardList);
+    }
+
+    protected void onPostExecute(List<Card> newDeckList) {
+      Log.d(TAG, newDeckList.toString());
+      // sends the new deck of cards to the presenter
+      editDeckPresenter.recieveCards(newDeckList);
     }
   }
 
@@ -198,7 +212,7 @@ public class CardRepositoryImpl implements CardRepository {
         Log.d(TAG, "CARD name: " + card.getName());
       }
 
-      return new ArrayList<>(cardDatabase.cardModel().getCardList(deckArray));
+      return new ArrayList<>(cardList);
     }
 
     protected void onPostExecute(List<Card> newDeckList) {

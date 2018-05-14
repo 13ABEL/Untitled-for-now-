@@ -39,9 +39,6 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
   }
 
 
-  public LiveData<PagedList<CardDecorator>> fetchCards(int classID) {
-    return cardRepo.generateDeckCards(classID, true);
-  }
 
   public void receiveCardBatch (List <CardDecorator> cardBatch) {
     if (cardBatch != null) {

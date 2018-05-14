@@ -85,15 +85,15 @@ public class NewDeckDialog extends DialogFragment {
         newDeck.setFormat(isStandard);
         
         // create the new fragment for editing a deck and the bundle for the new deck
-        EditDeckView createDeckFragment = new EditDeckView();
+        EditDeckView editDeckView = new EditDeckView();
         Bundle args = new Bundle();
         args.putParcelable("deck", newDeck);
 
-        createDeckFragment.setArguments(args);
+        editDeckView.setArguments(args);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
 
         // add fragment on top of the root tab fragment in backstack
-        transaction.replace(R.id.content_frame, createDeckFragment)
+        transaction.replace(R.id.content_frame, editDeckView)
           // adds the replaced fragment to the backstack to allow user to navigate back to it
           .addToBackStack(null)
           .commit();

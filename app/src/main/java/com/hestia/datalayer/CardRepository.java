@@ -7,6 +7,8 @@ import android.graphics.Bitmap;
 import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
+import com.hestia.presentationlayer.editdeck.EditDeckContract;
+import com.hestia.presentationlayer.editdeck.EditDeckPresenter;
 import com.hestia.presentationlayer.singledeck.SingleDeckContract;
 
 import java.util.List;
@@ -24,7 +26,8 @@ public interface CardRepository {
   LiveData<PagedList<CardDecorator>> generateOrdered(String column, boolean desc);
   LiveData<PagedList<CardDecorator>> generateFiltered(int cost, int classID);
   LiveData<PagedList<CardDecorator>> generateSearchResults(String search, boolean desc);
-  LiveData<PagedList<CardDecorator>> generateDeckCards(int classID, boolean isStandard);
+
+  void getEditableCards(EditDeckContract.Presenter presenter, int classID);
 
   void getCardsFromString(SingleDeckContract.Presenter cPresenter, String deckString);
 }

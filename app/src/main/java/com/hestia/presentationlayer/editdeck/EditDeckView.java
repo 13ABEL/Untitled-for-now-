@@ -12,15 +12,22 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.hestia.R;
+import com.hestia.datalayer.CardRepository;
+import com.hestia.datalayer.CardRepositoryImpl;
+import com.hestia.domainlayer.Card;
 import com.hestia.domainlayer.Deck;
 import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 import com.hestia.presentationlayer.displaycards.DisplayCardsVM;
+
+import java.util.List;
 
 public class EditDeckView extends Fragment implements EditDeckContract.View{
   private final String TAG = "CREATE_DECK";
 
   private View rootView;
-  EditDeckContract.Presenter cPresenter;
+
+  private CardRepository cardRepo;
+  private EditDeckContract.Presenter cPresenter;
   private DisplayCardsVM viewModel;
 
   DisplayCardAdapter cardAdapter;
@@ -69,8 +76,10 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
     cardAdapter.addOnClickListener(new cardOnClick());
     mRecyclerView.setAdapter(cardAdapter);
 
-    // display the default screen for the cards
-    resetList();
+    // inject the repo dependency into the presenter and asks it to retreive the cards
+    cPresenter.injectDependencies(new CardRepositoryImpl(this.getContext()));
+    cPresenter.retrieveCards(deckClassID);
+
     return rootView;
   }
 
@@ -83,10 +92,6 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
     }
   }
 
-  public void resetList() {
-    viewModel.getCreateCards(deckClassID, isStandard).observe(this, liveCardList ->
-        cardAdapter.submitList(liveCardList));
-  }
 
   public void showCardAdded(boolean cardAdded) {
     // shows action based on whether the card has been added or not
@@ -97,6 +102,11 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
     }
     Toast.makeText(rootView.getContext(), " added : " + cardAdded, Toast.LENGTH_SHORT).show();
   }
+
+  public void displayCards(List<Card> cardList) {
+
+  }
+
 
   /**
    * Sets up the FAB if the deck has not been saved

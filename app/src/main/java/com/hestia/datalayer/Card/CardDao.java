@@ -79,7 +79,7 @@ public interface CardDao {
   @Query("SELECT * FROM CardDecorator WHERE card_class IN (:className, 0) " +
       "AND card_cost >= 0 " +
       "ORDER BY card_class DESC, card_cost ASC")
-  DataSource.Factory<Integer, CardDecorator> getEditable(int className);
+  List<CardDecorator> getEditable(int className);
 
 
   @Query("SELECT * FROM CardDecorator WHERE cardID IN(:queryArray) ORDER BY card_cost ASC")

@@ -38,7 +38,6 @@ public class DisplayCardsTab extends Fragment {
     RecyclerView.LayoutManager mLayoutManager = new GridLayoutManager(rootView.getContext(), 2);
     recyclerView.setLayoutManager(mLayoutManager);
 
-
     // create the new adapter and attach the listener to it
     cardListAdapter = new DisplayCardAdapter();
     cardListAdapter.addOnClickListener(new CardListener());
@@ -47,6 +46,10 @@ public class DisplayCardsTab extends Fragment {
     return this.rootView;
   }
 
+  /**
+   * Callback used by the presenter to submit tell the view to show a list of cards
+   * @param cardlist list of displayed cards
+   */
   public void attachCards(LiveData<PagedList<CardDecorator>> cardlist) {
     Log.d("SINGLE_CARDS_TAB", cardlist.toString());
     cardlist.observe(this, liveCardlist -> cardListAdapter.submitList(liveCardlist));

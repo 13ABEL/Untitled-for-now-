@@ -37,12 +37,6 @@ public class DisplayCardsVM extends ViewModel {
     return cardList;
   }
 
-  // method for easily getting the cards that are used to create decks
-  public LiveData<PagedList<CardDecorator>> getCreateCards(int classID, boolean isStandard) {
-    cardList = cardRepo.generateDeckCards(classID, isStandard);
-    return cardList;
-  }
-
   public void changeClass(int newID) {
     // only resets the list if the id is different
     if (newID != classID) {

@@ -24,7 +24,7 @@ public interface DisplayCardsContract {
 
   interface Presenter extends Base.BasePresenter {
     View getView();
-    LiveData<PagedList<CardDecorator>> fetchCards(int classID);
+
     void receiveCardBatch(List <CardDecorator> cardBatch);
     List<Card> getCardSet();
   }

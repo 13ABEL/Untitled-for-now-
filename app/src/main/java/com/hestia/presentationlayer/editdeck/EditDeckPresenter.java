@@ -1,6 +1,7 @@
 package com.hestia.presentationlayer.editdeck;
 
 import com.hestia.datalayer.Card.CardDecorator;
+import com.hestia.datalayer.CardRepository;
 import com.hestia.datalayer.UserRepository;
 import com.hestia.datalayer.UserRepositoryImpl;
 import com.hestia.domainlayer.Card;
@@ -8,9 +9,11 @@ import com.hestia.domainlayer.Deck;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 public class EditDeckPresenter implements EditDeckContract.Presenter {
   final private String LEGENDARY = "Legendary";
+  private CardRepository cardRepo;
 
   // reference to the view the presenter manages
   EditDeckContract.View cView;
@@ -20,15 +23,12 @@ public class EditDeckPresenter implements EditDeckContract.Presenter {
   private Collection <Card> cardList;
   //List <CardDecorator> currentDeckList;
 
-  EditDeckPresenter(EditDeckContract.View ownerView, Deck newDeck) {
+  public EditDeckPresenter(EditDeckContract.View ownerView, Deck newDeck) {
     this.cView = ownerView;
     this.editDeck = newDeck;
 
     // initialize the arraylist to hold the cards
     cardList = new ArrayList<>();
-
-    // extract the current cardlist from the deck
-
   }
 
   @Override
@@ -55,6 +55,20 @@ public class EditDeckPresenter implements EditDeckContract.Presenter {
     // userRepository.saveNewDeck(editDeck);
     // TODO replace this method on release
     userRepository.saveDeck(editDeck);
+  }
+
+  @Override
+  public void injectDependencies(CardRepository cardRepo) {
+    this.cardRepo = cardRepo;
+  }
+
+  @Override
+  public void retrieveCards(int classID) {
+    cardRepo.getEditableCards(this, classID);
+  }
+
+  public void recieveCards(List <Card> cardList) {
+    cView.displayCards(cardList);
   }
 
 

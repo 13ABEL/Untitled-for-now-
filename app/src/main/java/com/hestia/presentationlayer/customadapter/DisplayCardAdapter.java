@@ -140,9 +140,8 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     holder.setPosition(position);
 
     // loads the preview image
-    Picasso.get().load(currentCard.getURL()).fit().centerCrop()
-        .into(holder.cardPreview);
-
+    Picasso.get().load(currentCard.getURL())
+        .resize(307, 465).into(holder.cardPreview);
 
     holder.itemView.setTag(R.id.TAG_CARD_ID, currentCard.getURL());
     Log.d("singledeckcardadapter", currentCard.getURL() + " URL");
