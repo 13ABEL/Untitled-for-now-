@@ -88,5 +88,5 @@ public interface CardDao {
 
   @Query("SELECT * FROM CardDecorator WHERE card_cost = :cost AND card_class = :classID " +
       "ORDER BY card_cost ASC")
-  DataSource.Factory<Integer, CardDecorator> getClassCardsByCost(int classID, int cost);
+  List <CardDecorator> getClassCardsByCost(int classID, int cost);
 }

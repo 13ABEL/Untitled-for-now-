@@ -5,6 +5,7 @@ import android.arch.paging.PagedList;
 import android.content.Context;
 
 import com.hestia.datalayer.Card.CardDecorator;
+import com.hestia.datalayer.CardRepository;
 import com.hestia.domainlayer.Card;
 import com.hestia.presentationlayer.Base;
 
@@ -17,15 +18,16 @@ import java.util.List;
 public interface DisplayCardsContract {
 
   interface View extends Base.BaseView {
-    Context getViewContext();
-    //void displayCardBatch(List <CardDecorator> cardBatch);
+    void displayCards(List <Card> cardList);
   }
 
 
   interface Presenter extends Base.BasePresenter {
     View getView();
 
-    void receiveCardBatch(List <CardDecorator> cardBatch);
+    void injectDependencies(CardRepository cardRepo);
+    void retrieveCards(DisplayCardsContract.View view, int classID, int cost);
+    void receiveCardBatch(DisplayCardsContract.View tab, List <Card> cardBatch);
     List<Card> getCardSet();
   }
 

@@ -40,6 +40,8 @@ import com.hestia.presentationlayer.CardImageDialog;
 import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 
 /**
  * Created by Richard on 3/30/2018.
@@ -50,21 +52,22 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   private final String TAG = "DISPLAY_CARDS_FRAGMENT";
 
   private View rootView;
+  private DisplayCardsContract.Presenter presenter;
   private RecyclerView mRecyclerView;
   private RecyclerView.LayoutManager mLayoutManager;
 
   private DisplayCardAdapter mLayoutAdapter;
   private FragmentStatePagerAdapter filterTabAdapter;
 
+  private CardRepository cardRepo;
 
   private int currentClassID;
 
   ViewPager viewPager;
   TabLayout tabLayout;
 
-  DisplayCardsVM viewModel;
+  // DisplayCardsVM viewModel;
   String created = "NEW";
-
 
   /**
    * This method is called only when the fragment is created
@@ -73,11 +76,12 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   public void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
 
-    getActivity().setTitle(R.string.app_name);
+    // initializes the instance of the presenter
+    presenter = new DisplayCardsPresenter(this);
 
-    // gets the ViewModel instance associated with the fragment
-    viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
-    viewModel.initializeRepo(this.getContext());
+    // initializes the repository and injects it into the presenter
+    cardRepo = new CardRepositoryImpl(this.getContext());
+    presenter.injectDependencies(cardRepo);
   }
 
 
@@ -162,7 +166,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
       @Override
       public boolean onClose() {
         Toast.makeText(getActivity().getApplicationContext(), "closed search", Toast.LENGTH_SHORT).show();
-        resetData();
+        //resetData();
         return false;
       }
     });
@@ -189,7 +193,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     // reset the view only if a new class is selected
     if (currentClassID != newClassID) {
       // updates the class id used by viewmodel to generate list
-      viewModel.changeClass(currentClassID);
+      //viewModel.changeClass(currentClassID);
       int position = tabLayout.getSelectedTabPosition();
 
       // get the child fragment manger to create a new tab layout adapter to allow us to reset
@@ -200,13 +204,6 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     }
 
     return super.onOptionsItemSelected(item);
-  }
-
-
-  // resets the data that the adapter observes
-  public void resetData () {
-//    viewModel.getCards(4).observe(this, liveCardList ->
-//        mLayoutAdapter.submitList(liveCardList));
   }
 
 
@@ -222,7 +219,7 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     public boolean onQueryTextChange(String newText) {
       // returns the default list if the search text is empty
       if (newText.length() == 0) {
-        resetData();
+        //resetData();
       }
       // true because the action is handled by the listener
       return true;
@@ -250,6 +247,10 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
   }
 
 
+  @Override
+  public void displayCards(List<Card> cardList) {
+    mLayoutAdapter.setCardList(cardList);
+  }
 
 
   // TODO initialize a new actionbar with custom menus (filtering, sorting)
@@ -265,8 +266,9 @@ public class DisplayCardsView extends Fragment implements DisplayCardsContract.V
     public Fragment getItem(int position) {
       DisplayCardsTab cardTab = new DisplayCardsTab();
 
-      // gets the cards associated with this tab and attach them to it
-      cardTab.attachCards(viewModel.getCards(position));
+      // initializes the instance of the presenter for the tab and retrieves the cards to display
+      presenter.retrieveCards(cardTab, currentClassID, position);
+
       return cardTab;
     }
 

@@ -23,15 +23,17 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
 
   // holds the items that the adapter displays, want to keep it T H I N
   private ArrayList<Card> cardSet;
-  private static final int BATCH_SIZE = 25;
-  int currentBatchEnd = 0;
 
   public DisplayCardsPresenter (DisplayCardsContract.View view) {
     this.displayCardsView = view;
 
     // initialize the instance of the repository and the item set used by the adapter
-    cardRepo = new CardRepositoryImpl(this);
     cardSet = new ArrayList<>();
+  }
+
+  @Override
+  public void injectDependencies(CardRepository cardRepo) {
+    this.cardRepo = cardRepo;
   }
 
   public DisplayCardsContract.View getView () {
@@ -39,8 +41,16 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
   }
 
 
+  public void retrieveCards(DisplayCardsContract.View view, int classID , int cost) {
+    cardRepo.generateFiltered(this, view, classID, cost);
+  }
 
-  public void receiveCardBatch (List <CardDecorator> cardBatch) {
+
+  /**
+   * Callback to receive the set of cards when they've been loaded by the repository
+   * @param cardBatch
+   */
+  public void receiveCardBatch (DisplayCardsContract.View tab, List <Card> cardBatch) {
     if (cardBatch != null) {
       //Toast.makeText(displayCardsView.getViewContext(), cardBatch.size(), Toast.LENGTH_SHORT).show();
       // gets position of last element in items array
@@ -51,6 +61,7 @@ public class DisplayCardsPresenter implements DisplayCardsContract.Presenter {
       //displayCardsView.notifyAdapter(position);
       // passes the cards to the view to display
       //displayCardsView.displayCardBatch(cardSet);
+      tab.displayCards(cardBatch);
     }
   }
 

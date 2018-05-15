@@ -22,7 +22,10 @@ import com.hestia.presentationlayer.customadapter.DisplayCardAdapter;
 import com.hestia.presentationlayer.singledeck.TabFragment;
 import com.squareup.picasso.Picasso;
 
-public class DisplayCardsTab extends Fragment {
+import java.util.List;
+
+public class DisplayCardsTab extends Fragment implements DisplayCardsContract.View {
+  DisplayCardsContract.Presenter presenter;
   private DisplayCardAdapter cardListAdapter;
   View rootView;
 
@@ -48,11 +51,12 @@ public class DisplayCardsTab extends Fragment {
 
   /**
    * Callback used by the presenter to submit tell the view to show a list of cards
-   * @param cardlist list of displayed cards
+   * @param cardList list of displayed cards
    */
-  public void attachCards(LiveData<PagedList<CardDecorator>> cardlist) {
-    Log.d("SINGLE_CARDS_TAB", cardlist.toString());
-    //cardlist.observe(this, liveCardlist -> cardListAdapter.submitList(liveCardlist));
+  public void displayCards(List <Card> cardList) {
+    Log.d("SINGLE_CARDS_TAB", cardList.toString());
+    cardListAdapter.setCardList(cardList);
+    cardListAdapter.notifyDataSetChanged();
   }
 
   class CardListener implements View.OnClickListener {

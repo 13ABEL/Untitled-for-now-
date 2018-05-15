@@ -24,10 +24,10 @@ public interface CardRepository {
   void getCardBatch(int batchSize);
 
   LiveData<PagedList<CardDecorator>> generateOrdered(String column, boolean desc);
-  LiveData<PagedList<CardDecorator>> generateFiltered(int cost, int classID);
   LiveData<PagedList<CardDecorator>> generateSearchResults(String search, boolean desc);
 
+  void generateFiltered(DisplayCardsContract.Presenter presenter, DisplayCardsContract.View view,
+                        int cost, int classID);
   void getEditableCards(EditDeckContract.Presenter presenter, int classID);
-
   void getCardsFromString(SingleDeckContract.Presenter cPresenter, String deckString);
 }

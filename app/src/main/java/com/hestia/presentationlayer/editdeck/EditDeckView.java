@@ -106,7 +106,6 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
     cardAdapter.notifyDataSetChanged();
   }
 
-
   /**
    * Sets up the FAB if the deck has not been saved
    */

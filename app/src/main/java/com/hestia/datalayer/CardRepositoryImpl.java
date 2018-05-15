@@ -7,7 +7,6 @@ import android.arch.paging.PagedList;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hestia.datalayer.Card.CardDao;
 import com.hestia.datalayer.Card.CardDatabase;
@@ -43,20 +42,6 @@ public class CardRepositoryImpl implements CardRepository {
 
   private LiveData<PagedList<CardDecorator>> livePagedCards;
 
-
-  public CardRepositoryImpl(DisplayCardsContract.Presenter newPresenter) {
-    this.presenter = newPresenter;
-
-    // gets the context of the view and updates the database instance
-    this.viewContext = presenter.getView().getViewContext();
-    this.cardDatabase = CardDatabase.getDatabase(viewContext);
-
-    // page config to customize how our data is loaded
-    pagedListConfig =(new PagedList.Config.Builder()).setEnablePlaceholders(true)
-        .setPrefetchDistance(15)
-        .setPageSize(30).build();
-  }
-
   public CardRepositoryImpl(Context currentContext) {
     // gets the context of the view and gets the database instance based on it
     this.viewContext = currentContext;
@@ -76,26 +61,12 @@ public class CardRepositoryImpl implements CardRepository {
 
 
   public void getCardBatch (int numCards) {
-    NewTask fetchBatchTask = new NewTask();
+    GetFilteredCardsTask fetchBatchTask = new GetFilteredCardsTask();
     fetchBatchTask.execute(presenter, numCards);
   }
 
 
-  /**
-   * Generates a filtered live paged-list based on filter value
-   * @param cost value of column to display
-   * @return the live page data associated with the filter applied
-   */
-  public LiveData<PagedList<CardDecorator>> generateFiltered(int classID, int cost) {
-    cardModel = cardDatabase.cardModel();
-    DataSource.Factory <Integer, CardDecorator> cardFactory;
 
-    cardFactory = cardModel.getClassCardsByCost(classID, cost);
-
-    // build the new Live paged list based on the factory produced
-    this.livePagedCards = new LivePagedListBuilder<>(cardFactory, this.pagedListConfig).build();
-    return livePagedCards;
-  }
 
 
   /**
@@ -143,22 +114,36 @@ public class CardRepositoryImpl implements CardRepository {
   }
 
 
-  class NewTask extends AsyncTask <Object, Integer, List<CardDecorator>>{
+  /**
+   * Generates a filtered live paged-list based on filter value
+   * @param cost value of column to display
+   * @return the live page data associated with the filter applied
+   */
+  public void generateFiltered(DisplayCardsContract.Presenter presenter,
+                               DisplayCardsContract.View view, int classID, int cost) {
+    new GetFilteredCardsTask().execute(presenter, view, classID, cost);
+  }
+
+  static class GetFilteredCardsTask extends AsyncTask <Object, Integer, List<CardDecorator>>{
     private  DisplayCardsContract.Presenter presenter;
+    private  DisplayCardsContract.View view;
+
 
     @Override
     protected List<CardDecorator> doInBackground(Object... objects) {
       this.presenter = (DisplayCardsContract.Presenter) objects[0];
-      int numCards = (int) objects[1];
+      this.view =  (DisplayCardsContract.View) objects[1];
+      int classID = (int) objects[2];
+      int cost = (int) objects[3];
 
-      List<CardDecorator> cardList = cardDatabase.cardModel().getBatch(numCards);
+      List<CardDecorator> cardList = cardDatabase.cardModel().getClassCardsByCost(classID, cost);
       // gets the batch of cards
       return cardList;
     }
 
     protected void onPostExecute(List<CardDecorator> returnedCards) {
       // routes the information back to the presenter
-      presenter.receiveCardBatch(returnedCards);
+      presenter.receiveCardBatch(view, new ArrayList<>(returnedCards));
     }
   }
 

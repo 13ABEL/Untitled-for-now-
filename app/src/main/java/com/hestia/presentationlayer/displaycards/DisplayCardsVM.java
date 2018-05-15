@@ -25,7 +25,7 @@ public class DisplayCardsVM extends ViewModel {
 
   public LiveData<PagedList<CardDecorator>> getCards(int cardCost) {
     // generate the live paged list and attach it to this viewmodel
-    cardList = cardRepo.generateFiltered(classID, cardCost);
+    //cardList = cardRepo.generateFiltered(this, classID, cardCost);
 
     return cardList;
   }
