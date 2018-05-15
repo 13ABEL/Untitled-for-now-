@@ -13,6 +13,8 @@ public interface Card {
   int getID();
   String getName();
   int getCost();
+
+  int getCardClass();
   
   String getRarity();
 

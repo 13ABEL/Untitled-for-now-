@@ -185,7 +185,9 @@ public class DeckImpl implements Deck {
     for (Card collectionCard : deckList) {
       deckString.append(collectionCard.getID() + ",");
     }
-    deckString.deleteCharAt(deckString.length() -1);
+    if (deckString.length() > 0 ) {
+      deckString.deleteCharAt(deckString.length() - 1);
+    }
 
     Map<String, Object> deckRep = new HashMap<String, Object>();
     deckRep.put("deckName", this.deckName);

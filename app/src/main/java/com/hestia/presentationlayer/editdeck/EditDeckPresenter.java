@@ -32,7 +32,7 @@ public class EditDeckPresenter implements EditDeckContract.Presenter {
   }
 
   @Override
-  public void addToNewDeck(CardDecorator currCard) {
+  public void addToNewDeck(Card currCard) {
     // attempts to add the card to the deck, storing result
     int cardsAdded = editDeck.addToDeck(currCard);
 
@@ -67,7 +67,7 @@ public class EditDeckPresenter implements EditDeckContract.Presenter {
     cardRepo.getEditableCards(this, classID);
   }
 
-  public void recieveCards(List <Card> cardList) {
+  public void receiveCards(List <Card> cardList) {
     cView.displayCards(cardList);
   }
 

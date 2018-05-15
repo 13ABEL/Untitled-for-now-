@@ -52,7 +52,7 @@ public class DisplayCardsTab extends Fragment {
    */
   public void attachCards(LiveData<PagedList<CardDecorator>> cardlist) {
     Log.d("SINGLE_CARDS_TAB", cardlist.toString());
-    cardlist.observe(this, liveCardlist -> cardListAdapter.submitList(liveCardlist));
+    //cardlist.observe(this, liveCardlist -> cardListAdapter.submitList(liveCardlist));
   }
 
   class CardListener implements View.OnClickListener {

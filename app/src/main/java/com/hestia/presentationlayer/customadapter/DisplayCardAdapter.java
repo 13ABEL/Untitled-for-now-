@@ -24,13 +24,16 @@ import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
 import com.squareup.picasso.Picasso;
 
+import java.util.List;
+
 
 /**
  * Created by Richard on 3/30/2018.
  */
 
-public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayCardAdapter.ViewHolder> {
+public class DisplayCardAdapter extends RecyclerView.Adapter<DisplayCardAdapter.ViewHolder> {
   private View.OnClickListener cardListener;
+  private List<Card> cardList;
 
   ViewGroup parent;
   /**
@@ -69,20 +72,6 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
   }
 
 
-  public DisplayCardAdapter() {
-    super(new DiffUtil.ItemCallback<CardDecorator>() {
-      @Override
-      public boolean areItemsTheSame(CardDecorator oldCard, CardDecorator newCard) {
-        return (oldCard.getID() == newCard.getID());
-      }
-
-      @Override
-      public boolean areContentsTheSame(CardDecorator oldCard, CardDecorator newCard) {
-        return (oldCard.getCost() == newCard.getCost());
-      }
-    });
-  }
-
 
   public void addOnClickListener (View.OnClickListener listener) {
     this.cardListener = listener;
@@ -111,7 +100,7 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     // get element from room at this position
-    CardDecorator currentCard = getItem(position);
+    Card currentCard = cardList.get(position);
 
     if (currentCard != null) {
       // bind the element to our viewholder
@@ -147,11 +136,25 @@ public class DisplayCardAdapter extends PagedListAdapter<CardDecorator, DisplayC
     Log.d("singledeckcardadapter", currentCard.getURL() + " URL");
   }
 
+  @Override
+  public int getItemCount() {
+    int count = 0;
+    if (cardList != null) {
+      count = cardList.size();
+    }
+    return count;
+  }
 
-  public CardDecorator getCard(View view) {
+
+  public Card getCard(View view) {
     // gets the card from the item
     int cardPosition = (int) view.getTag();
-    return getItem(cardPosition);
+    return cardList.get(cardPosition);
+  }
+
+  public void setCardList(List<Card> cardList) {
+    Log.d("TEST_ADAPTER", cardList.toString());
+    this.cardList = cardList;
   }
 
 }

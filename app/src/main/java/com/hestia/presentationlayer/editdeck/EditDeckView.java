@@ -6,6 +6,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,18 +54,14 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
 
     // initializes the reference the current floating action button
     showDeckFAB = getActivity().findViewById(R.id.fab);
-
-    // gets the ViewModel instance associated with the fragment
-    viewModel = ViewModelProviders.of(this).get(DisplayCardsVM.class);
-    viewModel.initializeRepo(this.getContext());
   }
 
 
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
     // inflate the same layout used for the display cards view
-    rootView = inflater.inflate(R.layout.display_cards, container, false);
+    rootView = inflater.inflate(R.layout.display_cards_tab, container, false);
     // initializes the recycler view
-    RecyclerView mRecyclerView  = rootView.findViewById(R.id.display_cards_recyclerview);
+    RecyclerView mRecyclerView  = rootView.findViewById(R.id.display_cards_tab_recycler);
     mRecyclerView.setHasFixedSize(true);
 
     // initializes the layout manager and attaches it to the recyclerview
@@ -82,6 +79,7 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
 
     return rootView;
   }
+
 
   public void onActivityCreated(Bundle savedInstanceState) {
     super.onActivityCreated(savedInstanceState);
@@ -104,7 +102,8 @@ public class EditDeckView extends Fragment implements EditDeckContract.View{
   }
 
   public void displayCards(List<Card> cardList) {
-
+    cardAdapter.setCardList(cardList);
+    cardAdapter.notifyDataSetChanged();
   }
 
 

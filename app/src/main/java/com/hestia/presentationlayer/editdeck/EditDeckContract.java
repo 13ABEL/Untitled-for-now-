@@ -18,7 +18,7 @@ public interface EditDeckContract {
 
   interface Presenter extends Base.BasePresenter {
     // event to add/remove cards from the deck
-    void addToNewDeck(CardDecorator card);
+    void addToNewDeck(Card card);
     // saves the deck to firestore
     void saveChanges();
 

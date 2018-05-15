@@ -5,16 +5,14 @@ import android.arch.paging.DataSource;
 import android.arch.paging.LivePagedListBuilder;
 import android.arch.paging.PagedList;
 import android.content.Context;
-import android.database.Cursor;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.hestia.datalayer.Card.CardDao;
 import com.hestia.datalayer.Card.CardDatabase;
 import com.hestia.datalayer.Card.CardDecorator;
 import com.hestia.domainlayer.Card;
-import com.hestia.domainlayer.CardImpl;
-import com.hestia.presentationlayer.DeckDecorator;
 import com.hestia.presentationlayer.displaycards.DisplayCardsContract;
 import com.hestia.presentationlayer.editdeck.EditDeckContract;
 import com.hestia.presentationlayer.editdeck.EditDeckPresenter;
@@ -168,24 +166,24 @@ public class CardRepositoryImpl implements CardRepository {
   public void getEditableCards(EditDeckContract.Presenter presenter, int classID) {
     cardModel = cardDatabase.cardModel();
 
-    new GetEditableCardsTask().execute(AsyncTask.THREAD_POOL_EXECUTOR, presenter, classID);
+    new GetEditableCardsTask().execute(presenter, classID);
   }
 
   static class GetEditableCardsTask extends  AsyncTask<Object, Integer, List<Card>> {
     private EditDeckPresenter editDeckPresenter;
     @Override
     protected List<Card> doInBackground(Object... objects) {
-      this.editDeckPresenter = (EditDeckPresenter) objects[1];
-      int classID = (int) objects[2];
+      this.editDeckPresenter = (EditDeckPresenter) objects[0];
+      int classID = (int) objects[1];
 
       List <Card> cardList = new ArrayList<>(cardDatabase.cardModel().getEditable(classID));
       return new ArrayList<>(cardList);
     }
 
     protected void onPostExecute(List<Card> newDeckList) {
-      Log.d(TAG, newDeckList.toString());
+      Log.d(TAG, "Editable cards " + newDeckList.toString());
       // sends the new deck of cards to the presenter
-      editDeckPresenter.recieveCards(newDeckList);
+      editDeckPresenter.receiveCards(newDeckList);
     }
   }
 
